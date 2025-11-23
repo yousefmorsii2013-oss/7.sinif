@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Topic, LoadingState, QuizQuestion } from '../types';
+import { Topic, LoadingState, QuizQuestion, Subject } from '../types';
 import { streamLessonContent, generateQuizQuestions } from '../services/geminiService';
 
 interface LessonViewProps {
   topic: Topic;
+  subject: Subject;
   onBack: () => void;
 }
 
-// Simple Markdown parser component since we can't install react-markdown
+// Helper to format text with bold (**text**) and math ($text$) support
+const formatText = (text: string) => {
+  // Split by bold (**) or math ($) patterns
+  // The regex captures the delimiters so they appear in the parts array
+  const parts = text.split(/(\*\*.*?\*\*|\$.*?\$)/g);
+  
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index} className="text-indigo-900 font-bold">{part.slice(2, -2)}</strong>;
+    } else if (part.startsWith('$') && part.endsWith('$')) {
+      // Basic math styling: serif font, italic, slight background
+      return (
+        <span key={index} className="font-serif italic px-1 mx-0.5 bg-slate-100 rounded text-slate-900 inline-block border border-slate-200">
+          {part.slice(1, -1)}
+        </span>
+      );
+    } else {
+      return part;
+    }
+  });
+};
+
+// Simple Markdown parser component
 const SimpleMarkdown: React.FC<{ content: string }> = ({ content }) => {
   const lines = content.split('\n');
   return (
@@ -20,17 +43,16 @@ const SimpleMarkdown: React.FC<{ content: string }> = ({ content }) => {
         } else if (line.startsWith('# ')) {
           return <h1 key={idx} className="text-3xl font-bold text-indigo-800 mb-4">{line.replace('# ', '')}</h1>;
         } else if (line.startsWith('- ') || line.startsWith('* ')) {
-          return <li key={idx} className="ml-4 text-gray-700 list-disc">{line.replace(/^[-*] /, '')}</li>;
+          return <li key={idx} className="ml-4 text-gray-700 list-disc">{formatText(line.replace(/^[-*] /, ''))}</li>;
         } else if (line.match(/^\d+\./)) {
-             return <div key={idx} className="ml-4 text-gray-700 font-semibold mt-2">{line}</div>;
+             return <div key={idx} className="ml-4 text-gray-700 font-semibold mt-2">{formatText(line)}</div>;
         } else if (line.trim() === '') {
           return <div key={idx} className="h-2"></div>;
         } else {
-           // Handle bold text simply
-           const parts = line.split('**');
+           // Handle paragraph text with formatting
            return (
              <p key={idx} className="text-gray-700 leading-relaxed">
-               {parts.map((part, i) => (i % 2 === 1 ? <strong key={i} className="text-indigo-900">{part}</strong> : part))}
+               {formatText(line)}
              </p>
            );
         }
@@ -39,7 +61,7 @@ const SimpleMarkdown: React.FC<{ content: string }> = ({ content }) => {
   );
 };
 
-const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
+const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
   const [content, setContent] = useState<string>("");
   const [loadingState, setLoadingState] = useState<LoadingState>(LoadingState.LOADING);
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
@@ -58,8 +80,8 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
         setLoadingState(LoadingState.LOADING);
         setContent("");
         
-        // 1. Start Quiz Generation in Background (Non-blocking)
-        generateQuizQuestions(topic.promptContext)
+        // 1. Start Quiz Generation in Background
+        generateQuizQuestions(topic.promptContext, subject.title)
           .then(questions => {
             if (isMounted) {
               setQuizQuestions(questions);
@@ -71,14 +93,13 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
           });
 
         // 2. Stream Lesson Content
-        const stream = streamLessonContent(topic.promptContext);
+        const stream = streamLessonContent(topic.promptContext, subject.title);
         let fullText = "";
         
         for await (const chunk of stream) {
           if (!isMounted) break;
           fullText += chunk;
           setContent(fullText);
-          // Switch to SUCCESS as soon as we have text to show
           setLoadingState(LoadingState.SUCCESS);
         }
       } catch (error) {
@@ -91,8 +112,7 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
     fetchData();
     
     return () => { isMounted = false; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [topic]);
+  }, [topic, subject.title]);
 
   const handleAnswer = (index: number) => {
     if (showExplanation) return;
@@ -125,8 +145,8 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
   if (loadingState === LoadingState.LOADING) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600"></div>
-        <p className="mt-4 text-xl font-handwritten text-indigo-600">Öğretmen ders notlarını hazırlıyor...</p>
+        <div className={`animate-spin rounded-full h-16 w-16 border-b-4 ${subject.colorClass.includes('teal') ? 'border-teal-600' : 'border-indigo-600'}`}></div>
+        <p className="mt-4 text-xl font-handwritten text-gray-600">Yusuf bunu hızlı açılmasını çok denedi ama elinden geleni buydu</p>
       </div>
     );
   }
@@ -140,19 +160,21 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
     )
   }
 
+  // Determine header color based on subject
+  const headerBgClass = subject.headerColor;
+
   return (
     <div className="max-w-4xl mx-auto pb-12">
-      {/* Breadcrumb */}
       <button 
         onClick={onBack}
-        className="mb-6 flex items-center text-indigo-600 hover:text-indigo-800 font-medium"
+        className="mb-6 flex items-center text-gray-600 hover:text-gray-900 font-medium"
       >
         &larr; Konulara Dön
       </button>
 
       {!showQuiz ? (
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-          <div className="bg-indigo-600 p-8 text-white">
+          <div className={`${headerBgClass} p-8 text-white`}>
             <div className="flex items-center gap-4">
                 <span className="text-4xl">{topic.icon}</span>
                 <h1 className="text-3xl font-bold font-handwritten">{topic.title}</h1>
@@ -181,9 +203,9 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
       ) : (
         /* Quiz Section */
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-            <div className="bg-purple-600 p-6 text-white flex justify-between items-center">
-                <h2 className="text-2xl font-bold font-handwritten">Bilgi Yarışması</h2>
-                {!quizFinished && <span className="bg-purple-800 px-3 py-1 rounded-full text-sm">Soru {currentQuestionIndex + 1} / {quizQuestions.length}</span>}
+            <div className={`${headerBgClass} p-6 text-white flex justify-between items-center`}>
+                <h2 className="text-2xl font-bold font-handwritten">{subject.title} Testi</h2>
+                {!quizFinished && <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Soru {currentQuestionIndex + 1} / {quizQuestions.length}</span>}
             </div>
             
             <div className="p-8 lg:p-12">
@@ -203,7 +225,7 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
                                                 : idx === selectedOption
                                                     ? 'bg-red-100 border-red-500 text-red-800'
                                                     : 'border-gray-200 opacity-50'
-                                            : 'border-gray-200 hover:border-purple-400 hover:bg-purple-50'
+                                            : 'border-gray-200 hover:border-gray-400 hover:bg-gray-50'
                                     }`}
                                 >
                                     <span className="font-bold mr-2">{String.fromCharCode(65 + idx)}.</span> {option}
@@ -218,9 +240,9 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
                                 <div className="mt-4 text-right">
                                     <button 
                                         onClick={nextQuestion}
-                                        className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium"
+                                        className={`px-6 py-2 text-white rounded-lg font-medium shadow-md ${subject.headerColor.replace('bg-', 'hover:bg-').replace('600', '700')} ${subject.headerColor}`}
                                     >
-                                        {currentQuestionIndex < quizQuestions.length - 1 ? 'Sıradaki Soru' : 'Sonucu Gör'}
+                                        Sıradaki Soru
                                     </button>
                                 </div>
                             </div>
@@ -244,7 +266,7 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, onBack }) => {
                             </button>
                             <button 
                                 onClick={onBack}
-                                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
+                                className={`px-6 py-2 text-white rounded-lg font-medium transition-colors shadow-md ${subject.headerColor}`}
                             >
                                 Diğer Konular
                             </button>

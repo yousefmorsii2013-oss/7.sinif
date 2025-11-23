@@ -1,5 +1,5 @@
 {
-  "name": "Fen Atlası - 7. Sınıf",
-  "description": "7. Sınıf Fen Bilimleri dersi için yapay zeka destekli interaktif öğrenme platformu. Konu anlatımları, bilimsel görsel üretim ve testler içerir.",
+  "name": "7. Sınıf Ders Atlası",
+  "description": "7. Sınıf tüm dersler (Fen, Mat, Sosyal, Türkçe, İngilizce) için yapay zeka destekli interaktif öğrenme platformu.",
   "requestFramePermissions": []
 }
