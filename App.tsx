@@ -6,6 +6,7 @@ import LessonView from './components/LessonView';
 import StudioView from './components/StudioView';
 import AskTeacherView from './components/AskTeacherView';
 import GameView from './components/GameView';
+import PdfView from './components/PdfView';
 import { ViewState, Topic, Subject } from './types';
 import { TOPICS, SUBJECTS } from './constants';
 
@@ -139,6 +140,11 @@ const App: React.FC = () => {
         {/* GAME VIEW */}
         {currentView === ViewState.GAME && (
           <GameView />
+        )}
+
+        {/* PDF VIEW */}
+        {currentView === ViewState.PDF && (
+          <PdfView />
         )}
       </main>
     </div>

@@ -188,18 +188,17 @@ export const askTeacher = async (question: string, subjectName: string): Promise
 
 export const generateGameData = async (subjectName: string): Promise<GameRound[]> => {
   try {
-    const prompt = `7. sınıf ${subjectName} dersi için "Bilgi Uçağı" (Wordwall tarzı) oyunu verisi hazırla.
+    const prompt = `7. sınıf ${subjectName} dersi için "Labirent Kovalamaca" oyunu verisi hazırla.
     Toplam 10 tur (round) oluştur.
     
-    Her turda:
-    1. "question": Uçak havadayken sorulacak kısa bir soru (Maksimum 5-6 kelime).
-    2. "correctAnswer": Doğru olan bulut (ÇOK KISA, 1-2 kelime).
-    3. "wrongAnswers": Yanlış bulutlar (3 adet, KISA kelimeler).
+    ÖNEMLİ KURALLAR:
+    1. "question": Kısa ve net bir soru (Maks 6-7 kelime).
+    2. "correctAnswer": ÇOK KISA olmalı (Maksimum 1-2 kelime). Çünkü ekrandaki küçük kutulara sığmalı.
+    3. "wrongAnswers": 3 adet yanlış cevap, yine ÇOK KISA (1-2 kelime).
     
     Örnekler:
-    - Fen: Soru="Hücrenin enerji santrali", Cevap="Mitokondri", Yanlışlar=["Koful", "Çekirdek", "Lizozom"]
-    - Sosyal: Soru="İstanbul'un fethi tarihi", Cevap="1453", Yanlışlar=["1071", "1923", "1299"]
-    - Matematik: Soru="$2^3$ kaçtır?", Cevap="8", Yanlışlar=["6", "9", "12"]
+    - Fen: Soru="Hücrenin enerji merkezi?", Cevap="Mitokondri", Yanlışlar=["Koful", "Çekirdek", "Lizozom"]
+    - Mat: Soru="$3^2 + 4^2$ işlemi?", Cevap="25", Yanlışlar=["14", "49", "12"]
     
     JSON formatında döndür.`;
 

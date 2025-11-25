@@ -4,7 +4,8 @@ export enum ViewState {
   LESSON = 'LESSON',
   STUDIO = 'STUDIO',
   ASK_TEACHER = 'ASK_TEACHER',
-  GAME = 'GAME'
+  GAME = 'GAME',
+  PDF = 'PDF'
 }
 
 export interface Subject {
