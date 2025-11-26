@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Header from './components/Header';
 import LessonCard from './components/LessonCard';
@@ -7,6 +8,8 @@ import StudioView from './components/StudioView';
 import AskTeacherView from './components/AskTeacherView';
 import GameView from './components/GameView';
 import PdfView from './components/PdfView';
+import CompetitionView from './components/CompetitionView';
+import TestView from './components/TestView';
 import { ViewState, Topic, Subject } from './types';
 import { TOPICS, SUBJECTS } from './constants';
 
@@ -145,6 +148,16 @@ const App: React.FC = () => {
         {/* PDF VIEW */}
         {currentView === ViewState.PDF && (
           <PdfView />
+        )}
+
+        {/* COMPETITION VIEW */}
+        {currentView === ViewState.COMPETITION && (
+          <CompetitionView />
+        )}
+
+        {/* TEST TUBE VIEW */}
+        {currentView === ViewState.TEST_CENTER && (
+          <TestView />
         )}
       </main>
     </div>

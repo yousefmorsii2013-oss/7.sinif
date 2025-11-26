@@ -1,5 +1,6 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
-import { QuizQuestion, GameRound } from "../types";
+import { QuizQuestion, GameRound, RiskCategory } from "../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -229,6 +230,101 @@ export const generateGameData = async (subjectName: string): Promise<GameRound[]
     return JSON.parse(jsonStr);
   } catch (error) {
     console.error("Game data generation error:", error);
+    throw error;
+  }
+};
+
+export const generateBigRiskBoard = async (context: string, isSpecificTopic: boolean): Promise<RiskCategory[]> => {
+  try {
+    let categoryPrompt = "";
+    
+    if (context === "Karma") {
+      categoryPrompt = `
+      "Kategoriler" kesinlikle şunlar olmalı (Ders İsimleri): 
+      1. Fen Bilimleri
+      2. Matematik
+      3. Sosyal Bilgiler
+      4. Türkçe
+      5. Din Kültürü`;
+    } else if (isSpecificTopic) {
+      // User selected a specific topic (e.g. "Unit 1: Appearance and Personality")
+      // Need 5 sub-categories related to THIS topic
+      categoryPrompt = `
+      Seçilen Konu: "${context}".
+      
+      Bu tek bir ünitedir. Yarışma tahtasını bu ünitenin alt başlıklarına bölmelisin.
+      
+      Lütfen şu 5 kategoriyi oluştur (Dersin içeriğine göre uyarla):
+      1. Kelime Bilgisi / Kavramlar (Vocabulary/Concepts)
+      2. Dil Bilgisi / Kurallar (Grammar/Rules)
+      3. Doğru mu Yanlış mı? (True/False)
+      4. Boşluk Doldurma / Tamamlama
+      5. Sürpriz / Zor Sorular
+      
+      Eğer konu Matematik veya Fen ise kategorileri işlemlere, tanımlara veya problemlere göre adlandır.`;
+    } else {
+      // Fallback for just Subject Name (though UI now drives to Topic)
+      categoryPrompt = `
+      Seçilen Ders: ${context}.
+      Bu dersin 7. sınıf müfredatındaki 5 farklı ünitesini kategori olarak belirle.`;
+    }
+
+    const prompt = `Hazırla: "Riskli Yusuf" yarışma tahtası.
+    Hedef Kitle: 7. Sınıf öğrencileri.
+    
+    ${categoryPrompt}
+    
+    Her kategori için zorluk seviyesine göre artan 5 soru hazırla (Toplam 25 soru).
+    Puanlar sırasıyla: 50, 100, 150, 200, 250.
+    
+    Kurallar:
+    1. Sorular kısa ve net bilgi sorusu olsun.
+    2. Cevaplar kısa ve öz olsun.
+    3. Matematik soruları zihinden veya kağıt üzerinde yapılabilecek işlemler olsun ($x^2$ formatı kullan).
+    
+    JSON formatında döndür.`;
+
+    const response = await ai.models.generateContent({
+      model: TEXT_MODEL,
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.ARRAY,
+          items: {
+            type: Type.OBJECT,
+            properties: {
+              title: { type: Type.STRING, description: "Kategori Başlığı" },
+              questions: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    points: { type: Type.INTEGER },
+                    question: { type: Type.STRING },
+                    answer: { type: Type.STRING }
+                  },
+                  required: ["points", "question", "answer"]
+                }
+              }
+            },
+            required: ["title", "questions"]
+          }
+        }
+      }
+    });
+
+    const jsonStr = response.text || "[]";
+    const data = JSON.parse(jsonStr);
+    
+    // Add isOpened state locally
+    return data.map((cat: any) => ({
+      ...cat,
+      questions: cat.questions.map((q: any) => ({ ...q, isOpened: false }))
+    }));
+
+  } catch (error) {
+    console.error("Riski Yusuf generation error:", error);
     throw error;
   }
 };

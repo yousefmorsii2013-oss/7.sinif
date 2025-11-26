@@ -1,3 +1,4 @@
+
 export enum ViewState {
   SUBJECT_SELECTION = 'SUBJECT_SELECTION',
   TOPIC_SELECTION = 'TOPIC_SELECTION',
@@ -5,7 +6,9 @@ export enum ViewState {
   STUDIO = 'STUDIO',
   ASK_TEACHER = 'ASK_TEACHER',
   GAME = 'GAME',
-  PDF = 'PDF'
+  PDF = 'PDF',
+  COMPETITION = 'COMPETITION',
+  TEST_CENTER = 'TEST_CENTER'
 }
 
 export interface Subject {
@@ -41,6 +44,25 @@ export interface GameRound {
   question: string; // Text on the train wagon (e.g., "En Büyük Gezegen")
   correctAnswer: string; // The falling block (e.g., "Jüpiter")
   wrongAnswers: string[]; // Distractors (e.g., "Mars", "Venüs")
+}
+
+export interface RiskCategory {
+  title: string;
+  questions: RiskQuestion[];
+}
+
+export interface RiskQuestion {
+  points: number;
+  question: string;
+  answer: string;
+  isOpened: boolean;
+}
+
+export interface Team {
+  id: number;
+  name: string;
+  score: number;
+  color: string;
 }
 
 export enum LoadingState {

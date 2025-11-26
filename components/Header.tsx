@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ViewState, Subject } from '../types';
 
@@ -45,8 +46,8 @@ const Header: React.FC<HeaderProps> = ({ currentView, setView, selectedSubject, 
             </div>
           </div>
           
-          <nav className="flex items-center space-x-1 sm:space-x-3">
-            {!isHome && selectedSubject && currentView !== ViewState.ASK_TEACHER && currentView !== ViewState.STUDIO && currentView !== ViewState.GAME && currentView !== ViewState.PDF && (
+          <nav className="flex items-center space-x-1 sm:space-x-3 overflow-x-auto">
+            {!isHome && selectedSubject && currentView !== ViewState.ASK_TEACHER && currentView !== ViewState.STUDIO && currentView !== ViewState.GAME && currentView !== ViewState.PDF && currentView !== ViewState.COMPETITION && currentView !== ViewState.TEST_CENTER && (
                  <button
                  onClick={() => setView(ViewState.TOPIC_SELECTION)}
                  className={`hidden sm:block px-3 py-2 rounded-full text-sm font-bold transition-colors border-2 ${
@@ -69,6 +70,18 @@ const Header: React.FC<HeaderProps> = ({ currentView, setView, selectedSubject, 
             >
               <span className="mr-1">🎮</span>
               <span className="hidden sm:inline">Oyun</span>
+            </button>
+
+            <button
+              onClick={() => setView(ViewState.TEST_CENTER)}
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
+                currentView === ViewState.TEST_CENTER 
+                  ? 'bg-red-100 text-red-700' 
+                  : 'text-gray-500 hover:text-red-600'
+              }`}
+            >
+              <span className="mr-1">📝</span>
+              <span className="hidden sm:inline">TestTube</span>
             </button>
 
             <button
@@ -105,6 +118,18 @@ const Header: React.FC<HeaderProps> = ({ currentView, setView, selectedSubject, 
             >
               <span className="mr-1">📚</span>
               <span className="hidden sm:inline">PDF</span>
+            </button>
+
+            <button
+              onClick={() => setView(ViewState.COMPETITION)}
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
+                currentView === ViewState.COMPETITION 
+                  ? 'bg-purple-100 text-purple-700' 
+                  : 'text-gray-500 hover:text-purple-600'
+              }`}
+            >
+              <span className="mr-1">🏆</span>
+              <span className="hidden sm:inline">Yarışma</span>
             </button>
           </nav>
         </div>
