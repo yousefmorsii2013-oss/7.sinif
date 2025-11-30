@@ -506,6 +506,72 @@ const dinUnit5: Question[] = [
     { q: 'Mezhepler dinin kendisi midir?', options: ['Hayır, dinin yorumudur', 'Evet', 'Dinden üstündür', 'Dinin zıddıdır'], answer: 0 }
 ];
 
+// --- ARAPÇA (5 ÜNİTE - YENİ EKLENDİ) ---
+const arpUnit1: Question[] = [
+    { q: '"Muallim" kelimesinin anlamı nedir?', options: ['Öğretmen', 'Doktor', 'Polis', 'Çiftçi'], answer: 0 },
+    { q: '"Ben doktorum" cümlesinin Arapçası?', options: ['Ene tabib', 'Ene muallim', 'Ene fellah', 'Ene mühendis'], answer: 0 },
+    { q: 'Marangoz ne demektir?', options: ['Naccar', 'Hayyat', 'Tabib', 'Fellah'], answer: 0 },
+    { q: '"Mühendis" kelimesinin anlamı?', options: ['Mühendis', 'Mimar', 'Doktor', 'Avukat'], answer: 0 },
+    { q: 'Polis Arapça ne demektir?', options: ['Şurtî', 'Fellah', 'Naccar', 'Hayyat'], answer: 0 },
+    { q: '"O nedir?" sorusu?', options: ['Ma hazâ?', 'Men hazâ?', 'Keyfe haluk?', 'Mesmuke?'], answer: 0 },
+    { q: 'Terzi ne demektir?', options: ['Hayyat', 'Naccar', 'Tabib', 'Muallim'], answer: 0 },
+    { q: '"Ene fellah" ne demektir?', options: ['Ben çiftçiyim', 'Ben doktorum', 'Ben polisim', 'Ben öğrenciyim'], answer: 0 },
+    { q: 'Öğrenci (Erkek) ne demektir?', options: ['Talib', 'Muallim', 'Müdir', 'Fellah'], answer: 0 },
+    { q: 'Hangisi bir meslektir?', options: ['Tabib', 'Beyt', 'Medrese', 'Kitab'], answer: 0 }
+];
+
+const arpUnit2: Question[] = [
+    { q: '"Fakihe" kelimesinin anlamı?', options: ['Meyve', 'Sebze', 'Et', 'Ekmek'], answer: 0 },
+    { q: 'Elma Arapça ne demektir?', options: ['Tuffah', 'Mevz', 'Burtukal', 'Ineb'], answer: 0 },
+    { q: '"Hudar" kelimesinin anlamı?', options: ['Sebze', 'Meyve', 'Yemek', 'İçecek'], answer: 0 },
+    { q: 'Muz ne demektir?', options: ['Mevz', 'Tuffah', 'Kiraz', 'Ceviz'], answer: 0 },
+    { q: 'Ekmek ne demektir?', options: ['Hubz', 'Lahm', 'Ma', 'Halib'], answer: 0 },
+    { q: 'Çarşı/Pazar ne demektir?', options: ['Suuk', 'Beyt', 'Medrese', 'Mescid'], answer: 0 },
+    { q: 'Portakal ne demektir?', options: ['Burtukal', 'Limon', 'Mandalina', 'Ayva'], answer: 0 },
+    { q: '"Kem lira?" ne demektir?', options: ['Kaç lira?', 'Ne kadar?', 'Nerede?', 'Neden?'], answer: 0 },
+    { q: 'Domates Arapça ne demektir?', options: ['Tamatim', 'Patates', 'Hiyar', 'Fülfül'], answer: 0 },
+    { q: 'Bakkal neresidir?', options: ['Bakkal', 'Manav', 'Kasap', 'Fırın'], answer: 0 }
+];
+
+const arpUnit3: Question[] = [
+    { q: '"Müsteşfa" kelimesinin anlamı?', options: ['Hastane', 'Eczane', 'Okul', 'Ev'], answer: 0 },
+    { q: 'Doktor ne demektir?', options: ['Tabib', 'Muallim', 'Mühendis', 'Fellah'], answer: 0 },
+    { q: '"Meriz" ne demektir?', options: ['Hasta', 'Sağlıklı', 'Doktor', 'Hemşire'], answer: 0 },
+    { q: 'İlaç ne demektir?', options: ['Deva', 'Su', 'Yemek', 'Şifa'], answer: 0 },
+    { q: '"Re\'s" vücudun neresidir?', options: ['Baş', 'Karın', 'El', 'Ayak'], answer: 0 },
+    { q: 'Karın ne demektir?', options: ['Batn', 'Re\'s', 'Yed', 'Ricl'], answer: 0 },
+    { q: '"Elem" ne demektir?', options: ['Ağrı', 'Mutluluk', 'Hastalık', 'İlaç'], answer: 0 },
+    { q: '"Geçmiş olsun" kalıbı?', options: ['Selametek', 'Ehlen', 'Merhaban', 'Şükran'], answer: 0 },
+    { q: 'Eczane ne demektir?', options: ['Saydaliye', 'Müsteşfa', 'Suuk', 'Medrese'], answer: 0 },
+    { q: 'Hemşire ne demektir?', options: ['Mümarrida', 'Tabibe', 'Muallime', 'Talibe'], answer: 0 }
+];
+
+const arpUnit4: Question[] = [
+    { q: '"Riyada" ne demektir?', options: ['Spor', 'Yemek', 'Okul', 'Ev'], answer: 0 },
+    { q: 'Futbol ne demektir?', options: ['Kuratü\'l-Kadem', 'Kuratü\'s-Selle', 'Kuratü\'t-Taire', 'Sibaha'], answer: 0 },
+    { q: 'Basketbol ne demektir?', options: ['Kuratü\'s-Selle', 'Kuratü\'l-Kadem', 'Tinnis', 'Cudo'], answer: 0 },
+    { q: 'Yüzme ne demektir?', options: ['Sibaha', 'Rakd', 'Meşy', 'Kafz'], answer: 0 },
+    { q: 'Top ne demektir?', options: ['Kura', 'Mel\'ab', 'Feric', 'Hedef'], answer: 0 },
+    { q: 'Takım ne demektir?', options: ['Feric', 'Mel\'ab', 'Müderrib', 'Laib'], answer: 0 },
+    { q: 'Saha/Stadyum ne demektir?', options: ['Mel\'ab', 'Beyt', 'Saff', 'Mekteb'], answer: 0 },
+    { q: '"Ben oynuyorum" ne demektir?', options: ['El\'abü', 'Te\'kulu', 'Teşrabü', 'Tektübü'], answer: 0 },
+    { q: 'Voleybol ne demektir?', options: ['Kuratü\'t-Taire', 'Kuratü\'l-Kadem', 'Kuratü\'s-Selle', 'GOLF'], answer: 0 },
+    { q: 'Oyuncu ne demektir?', options: ['Laib', 'Hakem', 'Müderrib', 'Müşahid'], answer: 0 }
+];
+
+const arpUnit5: Question[] = [
+    { q: '"Beyt" kelimesinin anlamı?', options: ['Ev', 'Okul', 'Bahçe', 'Oda'], answer: 0 },
+    { q: 'Anne ne demektir?', options: ['Ümm', 'Eb', 'Cedd', 'Eh'], answer: 0 },
+    { q: 'Baba ne demektir?', options: ['Eb', 'Ümm', 'Uht', 'Amme'], answer: 0 },
+    { q: 'Kardeş (Erkek) ne demektir?', options: ['Eh', 'Uht', 'Cedd', 'Hale'], answer: 0 },
+    { q: 'Dede ne demektir?', options: ['Cedd', 'Eb', 'Am', 'Hal'], answer: 0 },
+    { q: 'Oda ne demektir?', options: ['Gurfe', 'Matbah', 'Hammam', 'Salon'], answer: 0 },
+    { q: 'Mutfak ne demektir?', options: ['Matbah', 'Gurfe', 'Balkon', 'Hammam'], answer: 0 },
+    { q: '"Ailem" ne demektir?', options: ['Usretî', 'Beytî', 'Medresetî', 'Saffî'], answer: 0 },
+    { q: 'Kız kardeş ne demektir?', options: ['Uht', 'Eh', 'Ümm', 'Eb'], answer: 0 },
+    { q: 'Banyo ne demektir?', options: ['Hammam', 'Matbah', 'Gurfe', 'Salon'], answer: 0 }
+];
+
 
 const generateTestsFromPool = (pool: Question[], baseId: string, baseTitle: string): TestPaper[] => {
     // Helper to rotate questions to create 5 distinct tests of 10 questions
@@ -592,6 +658,16 @@ const TEST_DATABASE: Record<string, SubjectTests> = {
        { id: 'din-3', title: '3. Ünite: Ahlaki Davranışlar', tests: generateTestsFromPool(dinUnit3, 'din-u3', 'Ahlak Test') },
        { id: 'din-4', title: '4. Ünite: Hz. Muhammed', tests: generateTestsFromPool(dinUnit4, 'din-u4', 'Hz. Muhammed Test') },
        { id: 'din-5', title: '5. Ünite: Yorumlar', tests: generateTestsFromPool(dinUnit5, 'din-u5', 'Mezhepler Test') },
+    ]
+  },
+  'arabic': {
+    title: 'Arapça',
+    topics: [
+       { id: 'arp-1', title: '1. Ünite: Meslekler (El-Mihen)', tests: generateTestsFromPool(arpUnit1, 'arp-u1', 'Meslekler Test') },
+       { id: 'arp-2', title: '2. Ünite: Çarşıda Pazarda', tests: generateTestsFromPool(arpUnit2, 'arp-u2', 'Alışveriş Test') },
+       { id: 'arp-3', title: '3. Ünite: Sağlık (Es-Sıhha)', tests: generateTestsFromPool(arpUnit3, 'arp-u3', 'Sağlık Test') },
+       { id: 'arp-4', title: '4. Ünite: Spor ve Oyunlar', tests: generateTestsFromPool(arpUnit4, 'arp-u4', 'Spor Test') },
+       { id: 'arp-5', title: '5. Ünite: Evim ve Ailem', tests: generateTestsFromPool(arpUnit5, 'arp-u5', 'Aile Test') },
     ]
   }
 };

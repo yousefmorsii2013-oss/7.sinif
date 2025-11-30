@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 const PdfView: React.FC = () => {
@@ -17,6 +18,12 @@ const PdfView: React.FC = () => {
       color: 'bg-blue-100 text-blue-700 border-blue-200'
     },
     {
+      title: 'Matematik Defter Kitap',
+      link: 'https://drive.google.com/file/d/1gAYQ6jc5LAOtBrXuX9uEjgZHtvm4f9ja/view?usp=sharing', // Placeholder link
+      icon: '📓',
+      color: 'bg-cyan-100 text-cyan-700 border-cyan-200'
+    },
+    {
       title: 'Sosyal Bilgiler',
       link: 'https://drive.google.com/file/d/1ZXLFKYWIPVkuYtbVAu7z7SDxU-2utS0L/view?usp=sharing',
       icon: '🌍',
@@ -25,8 +32,8 @@ const PdfView: React.FC = () => {
     {
       title: 'İngilizce (Ders Kitabı)',
       link: 'https://drive.google.com/file/d/1E1mEtww6UXeRRtYT6gdlDgYecGZBQpjb/view?usp=sharing',
-      icon: '🇬🇧',
-      color: 'bg-rose-100 text-rose-700 border-rose-200'
+      icon: '📘',
+      color: 'bg-cyan-100 text-cyan-700 border-cyan-200'
     },
     {
       title: 'More & More English',
@@ -109,7 +116,7 @@ const PdfView: React.FC = () => {
     <div className="max-w-6xl mx-auto animate-fade-in-up pb-12">
       <div className="text-center mb-10 mt-4">
         <h2 className="text-4xl font-bold text-gray-800 font-handwritten mb-4">
-          Dijital Kütüphane 📚
+          Dijital Kütüphane 📄
         </h2>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Ders kitaplarına buradan ulaşabilir ve istediğin zaman inceleyebilirsin.

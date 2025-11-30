@@ -136,7 +136,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, setView, selectedSubject, 
                   : 'text-gray-500 hover:text-yellow-600'
               }`}
             >
-              <span className="mr-1 text-lg">📚</span>
+              <span className="mr-1 text-lg">📄</span>
               <span className="hidden sm:inline">PDF</span>
             </button>
 

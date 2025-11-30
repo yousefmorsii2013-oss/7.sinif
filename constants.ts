@@ -1,3 +1,4 @@
+
 import { Topic, Subject } from './types';
 
 export const SUBJECTS: Subject[] = [
@@ -25,9 +26,9 @@ export const SUBJECTS: Subject[] = [
   {
     id: 'english',
     title: 'İngilizce',
-    icon: '🇬🇧',
-    colorClass: 'bg-rose-100 text-rose-600 border-rose-200',
-    headerColor: 'bg-rose-600'
+    icon: '📘',
+    colorClass: 'bg-cyan-100 text-cyan-600 border-cyan-200',
+    headerColor: 'bg-cyan-600'
   },
   {
     id: 'turkish',
@@ -49,10 +50,59 @@ export const SUBJECTS: Subject[] = [
     icon: '🌙',
     colorClass: 'bg-violet-100 text-violet-600 border-violet-200',
     headerColor: 'bg-violet-600'
+  },
+  {
+    id: 'arabic',
+    title: 'Arapça',
+    icon: '🏺',
+    colorClass: 'bg-lime-100 text-lime-600 border-lime-200',
+    headerColor: 'bg-lime-600'
   }
 ];
 
 export const TOPICS: Topic[] = [
+  // --- ARAPÇA (7. SINIF MÜFREDATI) ---
+  {
+    id: 'arp-1',
+    subjectId: 'arabic',
+    title: '1. Ünite: Meslekler (El-Mihen)',
+    description: 'Meslek isimleri ve tanıtımı.',
+    icon: '👨‍⚕️',
+    promptContext: 'MEB 7. Sınıf Arapça 1. Ünite: Meslekler (El-Mihen). Kelimeler: Muallim (Öğretmen), Tabib (Doktor), Mühendis, Fellah (Çiftçi), Şurtî (Polis), Naccar (Marangoz), Hayyat (Terzi). Kalıplar: "O nedir?", "O doktordur.", "Ben öğretmenim".'
+  },
+  {
+    id: 'arp-2',
+    subjectId: 'arabic',
+    title: '2. Ünite: Çarşıda Pazarda',
+    description: 'Alışveriş diyalogları, meyve ve sebzeler.',
+    icon: '🛒',
+    promptContext: 'MEB 7. Sınıf Arapça 2. Ünite: Çarşıda (Fi\'s-Suuk). Kelimeler: Fakihe (Meyve), Hudar (Sebze), Tuffah (Elma), Burtukal (Portakal), Mevz (Muz), Domates, Bakkal, Ekmek. Kalıplar: "Kaç lira?", "Ne istersin?".'
+  },
+  {
+    id: 'arp-3',
+    subjectId: 'arabic',
+    title: '3. Ünite: Sağlık (Es-Sıhha)',
+    description: 'Hastanede, organlar ve hastalıklar.',
+    icon: '🏥',
+    promptContext: 'MEB 7. Sınıf Arapça 3. Ünite: Sağlık (Es-Sıhha). Kelimeler: Müsteşfa (Hastane), Deva (İlaç), Meriz (Hasta), Elem (Ağrı), Re\'s (Baş), Batn (Karın). Kalıplar: "Neyin var?", "Geçmiş olsun".'
+  },
+  {
+    id: 'arp-4',
+    subjectId: 'arabic',
+    title: '4. Ünite: Spor ve Oyunlar',
+    description: 'Spor dalları ve hobiler.',
+    icon: '⚽',
+    promptContext: 'MEB 7. Sınıf Arapça 4. Ünite: Spor (Er-Riyada). Kelimeler: Kura (Top), Kuratü\'l-Kadem (Futbol), Kuratü\'s-Selle (Basketbol), Sibaha (Yüzme), Feric (Takım), Mel\'ab (Saha).'
+  },
+  {
+    id: 'arp-5',
+    subjectId: 'arabic',
+    title: '5. Ünite: Evim ve Ailem',
+    description: 'Aile bireyleri ve evin bölümleri.',
+    icon: '🏠',
+    promptContext: 'MEB 7. Sınıf Arapça 5. Ünite: Evim ve Ailem. Kelimeler: Beyt (Ev), Gurfe (Oda), Matbah (Mutfak), Eb (Baba), Ümm (Anne), Eh (Kardeş), Cedd (Dede).'
+  },
+
   // --- DİN KÜLTÜRÜ VE AHLAK BİLGİSİ ---
   {
     id: 'din-1',

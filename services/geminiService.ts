@@ -38,6 +38,14 @@ export const streamLessonContent = async function* (topicContext: string, subjec
       - Ahlaki değerleri (Adalet, Merhamet) güncel örneklerle anlat.
       - Saygılı, manevi ve öğretici bir dil kullan.
       - Hac gibi ibadet konularında aşamaları maddeler halinde sırala.`;
+    } else if (subjectName === "Arapça") {
+      customInstructions = `
+      - BU DERS SADECE KELİME VE ANLAMLARI ÜZERİNEDİR.
+      - SORU SORMA. Soru-cevap yapma.
+      - Ünitenin başındaki Arapça kelimeleri listele. Format: **Arapça Kelime** - *Okunuşu* - **Türkçe Anlamı**.
+      - Kelimeleri verdikten sonra, bu kelimelerin içinde geçtiği basit cümleler kur ve Türkçe anlamlarını yaz.
+      - Örneğin: "Muallim (Öğretmen) -> Ene muallim (Ben öğretmenim)."
+      - Gramer detayına girme, kelime ezberletmeye odaklan.`;
     }
 
     const prompt = `Aşağıdaki konu bağlamını kullanarak MEB 7. Sınıf ${subjectName} Ders Kitabı formatında, müfredata %100 uyumlu bir ders içeriği oluştur.
@@ -53,11 +61,11 @@ export const streamLessonContent = async function* (topicContext: string, subjec
     ## 🎯 Neler Öğreneceğiz?
     *(Bu bölümde ders kitabı kazanımlarını maddeler halinde özetle)*
 
-    ## 🗝️ Anahtar Kavramlar
-    *(Konunun en önemli terimlerini liste halinde tanımla)*
+    ## 🗝️ Yeni Kelimeler (Kelimeler ve Anlamları)
+    *(Arapça ise kelimeleri liste halinde ver, diğer dersler için anahtar kavramları açıkla)*
 
     ## 📚 Konu Anlatımı
-    *(MEB ders kitabı dilini kullanarak, öğrenciye hitap eden, açıklayıcı, akademik ama anlaşılır bir anlatım yap. Alt başlıklar kullan. Önemli yerleri koyu yaz.)*
+    *(MEB ders kitabı dilini kullanarak anlat. Arapça için örnek cümleler kur. Diğer dersler için detaylı açıklama yap.)*
     
     ${subjectName === 'Matematik' ? '### ✏️ Birlikte Çözelim\n*(Adım adım çözümlü örnek soru)*' : ''}
 
@@ -65,7 +73,7 @@ export const streamLessonContent = async function* (topicContext: string, subjec
     *(Konuyla ilgili şaşırtıcı, güncel veya tarihi kısa bir anekdot)*
 
     ## 📝 Sıra Sizde
-    *(Öğrencinin konuyla ilgili yapabileceği basit bir etkinlik, düşünme sorusu veya araştırma ödevi)*
+    *(Öğrencinin konuyla ilgili yapabileceği basit bir etkinlik veya tekrar çalışması)*
     `;
 
     const response = await ai.models.generateContentStream({
@@ -95,6 +103,7 @@ export const generateQuizQuestions = async (topicContext: string, subjectName: s
     Sorular LGS tarzı, beceri temelli (eğer uygunsa), düşündürücü ve seçici sorular olsun.
     Matematik ise işlem gerektirsin ve sayılar LaTeX formatında olsun ($x+y$).
     Sosyal Bilgiler ise harita yorumlama veya paragraf yorumlama içersin.
+    Arapça ise kelime bilgisi veya basit cümle tamamlama sor.
     Her soru için 4 seçenek (A, B, C, D) ve 1 doğru cevap indexi (0-3) ver.
     
     JSON formatında döndür.`;
@@ -200,6 +209,7 @@ export const generateGameData = async (subjectName: string): Promise<GameRound[]
     Örnekler:
     - Fen: Soru="Hücrenin enerji merkezi?", Cevap="Mitokondri", Yanlışlar=["Koful", "Çekirdek", "Lizozom"]
     - Mat: Soru="$3^2 + 4^2$ işlemi?", Cevap="25", Yanlışlar=["14", "49", "12"]
+    - Arapça: Soru="Muallim kelimesinin anlamı?", Cevap="Öğretmen", Yanlışlar=["Doktor", "Polis", "Mühendis"]
     
     JSON formatında döndür.`;
 

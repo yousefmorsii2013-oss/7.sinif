@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Subject } from '../types';
 
@@ -17,9 +18,20 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, onClick }) => {
         <div className="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full bg-white opacity-20"></div>
         <div className="absolute bottom-0 left-0 -ml-8 -mb-8 w-24 h-24 rounded-full bg-white opacity-20"></div>
         
-        <span className="text-7xl transform group-hover:scale-110 transition-transform duration-300 drop-shadow-md filter grayscale-0">
-          {subject.icon}
-        </span>
+        <div className="relative transform group-hover:scale-110 transition-transform duration-300">
+            <span className="text-7xl drop-shadow-md filter grayscale-0 block">
+              {subject.icon}
+            </span>
+
+            {/* Specific Overlay for English Subject: "DICTIONARY" Label */}
+            {subject.id === 'english' && (
+                <div className="absolute top-0 left-0 right-0 flex justify-center pt-3 pointer-events-none">
+                    <span className="text-black text-[7px] font-black tracking-tighter font-sans opacity-100 transform scale-x-90">
+                        DICTIONARY
+                    </span>
+                </div>
+            )}
+        </div>
       </div>
       <div className="p-6 text-center">
         <h3 className="text-2xl font-bold mb-2 font-handwritten tracking-wide">{subject.title}</h3>
