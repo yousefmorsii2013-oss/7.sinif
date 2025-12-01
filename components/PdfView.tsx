@@ -19,7 +19,7 @@ const PdfView: React.FC = () => {
     },
     {
       title: 'Matematik Defter Kitap',
-      link: 'https://drive.google.com/file/d/1gAYQ6jc5LAOtBrXuX9uEjgZHtvm4f9ja/view?usp=sharing', // Placeholder link
+      link: 'https://www.cantadaakillitahta.com/zkitapx.php?code=M0JCR0xDQkg=',
       icon: '📓',
       color: 'bg-cyan-100 text-cyan-700 border-cyan-200'
     },
@@ -30,7 +30,7 @@ const PdfView: React.FC = () => {
       color: 'bg-orange-100 text-orange-700 border-orange-200'
     },
     {
-      title: 'İngilizce (Ders Kitabı)',
+      title: 'Dictionary',
       link: 'https://drive.google.com/file/d/1E1mEtww6UXeRRtYT6gdlDgYecGZBQpjb/view?usp=sharing',
       icon: '📘',
       color: 'bg-cyan-100 text-cyan-700 border-cyan-200'
