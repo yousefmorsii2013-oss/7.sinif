@@ -30,7 +30,7 @@ const PdfView: React.FC = () => {
       color: 'bg-orange-100 text-orange-700 border-orange-200'
     },
     {
-      title: 'Dictionary',
+      title: 'İngilizce',
       link: 'https://drive.google.com/file/d/1E1mEtww6UXeRRtYT6gdlDgYecGZBQpjb/view?usp=sharing',
       icon: '📘',
       color: 'bg-cyan-100 text-cyan-700 border-cyan-200'

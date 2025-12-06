@@ -22,15 +22,6 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, onClick }) => {
             <span className="text-7xl drop-shadow-md filter grayscale-0 block">
               {subject.icon}
             </span>
-
-            {/* Specific Overlay for English Subject: "DICTIONARY" Label */}
-            {subject.id === 'english' && (
-                <div className="absolute top-0 left-0 right-0 flex justify-center pt-3 pointer-events-none">
-                    <span className="text-black text-[7px] font-black tracking-tighter font-sans opacity-100 transform scale-x-90">
-                        DICTIONARY
-                    </span>
-                </div>
-            )}
         </div>
       </div>
       <div className="p-6 text-center">
