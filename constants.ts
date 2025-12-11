@@ -395,53 +395,85 @@ export const TOPICS: Topic[] = [
     promptContext: 'MEB 7th Grade English Unit 5: Television. Grammar: Prefer. Vocabulary: Documentary, soap opera, sitcom, remote control, director.'
   },
 
-  // --- TÜRKÇE ---
+  // --- TÜRKÇE (GÜNCELLENMİŞ - Turkcedersi.net Müfredatı) ---
   {
     id: 'tr-1',
     subjectId: 'turkish',
-    title: 'Dil Bilgisi: Fiiller (Eylem)',
-    description: 'Kip ekleri ve kişi ekleri.',
-    icon: '✍️',
-    promptContext: 'MEB 7. Sınıf Türkçe Dil Bilgisi. Konu: Fiiller. Alt Başlıklar: Anlamlarına Göre Fiiller (İş, Oluş, Durum), Fiil Kipleri (Haber Kipleri, Dilek Kipleri), Fiillerde Kişi.'
+    title: '1. Ünite: Sözcükte Anlam',
+    description: 'Gerçek, mecaz, terim anlam, eş ve zıt anlamlı kelimeler.',
+    icon: '📖',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Sözcükte Anlam. Alt Başlıklar: Gerçek Anlam, Mecaz Anlam, Terim Anlam, Eş Anlamlı (Anlamdaş), Zıt Anlamlı, Sesteş (Eş Sesli) Kelimeler, Yansıma Sözcükler.'
   },
   {
     id: 'tr-2',
     subjectId: 'turkish',
-    title: 'Dil Bilgisi: Fiillerde Yapı',
-    description: 'Basit, türemiş ve birleşik fiiller.',
-    icon: '🏗️',
-    promptContext: 'MEB 7. Sınıf Türkçe Dil Bilgisi. Konu: Fiillerde Yapı. Alt Başlıklar: Basit Fiiller, Türemiş Fiiller, Birleşik Fiiller (Kurallı, Yardımcı Eylemle Kurulan, Anlamca Kaynaşmış).'
+    title: '2. Ünite: Cümlede Anlam',
+    description: 'Neden-sonuç, amaç-sonuç, öznel ve nesnel yargılar.',
+    icon: '💬',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Cümlede Anlam. Alt Başlıklar: Neden-Sonuç (Sebep-Sonuç) Cümleleri, Amaç-Sonuç Cümleleri, Koşul-Sonuç Cümleleri, Öznel ve Nesnel Yargılar, Örtülü Anlam.'
   },
   {
     id: 'tr-3',
     subjectId: 'turkish',
-    title: 'Dil Bilgisi: Zarflar (Belirteçler)',
-    description: 'Durum, zaman, miktar, yer-yön zarfları.',
+    title: '3. Ünite: Fiiller (Eylemler)',
+    description: 'Fiillerde anlam, kipler ve kişi ekleri.',
     icon: '🏃',
-    promptContext: 'MEB 7. Sınıf Türkçe Dil Bilgisi. Konu: Zarflar. Alt Başlıklar: Durum zarfı, Zaman zarfı, Miktar zarfı, Yer-Yön zarfı, Soru zarfı.'
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Fiiller (Eylemler). Alt Başlıklar: Anlamlarına Göre Fiiller (İş, Oluş, Durum), Fiil Kipleri (Haber Kipleri, Dilek Kipleri), Fiillerde Kişi (Şahıs) Ekleri, Fiillerde Olumsuzluk ve Soru.'
   },
   {
     id: 'tr-4',
     subjectId: 'turkish',
-    title: 'Dil Bilgisi: Ek Fiil (Ek Eylem)',
-    description: 'İsim soylu sözcüklerin yüklem olması.',
-    icon: '🔗',
-    promptContext: 'MEB 7. Sınıf Türkçe Dil Bilgisi. Konu: Ek Fiil. Alt Başlıklar: İsim soylu sözcükleri yüklem yapma görevi, Basit zamanlı fiilleri birleşik zamanlı yapma görevi.'
+    title: '4. Ünite: Fiilde Yapı',
+    description: 'Basit, türemiş ve birleşik fiiller.',
+    icon: '🏗️',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Fiilde Yapı. Alt Başlıklar: Basit Fiiller, Türemiş Fiiller (Yapım Ekleri), Birleşik Fiiller (Kurallı Birleşik, Yardımcı Eylemle Kurulan, Anlamca Kaynaşmış).'
   },
   {
     id: 'tr-5',
     subjectId: 'turkish',
-    title: 'Dil Bilgisi: Anlatım Bozuklukları',
-    description: 'Anlamsal bozukluklar.',
-    icon: '❌',
-    promptContext: 'MEB 7. Sınıf Türkçe Dil Bilgisi. Konu: Anlatım Bozuklukları (Anlamsal). Alt Başlıklar: Gereksiz sözcük kullanımı, Sözcüğün yanlış anlamda kullanımı, Çelişen sözcüklerin kullanımı.'
+    title: '5. Ünite: Zarflar (Belirteçler)',
+    description: 'Fiilleri niteleyen sözcük türleri.',
+    icon: '⚡',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Zarflar (Belirteçler). Alt Başlıklar: Durum Zarfı, Zaman Zarfı, Miktar (Azlık-Çokluk) Zarfı, Yer-Yön Zarfı, Soru Zarfı.'
   },
   {
     id: 'tr-6',
     subjectId: 'turkish',
-    title: 'Okuma Kültürü: Metin Türleri',
-    description: 'Söyleşi, biyografi, otobiyografi.',
-    icon: '📜',
-    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Metin Türleri. Alt Başlıklar: Söyleşi (Sohbet), Biyografi (Yaşam Öyküsü), Otobiyografi (Öz Yaşam Öyküsü), Günlük, Anı.'
+    title: '6. Ünite: Ek Fiil (Ek Eylem)',
+    description: 'İsimleri yüklem yapma ve birleşik zaman.',
+    icon: '🔗',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Ek Fiil (Ek Eylem). Alt Başlıklar: Ek Fiilin Görevleri (İsim soylu sözcükleri yüklem yapma, Basit zamanlı fiilleri birleşik zamanlı yapma).'
+  },
+  {
+    id: 'tr-7',
+    subjectId: 'turkish',
+    title: '7. Ünite: Paragrafta Anlam',
+    description: 'Ana düşünce, konu, başlık ve anlatım biçimleri.',
+    icon: '📝',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Paragrafta Anlam. Alt Başlıklar: Paragrafın Ana Düşüncesi, Yardımcı Düşünceler, Paragrafın Konusu, Başlık, Paragraf Oluşturma, Anlatım Biçimleri (Öyküleme, Betimleme, Açıklama, Tartışma), Düşünceyi Geliştirme Yolları.'
+  },
+  {
+    id: 'tr-8',
+    subjectId: 'turkish',
+    title: '8. Ünite: Anlatım Bozuklukları',
+    description: 'Anlamsal bozukluklar.',
+    icon: '❌',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Anlatım Bozuklukları (Anlamsal). Alt Başlıklar: Gereksiz Sözcük Kullanımı, Sözcüğün Yanlış Anlamda Kullanılması, Çelişen Sözcüklerin Bir Arada Kullanılması, Sözcüğün Yanlış Yerde Kullanılması.'
+  },
+  {
+    id: 'tr-9',
+    subjectId: 'turkish',
+    title: '9. Ünite: Yazım ve Noktalama',
+    description: 'Büyük harfler, de/ki yazımı ve noktalama işaretleri.',
+    icon: '✍️',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Yazım Kuralları ve Noktalama İşaretleri. Alt Başlıklar: Büyük Harflerin Yazımı, "de" ve "ki" bağlaçlarının yazımı, Sayıların yazımı. Nokta, Virgül, Noktalı Virgül, İki Nokta, Üç Nokta.'
+  },
+  {
+    id: 'tr-10',
+    subjectId: 'turkish',
+    title: '10. Ünite: Metin Türleri ve Söz Sanatları',
+    description: 'Edebi türler ve söz sanatları.',
+    icon: '🎨',
+    promptContext: 'MEB 7. Sınıf Türkçe. Konu: Metin Türleri ve Söz Sanatları. Alt Başlıklar: Metin Türleri (Söyleşi, Biyografi, Otobiyografi, Günlük, Anı). Söz Sanatları (Kişileştirme, Konuşturma, Benzetme, Abartma, Karşıtlık).'
   }
 ];

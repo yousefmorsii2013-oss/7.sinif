@@ -157,7 +157,8 @@ const CompetitionView: React.FC = () => {
   // STEP 3: Select Topic
   const handleTopicSelect = (topic: Topic) => {
     setGameTitle(topic.title);
-    generateGame(topic.title, true);
+    // PASS PROMPT CONTEXT instead of title to ensure questions match the lesson content!
+    generateGame(topic.promptContext, true);
   };
 
   // STEP 4: Generate Game
@@ -346,6 +347,7 @@ const CompetitionView: React.FC = () => {
             <div className="mb-4 xl:mb-0 text-center xl:text-left">
                 <h1 className="text-4xl font-black text-yellow-400 font-handwritten tracking-wider drop-shadow-md">Riskli Yusuf</h1>
                 <p className="text-sm text-indigo-200 uppercase tracking-widest font-bold mt-1">{gameTitle}</p>
+                <p className="text-xs text-indigo-300 mt-2 italic">* Soruları bilemezsen ders notlarına bakabilirsin. Oyun kaybolmaz.</p>
             </div>
             
             {/* Scoreboard */}

@@ -361,9 +361,36 @@ const engUnit5: Question[] = [
     { q: 'What\'s on TV tonight?', options: ['Let\'s check the TV guide', 'It is black', 'I am eating', 'No'], answer: 0 }
 ];
 
-// --- TÜRKÇE (KONULAR) ---
+// --- TÜRKÇE (KONULAR - GENİŞLETİLMİŞ) ---
+
+const trWordMeaningQuestions: Question[] = [
+    { q: '"Sıcak" sözcüğü hangisinde MECAZ anlamda kullanılmıştır?', options: ['Bizi çok sıcak karşıladı.', 'Çorba çok sıcaktı.', 'Hava bugün sıcak.', 'Sıcak suyu severim.'], answer: 0 },
+    { q: '"Kırmak" sözcüğü hangisinde GERÇEK anlamda kullanılmıştır?', options: ['Odunları kırmak için balta aldı.', 'Kalp kırmak istemem.', 'Bu sözlerinle beni kırdın.', 'Cesaretimi kırdın.'], answer: 0 },
+    { q: 'Hangisi TERİM anlamlıdır?', options: ['Perde (Tiyatro terimi)', 'Perde (Ev eşyası)', 'Göz (Organ)', 'Ayak (Organ)'], answer: 0 },
+    { q: '"Kara" ile "Siyah" arasındaki ilişki nedir?', options: ['Eş Anlamlı', 'Zıt Anlamlı', 'Sesteş', 'Yansıma'], answer: 0 },
+    { q: '"Gül" (çiçek) ve "Gül" (eylem) nasıl sözcüklerdir?', options: ['Eş Sesli (Sesteş)', 'Zıt Anlamlı', 'Eş Anlamlı', 'Mecaz'], answer: 0 },
+    { q: '"İleri" sözcüğünün zıt anlamlısı nedir?', options: ['Geri', 'Yukarı', 'Aşağı', 'Sağ'], answer: 0 },
+    { q: '"Şırıl şırıl" ne tür bir sözcük grubudur?', options: ['Yansıma', 'Terim', 'Mecaz', 'Deyim'], answer: 0 },
+    { q: '"Ağır" sözcüğü hangisinde "Yavaş" anlamında kullanılmıştır?', options: ['İşler çok ağır ilerliyor.', 'Bu kutu çok ağır.', 'Ağır bir koku var.', 'Ağır başlı biridir.'], answer: 0 },
+    { q: '"Doktor" sözcüğünün eş anlamlısı?', options: ['Hekim', 'Hemşire', 'Öğretmen', 'Mühendis'], answer: 0 },
+    { q: '"İnce" sözcüğü hangisinde "Nazik" anlamında kullanılmıştır?', options: ['Çok ince bir davranıştı.', 'İnce bir ip.', 'İnce bir kitap.', 'İnce dilim.'], answer: 0 }
+];
+
+const trSentenceMeaningQuestions: Question[] = [
+    { q: '"Hasta olduğu için okula gelemedi." cümlesi ne bildirir?', options: ['Neden-Sonuç', 'Amaç-Sonuç', 'Koşul-Sonuç', 'Karşılaştırma'], answer: 0 },
+    { q: '"Seni görmek üzere buraya geldim." cümlesi ne bildirir?', options: ['Amaç-Sonuç', 'Neden-Sonuç', 'Koşul', 'Nesnel'], answer: 0 },
+    { q: '"Ödevini yaparsan dışarı çıkabilirsin." cümlesi ne bildirir?', options: ['Koşul-Sonuç', 'Neden-Sonuç', 'Amaç-Sonuç', 'Tanım'], answer: 0 },
+    { q: 'Hangisi ÖZNEL bir yargıdır?', options: ['Bu film çok sıkıcıydı.', 'Türkiye\'nin başkenti Ankara\'dır.', 'Bir hafta 7 gündür.', 'Su 100 derecede kaynar.'], answer: 0 },
+    { q: 'Hangisi NESNEL bir yargıdır?', options: ['Kitabın yazarı Yaşar Kemal\'dir.', 'Bu kitap çok güzel.', 'Yazarın dili çok akıcı.', 'En sevdiğim renk mavidir.'], answer: 0 },
+    { q: '"Gözlerini fal taşı gibi açtı." cümlesinde hangi anlam vardır?', options: ['Abartma', 'Benzetme', 'Kişileştirme', 'Örneklendirme'], answer: 0 },
+    { q: '"Pamuk gibi elleri vardı." cümlesinde ne yapılmıştır?', options: ['Benzetme', 'Kişileştirme', 'Konuşturma', 'Abartma'], answer: 0 },
+    { q: '"Keşke o gün oraya gitmeseydim." cümlesi ne bildirir?', options: ['Pişmanlık', 'Sitem', 'Özlem', 'Küçümseme'], answer: 0 },
+    { q: '"Belki yarın gelir." cümlesi ne bildirir?', options: ['İhtimal (Olasılık)', 'Kesinlik', 'Emir', 'Gereklilik'], answer: 0 },
+    { q: '"Sanki dünyaları o yarattı." cümlesinde hangi duygu vardır?', options: ['Küçümseme / Alay', 'Beğeni', 'Korku', 'Sevinç'], answer: 0 }
+];
+
 const trVerbQuestions: Question[] = [
-    { q: 'Hangisi iş (kılış) fiilidir?', options: ['Okumak', 'Uyumak', 'Sararmak', 'Büyümek'], answer: 0 },
+    { q: 'Hangisi iş (kılış) fiilidir?', options: ['Okumak (Kitabı okumak)', 'Uyumak', 'Sararmak', 'Büyümek'], answer: 0 },
     { q: 'Hangisi durum fiilidir?', options: ['Gülmek', 'Yazmak', 'Silmek', 'Taşımak'], answer: 0 },
     { q: 'Hangisi oluş fiilidir?', options: ['Paslanmak', 'Bakmak', 'Görmek', 'Yürümek'], answer: 0 },
     { q: '"Geliyor" fiilinin kipi nedir?', options: ['Şimdiki Zaman', 'Geniş Zaman', 'Gelecek Zaman', 'Geçmiş Zaman'], answer: 0 },
@@ -414,6 +441,19 @@ const trEkFiilQuestions: Question[] = [
     { q: '"İnsandır" kelimesindeki ek fiil?', options: ['Geniş zaman', 'Geçmiş zaman', 'Şart', 'İstek'], answer: 0 }
 ];
 
+const trParagraphQuestions: Question[] = [
+    { q: 'Paragrafın en kapsamlı yargısı nedir?', options: ['Ana Düşünce', 'Konu', 'Başlık', 'Yardımcı Düşünce'], answer: 0 },
+    { q: 'Paragrafta anlatılan olay veya durum nedir?', options: ['Konu', 'Ana Düşünce', 'Başlık', 'Anahtar Kelime'], answer: 0 },
+    { q: 'Paragrafın giriş cümlesi nasıl olmalıdır?', options: ['Genel ve tanıtıcı', 'Örnek verici', 'Sonuç bildirici', 'Ayrıntılı'], answer: 0 },
+    { q: '"Oysa, fakat, ama" gibi ifadeler ne işe yarar?', options: ['Düşüncenin yönünü değiştirir', 'Konuyu bitirir', 'Örnek verir', 'Tanımlama yapar'], answer: 0 },
+    { q: 'Hangisi düşünceyi geliştirme yollarından biridir?', options: ['Tanık Gösterme', 'Öyküleme', 'Betimleme', 'Tartışma'], answer: 0 },
+    { q: 'Bir olayın yer, zaman ve kişi belirtilerek anlatılmasına ne denir?', options: ['Öyküleme', 'Betimleme', 'Açıklama', 'Tartışma'], answer: 0 },
+    { q: '"Kelimelerle resim çizme sanatı" hangisidir?', options: ['Betimleme', 'Öyküleme', 'Açıklama', 'Tartışma'], answer: 0 },
+    { q: 'Yazarın okuyucuyu ikna etmeye çalıştığı anlatım biçimi?', options: ['Tartışma', 'Açıklama', 'Öyküleme', 'Betimleme'], answer: 0 },
+    { q: 'Paragrafta ana düşünceyi destekleyen cümlelere ne denir?', options: ['Yardımcı Düşünce', 'Ana Düşünce', 'Başlık', 'Giriş'], answer: 0 },
+    { q: 'Paragrafa en uygun başlık nasıl bulunur?', options: ['Konuyu ve ana düşünceyi özetlemeli', 'En uzun cümle olmalı', 'İlk kelime olmalı', 'Rastgele seçilmeli'], answer: 0 }
+];
+
 const trMeaningQuestions: Question[] = [
     { q: '"Geri iade etti" cümlesindeki anlatım bozukluğu nedeni?', options: ['Gereksiz sözcük kullanımı', 'Özne eksikliği', 'Yüklem eksikliği', 'Mantık hatası'], answer: 0 },
     { q: '"Yüksek sesle bağırma" cümlesindeki bozukluk?', options: ['Gereksiz sözcük (Bağırmak zaten yüksek sesledir)', 'Anlam belirsizliği', 'Çelişki', 'Sıralama hatası'], answer: 0 },
@@ -427,17 +467,30 @@ const trMeaningQuestions: Question[] = [
     { q: '"Kardeşim ve ben gittim" doğru mu?', options: ['Hayır, gittik olmalı', 'Evet', 'Hayır, gitti olmalı', 'Bilinmez'], answer: 0 }
 ];
 
+const trPunctuationQuestions: Question[] = [
+    { q: 'Özel isimlere gelen ekler ne ile ayrılır?', options: ['Kesme İşareti (\')', 'Virgül', 'Nokta', 'Kısa Çizgi'], answer: 0 },
+    { q: 'Tamamlanmış cümlenin sonuna ne konur?', options: ['Nokta', 'Virgül', 'Üç Nokta', 'Noktalı Virgül'], answer: 0 },
+    { q: 'Eş görevli kelimeleri ayırmak için ne kullanılır?', options: ['Virgül', 'Nokta', 'İki Nokta', 'Ünlem'], answer: 0 },
+    { q: 'Soru bildiren cümlelerin sonuna ne konur?', options: ['Soru İşareti', 'Ünlem', 'Nokta', 'Kesme'], answer: 0 },
+    { q: 'Korku, heyecan bildiren cümlelerin sonuna ne konur?', options: ['Ünlem', 'Soru İşareti', 'Nokta', 'Virgül'], answer: 0 },
+    { q: 'Satır sonuna sığmayan kelimeler ne ile bölünür?', options: ['Kısa Çizgi', 'Uzun Çizgi', 'Nokta', 'Virgül'], answer: 0 },
+    { q: 'Hangi "de" ayrı yazılır?', options: ['Bağlaç olan "de"', 'Ek olan "-de"', 'İsim olan', 'Hiçbiri'], answer: 0 },
+    { q: 'Hangisinin yazımı yanlıştır?', options: ['Herkez', 'Herkes', 'Yalnız', 'Yanlış'], answer: 0 },
+    { q: '"Ki" bağlacı nasıl yazılır?', options: ['Ayrı', 'Bitişik', 'Kısa çizgili', 'Parantezli'], answer: 0 },
+    { q: 'Sayılar metin içinde nasıl yazılır?', options: ['Yazıyla (üç, beş)', 'Rakamla (3, 5)', 'Romen rakamıyla', 'Karışık'], answer: 0 }
+];
+
 const trTextTypeQuestions: Question[] = [
     { q: 'Yazarın kendi hayatını anlattığı türe ne denir?', options: ['Otobiyografi', 'Biyografi', 'Anı', 'Günlük'], answer: 0 },
     { q: 'Başkasıyla konuşuyormuş gibi yazılan fikir yazısı?', options: ['Söyleşi (Sohbet)', 'Deneme', 'Makale', 'Fıkra'], answer: 0 },
     { q: 'Günü gününe yazılan yazı türü?', options: ['Günlük', 'Anı', 'Gezi Yazısı', 'Mektup'], answer: 0 },
     { q: 'Yaşanmış olayların üzerinden zaman geçtikten sonra yazılması?', options: ['Anı', 'Günlük', 'Roman', 'Hikaye'], answer: 0 },
     { q: 'Tanınmış birinin hayatının başkası tarafından anlatılması?', options: ['Biyografi', 'Otobiyografi', 'Portre', 'Mülakat'], answer: 0 },
-    { q: 'Düşüncelerin kanıtlama amacı güdülmeden yazıldığı tür?', options: ['Deneme', 'Makale', 'Haber', 'Rapor'], answer: 0 },
-    { q: 'Gezilip görülen yerlerin anlatıldığı tür?', options: ['Gezi Yazısı', 'Anı', 'Günlük', 'Hikaye'], answer: 0 },
-    { q: 'Olağanüstü olayların anlatıldığı hayali tür?', options: ['Masal', 'Hikaye', 'Roman', 'Anı'], answer: 0 },
-    { q: 'Hangisi bilgilendirici metindir?', options: ['Makale', 'Masal', 'Şiir', 'Hikaye'], answer: 0 },
-    { q: 'Dörtlüklerden oluşan edebi tür?', options: ['Şiir', 'Roman', 'Tiyatro', 'Deneme'], answer: 0 }
+    { q: 'Cansız varlıkların konuşturulduğu söz sanatı?', options: ['Konuşturma (İntak)', 'Kişileştirme', 'Benzetme', 'Abartma'], answer: 0 },
+    { q: 'İnsana ait özelliklerin doğaya verilmesi?', options: ['Kişileştirme', 'Konuşturma', 'Abartma', 'Tezat'], answer: 0 },
+    { q: 'Bir şeyi olduğundan çok veya az gösterme sanatı?', options: ['Abartma', 'Benzetme', 'Kişileştirme', 'Tezat'], answer: 0 },
+    { q: 'Zıt kavramların bir arada kullanılması?', options: ['Tezat (Karşıtlık)', 'Abartma', 'Benzetme', 'Konuşturma'], answer: 0 },
+    { q: '"Aslan gibi güçlü" sözünde ne vardır?', options: ['Benzetme', 'Kişileştirme', 'Abartma', 'Konuşturma'], answer: 0 }
 ];
 
 // --- DİN KÜLTÜRÜ (5 ÜNİTE) ---
@@ -632,12 +685,16 @@ const TEST_DATABASE: Record<string, SubjectTests> = {
   'turkish': {
     title: 'Türkçe',
     topics: [
-       { id: 'tr-1', title: 'Dil Bilgisi: Fiiller', tests: generateTestsFromPool(trVerbQuestions, 'tr-verb', 'Fiiller Test') },
-       { id: 'tr-2', title: 'Dil Bilgisi: Fiillerde Yapı', tests: generateTestsFromPool(trStructQuestions, 'tr-struct', 'Fiil Yapısı Test') },
-       { id: 'tr-3', title: 'Dil Bilgisi: Zarflar', tests: generateTestsFromPool(trAdvQuestions, 'tr-adv', 'Zarflar Test') },
-       { id: 'tr-4', title: 'Dil Bilgisi: Ek Fiil', tests: generateTestsFromPool(trEkFiilQuestions, 'tr-ek', 'Ek Fiil Test') },
-       { id: 'tr-5', title: 'Anlatım Bozuklukları', tests: generateTestsFromPool(trMeaningQuestions, 'tr-mean', 'Anlatım Bozukluğu Test') },
-       { id: 'tr-6', title: 'Metin Türleri', tests: generateTestsFromPool(trTextTypeQuestions, 'tr-text', 'Metin Türleri Test') },
+       { id: 'tr-1', title: '1. Ünite: Sözcükte Anlam', tests: generateTestsFromPool(trWordMeaningQuestions, 'tr-word', 'Sözcük Anlam Test') },
+       { id: 'tr-2', title: '2. Ünite: Cümlede Anlam', tests: generateTestsFromPool(trSentenceMeaningQuestions, 'tr-sent', 'Cümle Anlam Test') },
+       { id: 'tr-3', title: '3. Ünite: Fiiller (Eylemler)', tests: generateTestsFromPool(trVerbQuestions, 'tr-verb', 'Fiiller Test') },
+       { id: 'tr-4', title: '4. Ünite: Fiilde Yapı', tests: generateTestsFromPool(trStructQuestions, 'tr-struct', 'Fiil Yapısı Test') },
+       { id: 'tr-5', title: '5. Ünite: Zarflar (Belirteçler)', tests: generateTestsFromPool(trAdvQuestions, 'tr-adv', 'Zarflar Test') },
+       { id: 'tr-6', title: '6. Ünite: Ek Fiil', tests: generateTestsFromPool(trEkFiilQuestions, 'tr-ek', 'Ek Fiil Test') },
+       { id: 'tr-7', title: '7. Ünite: Paragrafta Anlam', tests: generateTestsFromPool(trParagraphQuestions, 'tr-para', 'Paragraf Test') },
+       { id: 'tr-8', title: '8. Ünite: Anlatım Bozuklukları', tests: generateTestsFromPool(trMeaningQuestions, 'tr-mean', 'Anlatım Boz. Test') },
+       { id: 'tr-9', title: '9. Ünite: Yazım ve Noktalama', tests: generateTestsFromPool(trPunctuationQuestions, 'tr-punc', 'Yazım/Noktalama Test') },
+       { id: 'tr-10', title: '10. Ünite: Metin Türleri', tests: generateTestsFromPool(trTextTypeQuestions, 'tr-text', 'Metin Türleri Test') },
     ]
   },
   'english': {

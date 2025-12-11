@@ -4,7 +4,6 @@ import Header from './components/Header';
 import LessonCard from './components/LessonCard';
 import SubjectCard from './components/SubjectCard';
 import LessonView from './components/LessonView';
-import StudioView from './components/StudioView';
 import AskTeacherView from './components/AskTeacherView';
 import GameView from './components/GameView';
 import PdfView from './components/PdfView';
@@ -130,11 +129,6 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* STUDIO VIEW */}
-        {currentView === ViewState.STUDIO && (
-          <StudioView />
-        )}
-
         {/* ASK TEACHER VIEW */}
         {currentView === ViewState.ASK_TEACHER && (
           <AskTeacherView />
@@ -150,10 +144,11 @@ const App: React.FC = () => {
           <PdfView />
         )}
 
-        {/* COMPETITION VIEW */}
-        {currentView === ViewState.COMPETITION && (
-          <CompetitionView />
-        )}
+        {/* COMPETITION VIEW - PRESERVED STATE */}
+        {/* We keep CompetitionView mounted but hidden when not active to preserve game state (score, questions) */}
+        <div style={{ display: currentView === ViewState.COMPETITION ? 'block' : 'none' }}>
+           <CompetitionView />
+        </div>
 
         {/* TEST TUBE VIEW */}
         {currentView === ViewState.TEST_CENTER && (

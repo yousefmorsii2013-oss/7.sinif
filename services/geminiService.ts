@@ -1,6 +1,7 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 import { QuizQuestion, GameRound, RiskCategory } from "../types";
+import { SUBJECTS, TOPICS } from "../constants";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -29,8 +30,11 @@ export const streamLessonContent = async function* (topicContext: string, subjec
       - Deney örnekleri veya günlük hayattan gözlemler ekle.`;
     } else if (subjectName === "Türkçe") {
       customInstructions = `
-      - Konuyu bir "Okuma Metni" üzerinden anlat.
-      - Dil bilgisi kurallarını bu metin üzerinden örneklendir.`;
+      - Konuyu "turkcedersi.net" sitesindeki gibi kapsamlı ve maddeler halinde anlat.
+      - Dil bilgisi konularında (Fiiller, Zarflar vb.) bol bol cümle örneği ver.
+      - Anlam konularında (Sözcükte/Cümlede/Paragrafta Anlam) tanımları kısa tut, örnekler üzerinden git.
+      - Yazım ve Noktalama konularında "DOĞRU - YANLIŞ" tabloları kullan.
+      - Metin türlerini anlatırken örnek kısa metinler ekle.`;
     } else if (subjectName === "Temel Dini Bilgiler" || subjectName === "Din Kültürü ve Ahlak Bilgisi") {
       customInstructions = `
       - Konuları ayet ve hadislerle destekle (Mealleriyle birlikte ver).
@@ -198,18 +202,35 @@ export const askTeacher = async (question: string, subjectName: string): Promise
 
 export const generateGameData = async (subjectName: string): Promise<GameRound[]> => {
   try {
+    // 1. DERS MÜFREDAT BAĞLAMI OLUŞTURMA
+    const subject = SUBJECTS.find(s => s.title === subjectName);
+    let contextInstruction = "";
+
+    if (subject) {
+        // Bu dersin sistemdeki tanımlı konularını al
+        const relevantTopics = TOPICS.filter(t => t.subjectId === subject.id);
+        const topicDescriptions = relevantTopics.map(t => `"${t.title}" (${t.description})`).join(', ');
+        
+        contextInstruction = `
+        Aşağıda listelenen 7. Sınıf MEB Müfredat konularını temel al:
+        ${topicDescriptions}
+        `;
+    }
+
     const prompt = `7. sınıf ${subjectName} dersi için "Labirent Kovalamaca" oyunu verisi hazırla.
     Toplam 10 tur (round) oluştur.
     
+    ${contextInstruction}
+    
     ÖNEMLİ KURALLAR:
-    1. "question": Kısa ve net bir soru (Maks 6-7 kelime).
-    2. "correctAnswer": ÇOK KISA olmalı (Maksimum 1-2 kelime). Çünkü ekrandaki küçük kutulara sığmalı.
-    3. "wrongAnswers": 3 adet yanlış cevap, yine ÇOK KISA (1-2 kelime).
+    1. SORULAR KESİNLİKLE VE SADECE DERS KİTABINDA BULUNAN BİLGİLERDEN OLMALIDIR. Öğrenci dersi okuduysa cevabı bilmelidir.
+    2. "question": Kısa ve net bir soru (Maks 6-7 kelime).
+    3. "correctAnswer": ÇOK KISA olmalı (Maksimum 1-2 kelime). Çünkü ekrandaki küçük kutulara sığmalı.
+    4. "wrongAnswers": 3 adet yanlış cevap, yine ÇOK KISA (1-2 kelime).
     
     Örnekler:
     - Fen: Soru="Hücrenin enerji merkezi?", Cevap="Mitokondri", Yanlışlar=["Koful", "Çekirdek", "Lizozom"]
     - Mat: Soru="$3^2 + 4^2$ işlemi?", Cevap="25", Yanlışlar=["14", "49", "12"]
-    - Arapça: Soru="Muallim kelimesinin anlamı?", Cevap="Öğretmen", Yanlışlar=["Doktor", "Polis", "Mühendis"]
     
     JSON formatında döndür.`;
 
@@ -257,23 +278,13 @@ export const generateBigRiskBoard = async (context: string, isSpecificTopic: boo
       4. Türkçe
       5. Din Kültürü`;
     } else if (isSpecificTopic) {
-      // User selected a specific topic (e.g. "Unit 1: Appearance and Personality")
-      // Need 5 sub-categories related to THIS topic
+      // Use the rich prompt context from the lesson definition
       categoryPrompt = `
-      Seçilen Konu: "${context}".
+      Ders İçeriği ve Bağlam: "${context}".
       
-      Bu tek bir ünitedir. Yarışma tahtasını bu ünitenin alt başlıklarına bölmelisin.
-      
-      Lütfen şu 5 kategoriyi oluştur (Dersin içeriğine göre uyarla):
-      1. Kelime Bilgisi / Kavramlar (Vocabulary/Concepts)
-      2. Dil Bilgisi / Kurallar (Grammar/Rules)
-      3. Doğru mu Yanlış mı? (True/False)
-      4. Boşluk Doldurma / Tamamlama
-      5. Sürpriz / Zor Sorular
-      
-      Eğer konu Matematik veya Fen ise kategorileri işlemlere, tanımlara veya problemlere göre adlandır.`;
+      Bu içerik tek bir üniteye aittir. Yarışma tahtasını bu ünitenin alt başlıklarına (veya içeriğine) göre kategorilere böl.
+      Kategoriler ders kitabındaki bölüm başlıkları gibi olsun (Örn: "Kelime Bilgisi", "İşlemler", "Tanımlar" vb).`;
     } else {
-      // Fallback for just Subject Name (though UI now drives to Topic)
       categoryPrompt = `
       Seçilen Ders: ${context}.
       Bu dersin 7. sınıf müfredatındaki 5 farklı ünitesini kategori olarak belirle.`;
@@ -281,16 +292,19 @@ export const generateBigRiskBoard = async (context: string, isSpecificTopic: boo
 
     const prompt = `Hazırla: "Riskli Yusuf" yarışma tahtası.
     Hedef Kitle: 7. Sınıf öğrencileri.
+    Müfredat: T.C. Milli Eğitim Bakanlığı (MEB) 7. Sınıf Ders Kitapları.
     
     ${categoryPrompt}
     
     Her kategori için zorluk seviyesine göre artan 5 soru hazırla (Toplam 25 soru).
     Puanlar sırasıyla: 50, 100, 150, 200, 250.
     
-    Kurallar:
-    1. Sorular kısa ve net bilgi sorusu olsun.
-    2. Cevaplar kısa ve öz olsun.
-    3. Matematik soruları zihinden veya kağıt üzerinde yapılabilecek işlemler olsun ($x^2$ formatı kullan).
+    ÇOK ÖNEMLİ KURALLAR:
+    1. SORULAR KESİNLİKLE DERS KİTABI BİLGİSİ OLMALIDIR. Genel kültür veya müfredat dışı soru sorma.
+    2. Amaç: Öğrencinin derste öğrendiği veya kitapta okuduğu bilgiyi ölçmek. Eğer öğrenci cevabı bilmiyorsa, ders kitabını açıp okuduğunda cevabı bulabilmeli.
+    3. Sorular kısa ve net bilgi sorusu olsun.
+    4. Cevaplar kısa ve öz olsun.
+    5. Matematik soruları zihinden veya kağıt üzerinde yapılabilecek işlemler olsun ($x^2$ formatı kullan).
     
     JSON formatında döndür.`;
 
