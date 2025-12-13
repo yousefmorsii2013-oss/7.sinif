@@ -187,9 +187,14 @@ export const askTeacher = async (question: string, subjectName: string): Promise
         
         Kurallar:
         1. Samimi, cesaretlendirici ve eğitici bir ton kullan.
-        2. ${subjectName === 'Matematik' ? 'Sayısal ifadeleri ve formülleri mutlaka LaTeX formatında yaz ($x^2$).' : ''}
-        3. Cevap KISA ve ÖZ olmalı. En fazla 6-7 satır uzunluğunda yaz.
-        4. Karmaşık detaylara girme, öğrencinin seviyesine in.`,
+        2. CEVABIN EN ÖNEMLİ KISMINI (Sonuç sayısı, Çeviri kelimesi, Doğru Cevap) MUTLAKA ** (iki yıldız) İÇİNE ALARAK VURGULA.
+           Örnekler:
+           - Soru: "55 eksi 54 kaç?" -> Cevap: "Sonuç **1** eder."
+           - Soru: "Beautiful ne demek?" -> Cevap: "**Güzel** anlamına gelir." veya "Waseem = **Yakışıklı**"
+           - Soru: "Başkent neresi?" -> Cevap: "**Ankara**'dır."
+        3. ${subjectName === 'Matematik' ? 'Formülleri $ işaretleri içinde yaz ($x^2$). ANCAK basit sayısal cevapları (1, -5 gibi) SADECE ** (yıldız) içine alarak DÜZ METİN yaz, LaTeX veya süslü parantez kullanma.' : ''}
+        4. Cevap KISA ve ÖZ olmalı. En fazla 6-7 satır uzunluğunda yaz.
+        5. Karmaşık detaylara girme, öğrencinin seviyesine in.`,
       }
     });
 
@@ -200,21 +205,28 @@ export const askTeacher = async (question: string, subjectName: string): Promise
   }
 };
 
-export const generateGameData = async (subjectName: string): Promise<GameRound[]> => {
+export const generateGameData = async (subjectName: string, selectedContexts?: string[]): Promise<GameRound[]> => {
   try {
     // 1. DERS MÜFREDAT BAĞLAMI OLUŞTURMA
-    const subject = SUBJECTS.find(s => s.title === subjectName);
     let contextInstruction = "";
 
-    if (subject) {
-        // Bu dersin sistemdeki tanımlı konularını al
-        const relevantTopics = TOPICS.filter(t => t.subjectId === subject.id);
-        const topicDescriptions = relevantTopics.map(t => `"${t.title}" (${t.description})`).join(', ');
-        
+    if (selectedContexts && selectedContexts.length > 0) {
         contextInstruction = `
-        Aşağıda listelenen 7. Sınıf MEB Müfredat konularını temel al:
-        ${topicDescriptions}
+        Aşağıdaki seçili 7. Sınıf MEB Müfredat konularını ve içeriklerini temel al:
+        ${selectedContexts.join('\n\n')}
         `;
+    } else {
+        const subject = SUBJECTS.find(s => s.title === subjectName);
+        if (subject) {
+            // Bu dersin sistemdeki tanımlı konularını al
+            const relevantTopics = TOPICS.filter(t => t.subjectId === subject.id);
+            const topicDescriptions = relevantTopics.map(t => `"${t.title}" (${t.description})`).join(', ');
+            
+            contextInstruction = `
+            Aşağıda listelenen 7. Sınıf MEB Müfredat konularını temel al:
+            ${topicDescriptions}
+            `;
+        }
     }
 
     const prompt = `7. sınıf ${subjectName} dersi için "Labirent Kovalamaca" oyunu verisi hazırla.
@@ -224,9 +236,10 @@ export const generateGameData = async (subjectName: string): Promise<GameRound[]
     
     ÖNEMLİ KURALLAR:
     1. SORULAR KESİNLİKLE VE SADECE DERS KİTABINDA BULUNAN BİLGİLERDEN OLMALIDIR. Öğrenci dersi okuduysa cevabı bilmelidir.
-    2. "question": Kısa ve net bir soru (Maks 6-7 kelime).
-    3. "correctAnswer": ÇOK KISA olmalı (Maksimum 1-2 kelime). Çünkü ekrandaki küçük kutulara sığmalı.
-    4. "wrongAnswers": 3 adet yanlış cevap, yine ÇOK KISA (1-2 kelime).
+    2. EĞER BİRDEN FAZLA KONU VERİLDİYSE, SORULARI KARIŞIK DAĞIT (Örneğin: Bir soru 1. konudan, diğeri 2. konudan olsun). Konuları sırayla bitirme, mutlaka karıştır.
+    3. "question": Kısa ve net bir soru (Maks 6-7 kelime).
+    4. "correctAnswer": ÇOK KISA olmalı (Maksimum 1-2 kelime). Çünkü ekrandaki küçük kutulara sığmalı.
+    5. "wrongAnswers": 3 adet yanlış cevap, yine ÇOK KISA (1-2 kelime).
     
     Örnekler:
     - Fen: Soru="Hücrenin enerji merkezi?", Cevap="Mitokondri", Yanlışlar=["Koful", "Çekirdek", "Lizozom"]
@@ -266,6 +279,63 @@ export const generateGameData = async (subjectName: string): Promise<GameRound[]
 };
 
 export const generateBigRiskBoard = async (context: string, isSpecificTopic: boolean): Promise<RiskCategory[]> => {
+  // SPECIAL HANDLING: If context implies Science (Fen Bilimleri), return the specific requested questions from Fen Aktivite.
+  // This satisfies the user requirement to "Change the questions" to the specific set, without altering the generic structure of the app.
+  if (context.includes("Fen Bilimleri") || context.includes("Güneş Sistemi") || context.includes("Hücre") || context.includes("Kuvvet") || context.includes("Madde") || context.includes("Işık")) {
+      return [
+        {
+          title: "UZAY VE EVREN",
+          questions: [
+            { points: 50, question: "Gök cisimlerini incelemek için kullanılan, 'gök dürbünü' de denilen alet nedir?", answer: "Teleskop", isOpened: false },
+            { points: 100, question: "Dünya atmosferi dışında kalan, gök cisimlerinin içinde yer aldığı sonsuz boşluğa ne denir?", answer: "Uzay", isOpened: false },
+            { points: 150, question: "Isı ve ışık yayan, küresel şekilli doğal gök cisimlerine ne denir?", answer: "Yıldız", isOpened: false },
+            { points: 200, question: "Güneş sisteminin içinde bulunduğu galaksinin (gök ada) adı nedir?", answer: "Samanyolu", isOpened: false },
+            { points: 250, question: "Yıldızların oluşum yeri olan, gaz ve toz bulutlarından oluşan gök cismine ne denir?", answer: "Bulutsu (Nebula)", isOpened: false }
+          ]
+        },
+        {
+          title: "HÜCRE VE BÖLÜNME",
+          questions: [
+            { points: 50, question: "Canlının canlılık özelliği gösteren en küçük yapı taşına ne denir?", answer: "Hücre", isOpened: false },
+            { points: 100, question: "Hücrede enerji üretimini sağlayan organel hangisidir?", answer: "Mitokondri", isOpened: false },
+            { points: 150, question: "Bitki hücresinde bulunan, fotosentez yaparak besin ve oksijen üreten organel hangisidir?", answer: "Kloroplast", isOpened: false },
+            { points: 200, question: "Vücut hücrelerinde görülen, büyüme ve onarımı sağlayan bölünme çeşidi nedir?", answer: "Mitoz", isOpened: false },
+            { points: 250, question: "Üreme ana hücrelerinde görülen ve kromozom sayısını yarıya indiren bölünme çeşidi nedir?", answer: "Mayoz", isOpened: false }
+          ]
+        },
+        {
+          title: "KUVVET VE ENERJİ",
+          questions: [
+            { points: 50, question: "Hareket halindeki cisimlerin sahip olduğu enerji türüne ne denir?", answer: "Kinetik Enerji", isOpened: false },
+            { points: 100, question: "Cisimlerin konumlarından (yükseklik) dolayı sahip oldukları enerjiye ne denir?", answer: "Potansiyel Enerji", isOpened: false },
+            { points: 150, question: "Bir cismin kütlesine etki eden yer çekimi kuvvetine ne denir?", answer: "Ağırlık", isOpened: false },
+            { points: 200, question: "İş yapabilme yeteneğine ne ad verilir?", answer: "Enerji", isOpened: false },
+            { points: 250, question: "Sürtünme kuvveti, hareket enerjisini genellikle hangi enerjiye dönüştürür?", answer: "Isı Enerjisi", isOpened: false }
+          ]
+        },
+        {
+          title: "MADDENİN YAPISI",
+          questions: [
+            { points: 50, question: "Maddenin bölünebilen en küçük yapı taşına ne denir?", answer: "Atom", isOpened: false },
+            { points: 100, question: "Atomun çekirdeğinde bulunan pozitif (+) yüklü parçacığa ne denir?", answer: "Proton", isOpened: false },
+            { points: 150, question: "Aynı cins atomlardan oluşan saf maddelere ne denir?", answer: "Element", isOpened: false },
+            { points: 200, question: "Farklı cins atomların belirli oranlarda birleşmesiyle oluşan saf maddeye ne denir?", answer: "Bileşik", isOpened: false },
+            { points: 250, question: "Atomun katmanlarında bulunan, çok hızlı hareket eden negatif (-) yüklü parçacığa ne denir?", answer: "Elektron", isOpened: false }
+          ]
+        },
+        {
+          title: "IŞIK VE MADDE",
+          questions: [
+            { points: 50, question: "Işığın madde tarafından tutulmasına ne denir?", answer: "Soğurulma", isOpened: false },
+            { points: 100, question: "Üzerine düşen ışığı yansıtmayıp büyük oranda geçiren maddelere ne denir?", answer: "Saydam Madde", isOpened: false },
+            { points: 150, question: "Görüntünün her zaman düz ve cisimle aynı boyda olduğu ayna çeşidi hangisidir?", answer: "Düz Ayna", isOpened: false },
+            { points: 200, question: "Işığın yoğunlukları farklı bir ortamdan diğerine geçerken doğrultu değiştirmesine ne denir?", answer: "Kırılma", isOpened: false },
+            { points: 250, question: "Beyaz ışık prizmadan geçirildiğinde en az kırılan renk hangisidir?", answer: "Kırmızı", isOpened: false }
+          ]
+        }
+      ];
+  }
+
   try {
     let categoryPrompt = "";
     

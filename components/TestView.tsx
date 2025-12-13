@@ -27,536 +27,533 @@ interface SubjectTests {
   topics: TopicTests[];
 }
 
-// --- STATIC DATABASE (MOCK DATA) ---
+// --- STATIC DATABASE (YENİLENMİŞ MEB MÜFREDAT SORULARI) ---
 
 // --- FEN BİLİMLERİ (7 ÜNİTE) ---
 const solarSystemQuestions: Question[] = [
-    { q: 'Güneş sistemindeki en büyük gezegen hangisidir?', options: ['Dünya', 'Mars', 'Jüpiter', 'Satürn'], answer: 2 },
-    { q: 'Aşağıdakilerden hangisi bir "Dış Gezegen"dir?', options: ['Merkür', 'Venüs', 'Dünya', 'Neptün'], answer: 3 },
-    { q: 'Halkası en belirgin olan gezegen hangisidir?', options: ['Uranüs', 'Jüpiter', 'Satürn', 'Mars'], answer: 2 },
-    { q: 'Güneş\'e en yakın gezegen hangisidir?', options: ['Merkür', 'Venüs', 'Dünya', 'Mars'], answer: 0 },
-    { q: 'Kızıl Gezegen olarak bilinen gök cismi hangisidir?', options: ['Venüs', 'Mars', 'Jüpiter', 'Merkür'], answer: 1 },
-    { q: 'Plüton neden gezegen sınıfından çıkarılmıştır?', options: ['Çok uzak olduğu için', 'Yörüngesini temizleyemediği için', 'Rengi soluk olduğu için', 'Uydusu olmadığı için'], answer: 1 },
-    { q: 'Mars ile Jüpiter arasında bulunan kuşak hangisidir?', options: ['Kuiper Kuşağı', 'Asteroit Kuşağı', 'Meteor Kuşağı', 'Kuyruklu Yıldızlar'], answer: 1 },
-    { q: 'Güneş tutulması sırasında Ay hangi evrededir?', options: ['Dolunay', 'Yeni Ay', 'İlk Dördün', 'Son Dördün'], answer: 1 },
-    { q: 'Yıldızların enerjisi hangi olay sonucunda açığa çıkar?', options: ['Nükleer Füzyon', 'Yanma', 'Sürtünme', 'Buharlaşma'], answer: 0 },
-    { q: 'Işık yılı ne birimidir?', options: ['Zaman', 'Hız', 'Uzaklık', 'Parlaklık'], answer: 2 },
-    { q: 'Dünya\'nın tek doğal uydusu nedir?', options: ['Titan', 'Ay', 'Ganymede', 'Phobos'], answer: 1 },
-    { q: 'Güneş sisteminin en sıcak gezegeni hangisidir?', options: ['Merkür', 'Venüs', 'Mars', 'Jüpiter'], answer: 1 },
-    { q: 'Kendi ekseni etrafında yan yatmış bir varil gibi dönen gezegen?', options: ['Uranüs', 'Neptün', 'Satürn', 'Jüpiter'], answer: 0 }
+    { q: 'Güneş tutulması olayı sırasında Ay, Güneş ve Dünya\'nın konumları nasıldır?', options: ['Güneş - Dünya - Ay', 'Güneş - Ay - Dünya', 'Ay - Güneş - Dünya', 'Dünya - Güneş - Ay'], answer: 1 },
+    { q: 'Aşağıdaki gezegenlerden hangisi "Gazsal Gezegenler" (Dış Gezegenler) grubunda yer ALMAZ?', options: ['Jüpiter', 'Satürn', 'Uranüs', 'Mars'], answer: 3 },
+    { q: 'Halk arasında "Çoban Yıldızı" olarak bilinen, Dünya\'nın ikizi denilen gezegen hangisidir?', options: ['Merkür', 'Venüs', 'Mars', 'Neptün'], answer: 1 },
+    { q: 'Uzay mekikleri ile uzay istasyonları arasındaki fark nedir?', options: ['Mekikler tekrar kullanılabilir, istasyonlar sabittir', 'Mekikler insan taşımaz', 'İstasyonlar Dünya\'ya iner', 'Fark yoktur'], answer: 0 },
+    { q: 'Yıldızların yaşam süreci ile ilgili; "Büyük kütleli yıldızların ömürlerinin sonunda geçirdiği patlama" hangisidir?', options: ['Süpernova', 'Beyaz Cüce', 'Kara Delik', 'Bulutsu'], answer: 0 },
+    { q: 'Güneş sisteminin en büyük gezegeni hangisidir?', options: ['Jüpiter', 'Satürn', 'Uranüs', 'Neptün'], answer: 0 },
+    { q: 'Bir teleskobun ışığı toplayan açıklığı ne kadar büyükse; görüntü o kadar _____ olur. Boşluğa ne gelmelidir?', options: ['Bulanık', 'Parlak ve Net', 'Küçük', 'Ters'], answer: 1 },
+    { q: '2006 yılında gezegen sınıfından çıkarılarak "Cüce Gezegen" sınıfına alınan gök cismi hangisidir?', options: ['Plüton', 'Ceres', 'Eris', 'Ay'], answer: 0 },
+    { q: 'Aşağıdakilerden hangisi uzay kirliliğine neden OLMAZ?', options: ['Ömrü bitmiş uydular', 'Roket parçaları', 'Meteor taşları', 'Yakıt tankları'], answer: 2 },
+    { q: 'Güneş\'e en yakın gezegen hangisidir?', options: ['Venüs', 'Merkür', 'Dünya', 'Mars'], answer: 1 }
 ];
 
 const cellQuestions: Question[] = [
-    { q: 'Hücrede enerji üretiminden sorumlu organel hangisidir?', options: ['Ribozom', 'Koful', 'Mitokondri', 'Lizozom'], answer: 2 },
-    { q: 'Bitki hücresinde olup hayvan hücresinde olmayan yapı hangisidir?', options: ['Hücre Zarı', 'Sitoplazma', 'Hücre Duvarı', 'Çekirdek'], answer: 2 },
-    { q: 'Protein sentezi yapan organel hangisidir?', options: ['Ribozom', 'Golgi', 'Sentrozom', 'Koful'], answer: 0 },
-    { q: 'Hücrenin yönetim merkezi neresidir?', options: ['Sitoplazma', 'Çekirdek', 'Zar', 'Mitokondri'], answer: 1 },
-    { q: 'Hangi organel "hücre içi sindirim" yapar?', options: ['Lizozom', 'Koful', 'Ribozom', 'Plastit'], answer: 0 },
-    { q: 'Sentrozom organeli hangi olayda görev alır?', options: ['Enerji üretimi', 'Hücre bölünmesi', 'Salgı üretimi', 'Fotosentez'], answer: 1 },
-    { q: 'Fotosentez yaparak besin ve oksijen üreten organel?', options: ['Kloroplast', 'Kromoplast', 'Lökoplast', 'Mitokondri'], answer: 0 },
-    { q: 'Hücre zarı ile ilgili hangisi yanlıştır?', options: ['Canlıdır', 'Seçici geçirgendir', 'Sert ve cansızdır', 'Esnektir'], answer: 2 },
-    { q: 'Çok hücreli canlılarda organizasyon sırası nasıldır?', options: ['Hücre-Doku-Organ-Sistem-Organizme', 'Doku-Hücre-Organ-Sistem', 'Organ-Sistem-Doku-Hücre', 'Hücre-Organ-Doku-Sistem'], answer: 0 },
-    { q: 'Ribozom nerede bulunmaz?', options: ['Sitoplazmada', 'Mitokondride', 'Kloroplastta', 'Koful öz suyunda'], answer: 3 }
+    { q: 'Mitoz bölünmenin hangi evresinde kromozomlar hücrenin ortasına (ekvatoral düzleme) dizilir?', options: ['Profaz', 'Metafaz', 'Anafaz', 'Telofaz'], answer: 1 },
+    { q: 'Aşağıdaki organel eşleştirmelerinden hangisi YANLIŞTIR?', options: ['Ribozom - Protein Sentezi', 'Mitokondri - Enerji Üretimi', 'Golgi - Sindirim', 'Kloroplast - Fotosentez'], answer: 2 },
+    { q: 'Hayvan hücresinde bulunup, bitki hücresinde BULUNMAYAN yapı hangisidir?', options: ['Hücre Duvarı', 'Kloroplast', 'Sentrozom', 'Koful'], answer: 2 },
+    { q: 'Mayoz bölünme sonucunda oluşan hücrelere ne denir?', options: ['Vücut hücresi', 'Üreme hücresi (Gamet)', 'Kök hücre', 'Deri hücresi'], answer: 1 },
+    { q: 'Mitoz bölünme tek hücreli canlılarda neyi sağlar?', options: ['Büyümeyi', 'Onarımı', 'Üremeyi', 'Gelişmeyi'], answer: 2 },
+    { q: 'DNA\'nın yapı birimi aşağıdakilerden hangisidir?', options: ['Gen', 'Kromozom', 'Nükleotid', 'Çekirdek'], answer: 2 },
+    { q: 'Hücrede kalıtsal bilgiyi taşıyan yönetim merkezi neresidir?', options: ['Sitoplazma', 'Çekirdek', 'Hücre Zarı', 'Ribozom'], answer: 1 },
+    { q: 'Hücre zarı ile ilgili hangisi doğrudur?', options: ['Cansızdır', 'Tam geçirgendir', 'Seçici geçirgendir', 'Serttir'], answer: 2 },
+    { q: 'Mayoz bölünmede parça değişimi (Crossing Over) hangi evrede gerçekleşir?', options: ['Mayoz 1', 'Mayoz 2', 'Mitoz', 'Döllenme'], answer: 0 },
+    { q: 'Aynı görevi yapan hücrelerin bir araya gelmesiyle ne oluşur?', options: ['Sistem', 'Organ', 'Doku', 'Organizma'], answer: 2 }
 ];
 
 const forceQuestions: Question[] = [
-    { q: 'Kütle ile ilgili hangisi yanlıştır?', options: ['Eşit kollu terazi ile ölçülür', 'Değişmeyen madde miktarıdır', 'Birimi Newton\'dur', 'Her yerde aynıdır'], answer: 2 },
-    { q: 'Ağırlık ne ile ölçülür?', options: ['Dinamometre', 'Terazi', 'Metre', 'Kronometre'], answer: 0 },
-    { q: 'Potansiyel enerji hangisine bağlıdır?', options: ['Sürat', 'Yükseklik ve Ağırlık', 'Sadece Sürat', 'Renk'], answer: 1 },
-    { q: 'Sürtünme kuvveti hareketi nasıl etkiler?', options: ['Hızlandırır', 'Yönünü değiştirir', 'Yavaşlatır', 'Etkilemez'], answer: 2 },
-    { q: 'Hangisi kinetik enerjiye sahiptir?', options: ['Duran top', 'Gerilmiş yay', 'Koşan çocuk', 'Dalda duran elma'], answer: 2 },
-    { q: 'İş yapabilme yeteneğine ne denir?', options: ['Güç', 'Enerji', 'Kuvvet', 'Basınç'], answer: 1 },
-    { q: 'Uzaya giden bir astronotun kütlesi nasıl değişir?', options: ['Artar', 'Azalır', 'Değişmez', 'Yok olur'], answer: 2 },
-    { q: 'Esneklik potansiyel enerjisi hangisinde vardır?', options: ['Akan su', 'Gerilmiş lastik', 'Uçan kuş', 'Yanan ateş'], answer: 1 },
-    { q: 'Hava direnci aşağıdakilerden hangisidir?', options: ['Temas gerektirmeyen kuvvet', 'Sürtünme kuvveti', 'Manyetik kuvvet', 'Elektriksel kuvvet'], answer: 1 },
-    { q: 'Enerjinin yok olmayıp başka türe dönüşmesine ne denir?', options: ['Enerji kaybı', 'Enerji korunumu', 'Enerji üretimi', 'Enerji tüketimi'], answer: 1 }
+    { q: 'Kütle ve Ağırlık arasındaki temel fark nedir?', options: ['Kütle değişmez, ağırlık yere göre değişir', 'Ağırlık değişmez, kütle değişir', 'İkisi de aynıdır', 'Kütle dinamometre ile ölçülür'], answer: 0 },
+    { q: 'Bir cismin sürati artarsa hangi enerjisi artar?', options: ['Çekim Potansiyel', 'Esneklik Potansiyel', 'Kinetik Enerji', 'Isı Enerjisi'], answer: 2 },
+    { q: 'Daldaki elma yere düşerken enerji dönüşümü nasıl olur?', options: ['Kinetik -> Potansiyel', 'Potansiyel -> Kinetik', 'Isı -> Kinetik', 'Potansiyel -> Isı'], answer: 1 },
+    { q: 'Sürtünme kuvveti kinetik enerjiyi hangi enerjiye dönüştürür?', options: ['Isı Enerjisi', 'Potansiyel Enerji', 'Nükleer Enerji', 'Işık Enerjisi'], answer: 0 },
+    { q: 'Dünya\'da 60 N gelen bir cisim Ay\'da yaklaşık kaç N gelir?', options: ['60 N', '6 N', '10 N', '0 N'], answer: 2 },
+    { q: 'Hangisi esneklik potansiyel enerjisine örnektir?', options: ['Koşan çocuk', 'Gerilmiş yay', 'Uçan kuş', 'Masa üzerindeki kitap'], answer: 1 },
+    { q: 'İş yapabilme yeteneğine ne ad verilir?', options: ['Güç', 'Kuvvet', 'Basınç', 'Enerji'], answer: 3 },
+    { q: 'Hava direnci tasarlanırken uçakların burnunun sivri yapılma nedeni nedir?', options: ['Sürtünmeyi artırmak', 'Sürtünmeyi azaltmak', 'Ağırlığı artırmak', 'Görünüşü güzelleştirmek'], answer: 1 },
+    { q: 'Fiziksel anlamda iş yapılmış sayılması için ne gereklidir?', options: ['Kuvvet uygulanmalı ve cisim yol almalı', 'Sadece kuvvet uygulanmalı', 'Cisim durmalı', 'Çok yorulmalı'], answer: 0 },
+    { q: 'Kütle çekim potansiyel enerjisi hangilerine bağlıdır?', options: ['Sürat ve Kütle', 'Kütle ve Yükseklik', 'Yol ve Zaman', 'Sıcaklık ve Basınç'], answer: 1 }
 ];
 
 const matterQuestions: Question[] = [
-    { q: 'Atomun merkezinde ne bulunur?', options: ['Yörünge', 'Çekirdek', 'Elektron', 'Katman'], answer: 1 },
-    { q: 'Negatif yüklü atom altı parçacık hangisidir?', options: ['Proton', 'Nötron', 'Elektron', 'Çekirdek'], answer: 2 },
-    { q: 'Aynı cins atomlardan oluşan saf maddeye ne denir?', options: ['Bileşik', 'Element', 'Karışım', 'Çözelti'], answer: 1 },
-    { q: 'Sembolü "Fe" olan element hangisidir?', options: ['Flor', 'Fosfor', 'Demir', 'Kalsiyum'], answer: 2 },
-    { q: 'Formülü H2O olan bileşik hangisidir?', options: ['Tuz', 'Su', 'Şeker', 'Amonyak'], answer: 1 },
-    { q: 'Karışımlar kaça ayrılır?', options: ['2 (Homojen, Heterojen)', '3', '4', 'Ayrılmazlar'], answer: 0 },
-    { q: 'Zeytinyağı-Su karışımı nasıl ayrılır?', options: ['Buharlaştırma', 'Damıtma', 'Ayırma Hunisi', 'Mıknatısla'], answer: 2 },
-    { q: 'Geri dönüşümün en önemli faydası nedir?', options: ['Çöpü artırmak', 'Kaynak tasarrufu', 'Maliyeti artırmak', 'Zaman kaybı'], answer: 1 },
-    { q: 'Elektronların bulunduğu yere ne denir?', options: ['Çekirdek', 'Katman (Yörünge)', 'Merkez', 'Proton'], answer: 1 },
-    { q: 'Nötr bir atomda hangileri eşittir?', options: ['Proton ve Nötron', 'Proton ve Elektron', 'Elektron ve Nötron', 'Hepsi'], answer: 1 }
+    { q: 'Atomun çekirdeğinde hangi parçacıklar bulunur?', options: ['Proton ve Elektron', 'Proton ve Nötron', 'Elektron ve Nötron', 'Sadece Proton'], answer: 1 },
+    { q: 'Elektronların bulunduğu katmanlara ne ad verilir?', options: ['Çekirdek', 'Yörünge (Katman)', 'Nötron', 'Proton'], answer: 1 },
+    { q: 'Aynı cins atomlardan oluşan saf maddelere ne denir?', options: ['Bileşik', 'Element', 'Karışım', 'Çözelti'], answer: 1 },
+    { q: 'Sembolü "Na" olan element hangisidir?', options: ['Azot', 'Sodyum', 'Neon', 'Nikel'], answer: 1 },
+    { q: 'H2O (Su) ne tür bir maddedir?', options: ['Element', 'Karışım', 'Bileşik', 'Atom'], answer: 2 },
+    { q: 'Zeytinyağı - Su karışımını ayırmak için hangi yöntem kullanılır?', options: ['Buharlaştırma', 'Damıtma', 'Ayırma Hunisi', 'Mıknatıs'], answer: 2 },
+    { q: 'Homojen karışımlara ne ad verilir?', options: ['Çözelti', 'Süspansiyon', 'Emülsiyon', 'Aerosol'], answer: 0 },
+    { q: 'Elektronun yükü nedir?', options: ['Pozitif (+)', 'Nötr (0)', 'Negatif (-)', 'Yüklü değildir'], answer: 2 },
+    { q: 'Geri dönüşümün en önemli katkısı nedir?', options: ['Doğal kaynakların korunması', 'Çöp miktarının artması', 'Maliyetin artması', 'Enerji tüketiminin artması'], answer: 0 },
+    { q: 'Hangisi bir karışım değildir?', options: ['Ayran', 'Hava', 'Saf Su', 'Toprak'], answer: 2 }
 ];
 
 const lightQuestions: Question[] = [
-    { q: 'Koyu renkli cisimler ışığı ne yapar?', options: ['Yansıtır', 'Kırar', 'Soğurur', 'Geçirir'], answer: 2 },
-    { q: 'Güneş enerjisiyle çalışan araçlara ne denir?', options: ['Güneş paneli', 'Radyometre', 'Güneş pili', 'Hepsi'], answer: 3 },
-    { q: 'Düz aynada görüntü nasıldır?', options: ['Ters ve büyük', 'Düz ve simetrik', 'Ters ve küçük', 'Yamuk'], answer: 1 },
-    { q: 'Dişçi aynası hangi tür aynadır?', options: ['Düz ayna', 'Tümsek ayna', 'Çukur ayna', 'Cam ayna'], answer: 2 },
-    { q: 'Işığın ortam değiştirirken yön değiştirmesine ne denir?', options: ['Yansıma', 'Kırılma', 'Soğurulma', 'Dağılma'], answer: 1 },
-    { q: 'Kalın kenarlı mercek ışığı nasıl kırar?', options: ['Toplayarak', 'Dağıtarak', 'Yansıtarak', 'Eğerek'], answer: 1 },
-    { q: 'Gökkuşağı oluşumu ışığın hangi özelliğiyle ilgilidir?', options: ['Renklerine ayrılması', 'Soğurulması', 'Yansıması', 'Düz gitmesi'], answer: 0 },
-    { q: 'Beyaz ışık prizmadan geçince en çok hangi renk kırılır?', options: ['Kırmızı', 'Yeşil', 'Mor', 'Sarı'], answer: 2 },
-    { q: 'Hangisi ışığı en iyi yansıtır?', options: ['Siyah kumaş', 'Ayna', 'Tahta', 'Toprak'], answer: 1 },
-    { q: 'Tümsek aynalar nerelerde kullanılır?', options: ['Makyaj aynası', 'Güvenlik aynası', 'Teleskop', 'Mikroskop'], answer: 1 }
+    { q: 'Açık renkli yüzeyler ışığı ....., koyu renkli yüzeyler ışığı ..... . Boşluklara ne gelmelidir?', options: ['Soğurur - Yansıtır', 'Yansıtır - Soğurur', 'Kırar - Yansıtır', 'Soğurur - Kırar'], answer: 1 },
+    { q: 'Görüntünün düz ve cisimle aynı boyda olduğu ayna türü hangisidir?', options: ['Çukur Ayna', 'Tümsek Ayna', 'Düz Ayna', 'Dev Aynası'], answer: 2 },
+    { q: 'Diş hekimlerinin ağız içini daha büyük görmek için kullandığı ayna türü?', options: ['Düz Ayna', 'Çukur Ayna', 'Tümsek Ayna', 'Cam'], answer: 1 },
+    { q: 'Beyaz ışık prizmadan geçtiğinde en az kırılan renk hangisidir?', options: ['Mor', 'Mavi', 'Sarı', 'Kırmızı'], answer: 3 },
+    { q: 'Işığın yoğun ortamdan az yoğun ortama geçerken izlediği yol nasıldır?', options: ['Normale yaklaşarak kırılır', 'Normalden uzaklaşarak kırılır', 'Kırılmadan geçer', 'Geri yansır'], answer: 1 },
+    { q: 'Güneş enerjisini elektrik enerjisine çeviren araç?', options: ['Güneş Paneli', 'Radyometre', 'Ayna', 'Mercek'], answer: 0 },
+    { q: 'Kalın kenarlı merceğin diğer adı ve özelliği nedir?', options: ['Yakınsak - Işığı toplar', 'Iraksak - Işığı dağıtır', 'Tümsek - Görüntü büyütür', 'Çukur - Işığı yansıtır'], answer: 1 },
+    { q: 'Gökkuşağı oluşumu ışığın hangi özelliği ile ilgilidir?', options: ['Yansıması', 'Soğurulması', 'Renklerine ayrılması (Kırılma)', 'Doğrusal yayılması'], answer: 2 },
+    { q: 'Mağazalarda güvenlik aynası olarak kullanılan geniş alanı gösteren ayna?', options: ['Çukur Ayna', 'Tümsek Ayna', 'Düz Ayna', 'Mercek'], answer: 1 },
+    { q: 'Kırmızı bir cisme yeşil ışık altında bakarsak hangi renk görürüz?', options: ['Kırmızı', 'Yeşil', 'Siyah', 'Beyaz'], answer: 2 }
 ];
 
 const reproductionQuestions: Question[] = [
-    { q: 'İnsanda üreme hücresi hangisidir?', options: ['Sperm ve Yumurta', 'Deri hücresi', 'Kan hücresi', 'Sinir hücresi'], answer: 0 },
-    { q: 'Döllenmiş yumurtaya ne ad verilir?', options: ['Embriyo', 'Fetüs', 'Zigot', 'Bebek'], answer: 2 },
-    { q: 'Erkek üreme sisteminde sperm nerede üretilir?', options: ['Testis', 'Penis', 'Salgı bezi', 'Kanal'], answer: 0 },
-    { q: 'Dişi üreme sisteminde döllenme nerede olur?', options: ['Yumurtalık', 'Döl yatağı', 'Yumurta kanalı', 'Vajina'], answer: 2 },
-    { q: 'Çiçekli bitkilerde erkek organın başçığında ne üretilir?', options: ['Yumurta', 'Polen', 'Tohum', 'Meyve'], answer: 1 },
-    { q: 'Tohumun çimlenmesi için hangisi GEREKMEZ?', options: ['Su', 'Oksijen', 'Sıcaklık', 'Işık'], answer: 3 },
-    { q: 'Vejetatif üreme hangi canlılarda görülür?', options: ['İnsanlarda', 'Bitkilerde', 'Kuşlarda', 'Balıklarda'], answer: 1 },
-    { q: 'Tomurcuklanarak üreyen canlı hangisidir?', options: ['Amip', 'Hidra', 'Bakteri', 'Öglena'], answer: 1 },
-    { q: 'Başkalaşım geçiren canlı hangisidir?', options: ['Kedi', 'Tavuk', 'Kurbağa', 'Yılan'], answer: 2 },
-    { q: 'Rejenerasyonla (Yenilenme) üreyen canlı?', options: ['Planarya', 'İnsan', 'Kedi', 'Köpek'], answer: 0 }
+    { q: 'Erkek üreme sisteminde spermlerin üretildiği kısım?', options: ['Testis', 'Penis', 'Salgı Bezleri', 'Sperm Kanalı'], answer: 0 },
+    { q: 'Dişi üreme sisteminde döllenmenin gerçekleştiği yer?', options: ['Yumurtalık', 'Döl Yatağı (Rahim)', 'Yumurta Kanalı', 'Vajina'], answer: 2 },
+    { q: 'Zigotun art arda mitoz bölünmeler geçirerek oluşturduğu yapı?', options: ['Fetüs', 'Embriyo', 'Bebek', 'Yumurta'], answer: 1 },
+    { q: 'Çiçekli bitkilerde polenlerin dişicik tepesine taşınması olayına ne denir?', options: ['Döllenme', 'Tozlaşma', 'Çimlenme', 'Büyüme'], answer: 1 },
+    { q: 'Aşağıdaki canlılardan hangisi rejenerasyon (yenilenme) ile ürer?', options: ['Deniz Yıldızı', 'Bakteri', 'Hidra', 'Patates'], answer: 0 },
+    { q: 'Başkalaşım geçiren canlı hangisidir?', options: ['Tavuk', 'Yılan', 'Kurbağa', 'Kartal'], answer: 2 },
+    { q: 'Tohumun çimlenmesi için aşağıdakilerden hangisi GEREKLİ DEĞİLDİR?', options: ['Su (Nem)', 'Oksijen (Hava)', 'Sıcaklık', 'Işık'], answer: 3 },
+    { q: 'Eşeysiz üreme çeşitlerinden tomurcuklanma hangisinde görülür?', options: ['Amip', 'Bira Mayası', 'Öglena', 'İnsan'], answer: 1 },
+    { q: 'Döllenmiş yumurtaya ne ad verilir?', options: ['Embriyo', 'Zigot', 'Sperm', 'Fetüs'], answer: 1 },
+    { q: 'Bitkilerde erkek organın kısımleri nelerdir?', options: ['Tepecik, Dişicik Borusu', 'Başçık, Sapçık', 'Taç Yaprak, Çanak Yaprak', 'Tohum, Meyve'], answer: 1 }
 ];
 
 const electricQuestions: Question[] = [
-    { q: 'Ampullerin uc uca eklendiği bağlama şekli hangisidir?', options: ['Paralel', 'Seri', 'Karışık', 'Düz'], answer: 1 },
-    { q: 'Seri bağlı devrede ampul sayısı artarsa parlaklık ne olur?', options: ['Artar', 'Azalır', 'Değişmez', 'Söner'], answer: 1 },
-    { q: 'Evimizdeki prizler birbirine nasıl bağlıdır?', options: ['Seri', 'Paralel', 'Karışık', 'Bağlı değildir'], answer: 1 },
-    { q: 'Elektrik akımını ölçen alet hangisidir?', options: ['Voltmetre', 'Ampermetre', 'Termometre', 'Barometre'], answer: 1 },
-    { q: 'Ampermetre devreye nasıl bağlanır?', options: ['Seri', 'Paralel', 'Her türlü', 'Bağlanmaz'], answer: 0 },
-    { q: 'Gerilimi (Potansiyel Farkı) ölçen alet?', options: ['Voltmetre', 'Ampermetre', 'Direnç', 'Pil'], answer: 0 },
-    { q: 'Paralel bağlı kollardaki gerilim nasıldır?', options: ['Eşittir', 'Farklıdır', 'Sıfırdır', 'Bilinmez'], answer: 0 },
-    { q: 'Direnci azaltırsak akım nasıl değişir (Ohm Kanunu)?', options: ['Azalır', 'Artar', 'Değişmez', 'Sıfırlanır'], answer: 1 },
-    { q: 'Kısa devre nedir?', options: ['Akımın dirençsiz yolu izlemesi', 'Devrenin kopması', 'Pilin bitmesi', 'Ampulün patlaması'], answer: 0 },
-    { q: 'Sigortanın görevi nedir?', options: ['Işık vermek', 'Devreyi korumak', 'Isı üretmek', 'Sesi iletmek'], answer: 1 }
+    { q: 'Seri bağlı bir devrede ampul sayısı artırılırsa parlaklık nasıl değişir?', options: ['Artar', 'Azalır', 'Değişmez', 'Ampul patlar'], answer: 1 },
+    { q: 'Evimizdeki elektrik tesisatı genellikle hangi bağlama şeklidir?', options: ['Seri Bağlama', 'Paralel Bağlama', 'Karışık Bağlama', 'Düz Bağlama'], answer: 1 },
+    { q: 'Akım şiddetini ölçen alet hangisidir ve devreye nasıl bağlanır?', options: ['Voltmetre - Seri', 'Ampermetre - Seri', 'Ampermetre - Paralel', 'Voltmetre - Paralel'], answer: 1 },
+    { q: 'Bir iletkenin uçları arasındaki potansiyel farkı (gerilimi) ölçen alet?', options: ['Ampermetre', 'Direnç', 'Voltmetre', 'Sigorta'], answer: 2 },
+    { q: 'Ohm Kanunu\'na göre; Gerilim / Akım oranı neyi verir?', options: ['Enerjiyi', 'Gücü', 'Direnci', 'Zamanı'], answer: 2 },
+    { q: 'Paralel bağlı kollardaki gerilimler nasıldır?', options: ['Birbirine eşittir', 'Farklıdır', 'Ana koldan büyüktür', 'Sıfırdır'], answer: 0 },
+    { q: 'Kısa devre nedir?', options: ['Akımın dirençsiz yolu tercih etmesi', 'Devrenin kopması', 'Ampulün patlaması', 'Pilin bitmesi'], answer: 0 },
+    { q: 'Sigortanın temel görevi nedir?', options: ['Işık vermek', 'Akımı artırmak', 'Devreyi yüksek akımdan korumak', 'Voltajı düşürmek'], answer: 2 },
+    { q: 'Elektrik akımının yönü nasıldır?', options: ['Eksiden artıya', 'Artıdan eksiye', 'Değişkendir', 'Yönü yoktur'], answer: 1 },
+    { q: '10 Ohm ve 5 Ohm\'luk iki direnç seri bağlanırsa eşdeğer direnç kaç olur?', options: ['5', '10', '15', '2'], answer: 2 }
 ];
 
 // --- MATEMATİK (6 ÜNİTE) ---
 const mathIntQuestions: Question[] = [
-    { q: '(-5) + (+3) işleminin sonucu kaçtır?', options: ['-2','-8','2','8'], answer: 0 },
-    { q: '(+10) + (-7) işleminin sonucu kaçtır?', options: ['3','-3','17','-17'], answer: 0 },
-    { q: '(-2) + (-4) işleminin sonucu kaçtır?', options: ['-6','6','2','-2'], answer: 0 },
-    { q: 'En büyük negatif tam sayı kaçtır?', options: ['-1','-99','0','1'], answer: 0 },
-    { q: 'Mutlak değeri 5 olan tamsayılar hangileridir?', options: ['Sadece 5','Sadece -5','5 ve -5','0'], answer: 2 },
-    { q: '(-3) x (-4) işleminin sonucu?', options: ['-12','12','7','-7'], answer: 1 },
-    { q: '(-12) : (+3) işleminin sonucu?', options: ['-4', '4', '-36', '36'], answer: 0 },
-    { q: 'Hava sıcaklığı -5 derecedir. 3 derece düşerse kaç olur?', options: ['-2', '-8', '2', '8'], answer: 1 },
-    { q: 'Çarpma işleminin yutan elemanı nedir?', options: ['0', '1', '-1', 'Yoktur'], answer: 0 },
-    { q: '(-1)^100 işleminin sonucu kaçtır?', options: ['1', '-1', '100', '-100'], answer: 0 }
+    { q: '(-12) + (+5) işleminin sonucu kaçtır?', options: ['-17', '-7', '7', '17'], answer: 1 },
+    { q: '(-3) . (-4) - (+10) işleminin sonucu kaçtır?', options: ['2', '-22', '-2', '22'], answer: 0 },
+    { q: 'En büyük negatif tam sayı ile en küçük iki basamaklı pozitif tam sayının toplamı kaçtır?', options: ['9', '11', '-9', '99'], answer: 0 },
+    { q: '(-20) : (+4) + (-2) işleminin sonucu kaçtır?', options: ['-7', '-3', '3', '7'], answer: 0 },
+    { q: '| -8 | - (+3) + (-2) işleminin sonucu kaçtır?', options: ['3', '7', '13', '-3'], answer: 0 },
+    { q: 'Bir şehirde hava sıcaklığı gündüz 4 derece, gece ise -5 derecedir. Fark kaç derecedir?', options: ['1', '9', '-1', '-9'], answer: 1 },
+    { q: '(-1) üssü 100 + (-1) üssü 101 işleminin sonucu?', options: ['0', '2', '-2', '1'], answer: 0 },
+    { q: 'Çarpma işleminin etkisiz elemanı hangisidir?', options: ['0', '1', '-1', '10'], answer: 1 },
+    { q: 'Aşağıdakilerden hangisi yanlıştır?', options: ['(-2).(-3) = 6', '(-4):(-2) = 2', '(-5).0 = 0', '(-8):(+2) = 4'], answer: 3 },
+    { q: 'Mutlak değeri 3 ten küçük olan kaç tane tam sayı vardır?', options: ['3', '4', '5', '6'], answer: 2 }
 ];
 
 const mathRatQuestions: Question[] = [
-    { q: '3/4 kesrinin ondalık gösterimi nedir?', options: ['0,75', '0,25', '3,4', '0,34'], answer: 0 },
-    { q: 'Hangisi bir rasyonel sayı değildir?', options: ['5', '0', '-3/7', '5/0'], answer: 3 },
-    { q: '0,5 sayısı rasyonel olarak nasıl gösterilir?', options: ['1/2', '1/5', '5/1', '2/5'], answer: 0 },
-    { q: '(-1/2) + (1/2) işleminin sonucu?', options: ['0', '1', '-1', '1/4'], answer: 0 },
-    { q: '2/3 ün çarpma işlemine göre tersi nedir?', options: ['-2/3', '3/2', '-3/2', '1'], answer: 1 },
-    { q: 'Aşağıdakilerden hangisi en büyüktür?', options: ['1/2', '1/3', '1/4', '1/5'], answer: 0 },
-    { q: 'Devirli ondalık gösterim 0,333... hangisine eşittir?', options: ['1/3', '3/10', '3/99', '30/100'], answer: 0 },
-    { q: '(-2/5) . (5/2) sonucu kaçtır?', options: ['1', '-1', '0', '25/4'], answer: 1 },
-    { q: 'Bir pastanın 3/8 ini Ali yedi. Geriye ne kadar kaldı?', options: ['5/8', '3/8', '1/2', '4/8'], answer: 0 },
-    { q: 'Hangisi negatif rasyonel sayıdır?', options: ['-1/2', '0', '5', '(-2)/(-3)'], answer: 0 }
+    { q: 'Aşağıdakilerden hangisi rasyonel sayı DEĞİLDİR?', options: ['0/5', '5/0', '-3/4', '12'], answer: 1 },
+    { q: '3/4 kesrinin ondalık gösterimi hangisidir?', options: ['0,75', '0,25', '3,4', '0,34'], answer: 0 },
+    { q: 'Devirli ondalık sayı 0,666... hangisine eşittir?', options: ['6/10', '2/3', '3/5', '6/90'], answer: 1 },
+    { q: '(-1/2) + (3/4) işleminin sonucu kaçtır?', options: ['1/4', '-1/4', '2/6', '1/2'], answer: 0 },
+    { q: '(2/3) . (9/4) işleminin sonucu kaçtır?', options: ['18/12', '3/2', '2/3', '11/7'], answer: 1 },
+    { q: '(4/5) : (2/5) işleminin sonucu kaçtır?', options: ['2', '1/2', '8/25', '2/5'], answer: 0 },
+    { q: 'Hangi sayının çarpma işlemine göre tersi yoktur?', options: ['1', '-1', '0', '1/2'], answer: 2 },
+    { q: 'Sayı doğrusunda -1 ile 0 arasında olan kesir hangisi olabilir?', options: ['-3/2', '-1/2', '1/2', '-5/4'], answer: 1 },
+    { q: '3 tam 1/5 kesrinin bileşik kesir hali nedir?', options: ['16/5', '15/5', '4/5', '3/5'], answer: 0 },
+    { q: '(1/2) nin karesi kaçtır?', options: ['1/4', '1/2', '2/4', '1'], answer: 0 }
 ];
 
 const mathAlgQuestions: Question[] = [
-    { q: '3x + 5 ifadesinde x=2 için sonuç kaçtır?', options: ['11', '8', '6', '10'], answer: 0 },
-    { q: 'Bir sayının 3 katının 2 eksiği nasıl yazılır?', options: ['3x-2', '3(x-2)', '2x-3', 'x-5'], answer: 0 },
-    { q: 'Benzer terimler hangisidir?', options: ['3x ve 3y', '2a ve 5a', '4x ve 4', '5a ve 5b'], answer: 1 },
-    { q: '2(x+3) ifadesinin açılımı nedir?', options: ['2x+3', '2x+6', 'x+6', '2x-6'], answer: 1 },
-    { q: '3, 6, 9, 12... örüntüsünün kuralı nedir?', options: ['3n', 'n+3', '3n+1', 'n-3'], answer: 0 },
-    { q: '2x - 4 = 10 denkleminin çözümü nedir?', options: ['3', '5', '7', '8'], answer: 2 },
-    { q: '3x = 15 ise x kaçtır?', options: ['3', '5', '12', '45'], answer: 1 },
-    { q: 'Hangi sayının 5 fazlası 12 eder?', options: ['5', '6', '7', '8'], answer: 2 },
-    { q: '5x + 2x işleminin sonucu?', options: ['7x', '10x', '3x', '7'], answer: 0 },
-    { q: 'Eşitliğin her iki tarafına aynı sayı eklenirse eşitlik bozulur mu?', options: ['Evet', 'Hayır', 'Bazen', 'Sayıya bağlı'], answer: 1 }
+    { q: '3x - 5 = 16 denkleminde x kaçtır?', options: ['5', '6', '7', '8'], answer: 2 },
+    { q: '"Bir sayının 3 katının 4 fazlası" ifadesinin cebirsel gösterimi?', options: ['3(x+4)', '3x+4', 'x+3.4', '4x+3'], answer: 1 },
+    { q: '2.(x - 3) ifadesinin eşiti nedir?', options: ['2x - 3', '2x - 6', 'x - 6', '2x + 6'], answer: 1 },
+    { q: 'Benzer terimler hangisidir?', options: ['2x ve 3y', '5a ve 5', '4x ve -x', '3a ve 3b'], answer: 2 },
+    { q: '5, 9, 13, 17... örüntüsünün genel kuralı nedir?', options: ['4n + 1', '4n - 1', '5n', 'n + 4'], answer: 0 },
+    { q: '3x + 2x - x işleminin sonucu?', options: ['5x', '4x', '3x', 'x'], answer: 1 },
+    { q: 'x = 3 için 2x + 5 ifadesinin değeri kaçtır?', options: ['10', '11', '12', '13'], answer: 1 },
+    { q: 'Terazi dengede ise; Sol kefe: 2x+1, Sağ kefe: 11. x kaçtır?', options: ['4', '5', '6', '10'], answer: 1 },
+    { q: 'Bir sınıftaki kızların sayısı erkeklerin sayısının 2 katından 3 eksiktir. Erkeklere x dersek kızlar?', options: ['2x - 3', '2(x - 3)', 'x/2 - 3', '3x - 2'], answer: 0 },
+    { q: '7 - 2x = 1 denkleminde x kaçtır?', options: ['2', '3', '4', '-3'], answer: 1 }
 ];
 
 const mathRatioQuestions: Question[] = [
-    { q: '2/5 = x/10 orantısında x kaçtır?', options: ['2', '4', '5', '8'], answer: 1 },
-    { q: '300 TL nin %20 si kaç TL dir?', options: ['60', '30', '20', '100'], answer: 0 },
-    { q: 'Bir mal %10 karla 110 TL ye satılıyor. Maliyeti kaçtır?', options: ['90', '100', '105', '99'], answer: 1 },
-    { q: 'Hızı 60 km/s olan araç 3 saatte kaç km gider?', options: ['120', '180', '200', '90'], answer: 1 },
-    { q: 'Aynı işi 2 işçi 10 günde yaparsa 4 işçi kaç günde yapar (Ters Orantı)?', options: ['20', '5', '10', '8'], answer: 1 },
-    { q: 'Hangi sayının %50 si 40 tır?', options: ['20', '60', '80', '100'], answer: 2 },
-    { q: '5 kalemi 20 TL olanın 1 kalemi kaç TL dir?', options: ['2', '3', '4', '5'], answer: 2 },
-    { q: '1/200000 ölçekli haritada 1 cm gerçekte kaç km dir?', options: ['2 km', '20 km', '200 km', '0.2 km'], answer: 0 },
-    { q: 'Tuz oranı %20 olan 100g karışımda kaç g tuz vardır?', options: ['10', '20', '30', '40'], answer: 1 },
-    { q: '%25 indirimli fiyatı 75 TL olan gömleğin asıl fiyatı?', options: ['80', '90', '100', '120'], answer: 2 }
+    { q: '2 kg elma 10 TL ise 5 kg elma kaç TL dir? (Doğru Orantı)', options: ['20', '25', '30', '50'], answer: 1 },
+    { q: 'Bir işi 4 işçi 12 günde yaparsa, 6 işçi kaç günde yapar? (Ters Orantı)', options: ['8', '18', '6', '10'], answer: 0 },
+    { q: '300 sayısının %20 si kaçtır?', options: ['30', '40', '50', '60'], answer: 3 },
+    { q: 'Hangi sayının %40 ı 20 dir?', options: ['40', '50', '80', '100'], answer: 1 },
+    { q: 'Bir gömlek %10 indirimle 90 TL ye satılıyor. İndirimsiz fiyatı?', options: ['100', '110', '99', '80'], answer: 0 },
+    { q: 'A/B = 2/3 ve A=10 ise B kaçtır?', options: ['10', '15', '20', '30'], answer: 1 },
+    { q: '1/500.000 ölçekli haritada 2 cm lik uzaklık gerçekte kaç km dir?', options: ['1 km', '10 km', '100 km', '1000 km'], answer: 1 },
+    { q: 'Bir sınıftaki kızların erkeklere oranı 3/4 tür. Sınıf mevcudu 35 ise kaç erkek vardır?', options: ['15', '20', '12', '16'], answer: 1 },
+    { q: '200 TL nin %18 KDV li fiyatı kaçtır?', options: ['218', '236', '36', '220'], answer: 1 },
+    { q: 'Yüzde problemleri çözerken "Ters Orantı" ne zaman kullanılır?', options: ['İşçi problemlerinde', 'Alışverişte', 'Karışım problemlerinde', 'Faiz problemlerinde'], answer: 0 }
 ];
 
 const mathGeoQuestions: Question[] = [
-    { q: 'Tümler iki açıdan biri 30 derece ise diğeri kaçtır?', options: ['60', '150', '30', '90'], answer: 0 },
-    { q: 'Bütünler iki açının toplamı kaç derecedir?', options: ['90', '180', '360', '270'], answer: 1 },
-    { q: 'İç ters açıların ölçüleri nasıldır?', options: ['Eşittir', 'Farklıdır', 'Toplamı 180 dir', 'Bilinmez'], answer: 0 },
-    { q: 'Düzgün beşgenin bir iç açısı kaç derecedir?', options: ['108', '120', '90', '72'], answer: 0 },
-    { q: 'Düzgün altıgenin dış açısı kaç derecedir?', options: ['60', '90', '120', '72'], answer: 0 },
-    { q: 'Yamuğun alanı nasıl bulunur?', options: ['(Alt+Üst)xYükseklik/2', 'Taban x Yükseklik', 'İki kenar çarpımı', 'Taban x Yükseklik/2'], answer: 0 },
-    { q: 'Eşkenar dörtgenin köşegenleri nasıl kesişir?', options: ['Dik', 'Paralel', 'Kesişmez', 'Eğik'], answer: 0 },
-    { q: 'Üçgenin iç açıları toplamı kaçtır?', options: ['180', '360', '90', '270'], answer: 0 },
-    { q: 'Dörtgenin dış açıları toplamı kaçtır?', options: ['180', '360', '90', '540'], answer: 1 },
-    { q: 'Paralelkenarın karşılıklı açıları nasıldır?', options: ['Eşittir', 'Bütünlerdir', 'Tümlerdir', 'Farklıdır'], answer: 0 }
+    { q: 'Tümler iki açıdan biri 40 derece ise diğeri kaç derecedir?', options: ['40', '50', '140', '150'], answer: 1 },
+    { q: 'Bütünler iki açının toplamı kaç derecedir?', options: ['90', '180', '270', '360'], answer: 1 },
+    { q: 'Paralel iki doğruyu kesen bir doğrunun oluşturduğu açılardan "Z kuralı" hangisidir?', options: ['Yöndeş Açılar', 'İç Ters Açılar', 'Dış Ters Açılar', 'Karşı Durumlu Açılar'], answer: 1 },
+    { q: 'Düzgün beşgenin bir iç açısının ölçüsü kaç derecedir?', options: ['108', '120', '72', '60'], answer: 0 },
+    { q: 'Yamuğun alanı nasıl hesaplanır?', options: ['(Alt Taban + Üst Taban) x Yükseklik / 2', 'Taban x Yükseklik', 'Kenar x Kenar', 'Köşegenler çarpımı / 2'], answer: 0 },
+    { q: 'Eşkenar dörtgenin köşegenleri birbirini nasıl keser?', options: ['Dik ortalar', 'Paraleldir', 'Kesişmez', 'Eşittir'], answer: 0 },
+    { q: 'Bir çokgenin dış açıları toplamı kaç derecedir?', options: ['180', '360', '540', 'Kenar sayısına bağlı'], answer: 1 },
+    { q: 'Düzgün altıgenin bir dış açısı kaç derecedir?', options: ['30', '45', '60', '90'], answer: 2 },
+    { q: 'Çevre uzunluğu 20 cm olan karenin alanı kaç cm karedir?', options: ['20', '25', '16', '100'], answer: 1 },
+    { q: 'Paralelkenarın alanı hangisidir?', options: ['Taban x Yükseklik', 'Taban x Yükseklik / 2', 'İki kenar çarpımı', 'Köşegen çarpımı'], answer: 0 }
 ];
 
 const mathCircleQuestions: Question[] = [
-    { q: 'Çemberin en uzun kirişine ne denir?', options: ['Yarıçap', 'Çap', 'Yay', 'Teğet'], answer: 1 },
-    { q: 'Çapı 10 cm olan çemberin yarıçapı kaçtır?', options: ['10', '20', '5', '2.5'], answer: 2 },
-    { q: 'Çevre formülü nedir (r yarıçap)?', options: ['2.pi.r', 'pi.r.kare', '2.pi', 'pi.r'], answer: 0 },
-    { q: 'Alan formülü nedir?', options: ['2.pi.r', 'pi.r.kare', 'pi.r', 'r.kare'], answer: 1 },
-    { q: 'Merkez açının gördüğü yayın ölçüsü nasıldır?', options: ['Açıya eşittir', 'Açının yarısıdır', 'Açının iki katıdır', '180 eksidir'], answer: 0 },
-    { q: 'Pi sayısı yaklaşık kaçtır?', options: ['3', '3.14', '22/7', 'Hepsi'], answer: 3 },
-    { q: 'Verilerin ortalamasını gösteren değere ne denir?', options: ['Aritmetik Ortalama', 'Mod', 'Medyan', 'Açıklık'], answer: 0 },
-    { q: 'Bir veri grubunda en çok tekrar eden değere ne denir?', options: ['Mod (Tepe Değer)', 'Medyan', 'Ortalama', 'Açıklık'], answer: 0 },
-    { q: 'Küçükten büyüğe sıralandığında ortadaki değere ne denir?', options: ['Medyan (Ortanca)', 'Mod', 'Ortalama', 'Frekans'], answer: 0 },
-    { q: 'Yarıçapı 3 cm olan dairenin alanı? (pi=3)', options: ['9', '18', '27', '36'], answer: 2 }
+    { q: 'Yarıçapı 5 cm olan çemberin çevresi kaçtır? (pi=3 alınız)', options: ['15', '30', '45', '75'], answer: 1 },
+    { q: 'Yarıçapı 4 cm olan dairenin alanı kaçtır? (pi=3 alınız)', options: ['12', '24', '48', '36'], answer: 2 },
+    { q: 'Merkez açının gördüğü yayın ölçüsü nasıldır?', options: ['Merkez açıya eşittir', 'Merkez açının yarısıdır', 'Merkez açının iki katıdır', '180 derecedir'], answer: 0 },
+    { q: 'Çemberin en uzun kirişine ne denir?', options: ['Yarıçap', 'Çap', 'Yay', 'Kes en'], answer: 1 },
+    { q: '72 derecelik daire diliminin alanı, tam dairenin alanının kaçta kaçıdır?', options: ['1/2', '1/4', '1/5', '1/6'], answer: 2 },
+    { q: 'Çizgi grafiği en çok hangi durumlarda kullanılır?', options: ['Bir değişkenin zamanla değişimini göstermek için', 'Parçaların bütüne oranını göstermek için', 'Sayıları karşılaştırmak için', 'Grupları ayırmak için'], answer: 0 },
+    { q: 'Veri grubundaki en büyük ve en küçük değer arasındaki farka ne denir?', options: ['Açıklık', 'Ortalama', 'Medyan', 'Mod'], answer: 0 },
+    { q: 'Aritmetik ortalama nasıl bulunur?', options: ['Verilerin toplamı / Veri sayısı', 'En büyük - En küçük', 'Ortadaki sayı', 'En çok tekrar eden'], answer: 0 },
+    { q: 'Daire grafiği en çok ne için kullanılır?', options: ['Bir bütünün parçalarını oransal göstermek için', 'Zamanla değişimi göstermek için', 'Sıcaklık değişimi için', 'Nüfus artışı için'], answer: 0 },
+    { q: 'Çapı gören çevre açının ölçüsü kaç derecedir? (Lise bilgisi ama bazen sorulur)', options: ['45', '90', '180', '60'], answer: 1 }
 ];
 
 // --- SOSYAL BİLGİLER (7 ÜNİTE) ---
 const socialCommQuestions: Question[] = [
-    { q: 'Etkili iletişimi olumsuz etkileyen davranış hangisidir?', options: ['Empati kurmak', 'Göz teması kurmak', 'Öğüt vermek', 'Dikkatli dinlemek'], answer: 2 },
-    { q: 'Ben dili kullanan biri nasıl konuşur?', options: ['"Çok yaramazsın"', '"Seni hiç sevmiyorum"', '"Davranışın beni üzdü"', '"Hep geç kalıyorsun"'], answer: 2 },
-    { q: 'Empati nedir?', options: ['Kendini başkasının yerine koyma', 'Sürekli konuşma', 'Küsme', 'Bağırma'], answer: 0 },
-    { q: 'Kitle iletişim araçlarının genel adı nedir?', options: ['Medya', 'Gazete', 'Telefon', 'İnternet'], answer: 0 },
-    { q: 'RTÜK\'ün görevi nedir?', options: ['Yayınları denetlemek', 'Yol yapmak', 'Okul açmak', 'Para basmak'], answer: 0 },
-    { q: 'Basın özgürlüğünün kısıtlandığı duruma ne denir?', options: ['Sansür', 'Tekzip', 'Manşet', 'Sütun'], answer: 0 },
-    { q: 'Yanlış bir haberi düzeltme yazısına ne denir?', options: ['Tekzip', 'İlan', 'Reklam', 'Haber'], answer: 0 },
-    { q: 'İletişimde jest ve mimik ne anlama gelir?', options: ['Beden dili', 'Yazı dili', 'Sözlü iletişim', 'Resim'], answer: 0 },
-    { q: 'Aşağıdakilerden hangisi olumlu iletişim örneğidir?', options: ['Yargılamak', 'Dinlemek', 'Alay etmek', 'Lakap takmak'], answer: 1 },
-    { q: 'Kamuoyu oluşturmada hangisi etkilidir?', options: ['Medya', 'Hava durumu', 'Trafik', 'Marketler'], answer: 0 }
+    { q: '"Sen dili" yerine "Ben dili" kullanmak iletişimde ne sağlar?', options: ['Karşıdakini suçlamadan duygumuzu anlatmayı', 'Kavgayı başlatmayı', 'Karşıdakini aşağılamayı', 'İletişimi kesmeyi'], answer: 0 },
+    { q: 'Aşağıdakilerden hangisi "Etkili Dinleme" yöntemlerinden biri DEĞİLDİR?', options: ['Göz teması kurmak', 'Söz kesmemek', 'Dinlerken başka işle uğraşmak', 'Empati kurmak'], answer: 2 },
+    { q: 'Gazete, TV, Genel Ağ gibi araçların tümüne ne ad verilir?', options: ['Kitle İletişim Araçları (Medya)', 'Haberleşme', 'Teknoloji', 'Ulaşım'], answer: 0 },
+    { q: 'Yanlış bir haberin düzeltilmesi için yayınlanan yazıya ne denir?', options: ['Tekzip', 'Sansür', 'Manşet', 'Sütun'], answer: 0 },
+    { q: 'Anayasamıza göre aşağıdakilerden hangisi iletişim özgürlüğünün kısıtlanabileceği durumlardan biridir?', options: ['Özel hayatın gizliliği ihlal edildiğinde', 'Haber beğenilmediğinde', 'Kağıt bittiğinde', 'Reyting düştüğünde'], answer: 0 },
+    { q: '"Empati" ne demektir?', options: ['Kendini başkasının yerine koyarak hissetme', 'Sadece kendini düşünme', 'Başkasına acıma', 'Sürekli nasihat etme'], answer: 0 },
+    { q: 'RTÜK\'ün (Radyo ve Televizyon Üst Kurulu) temel görevi nedir?', options: ['Yayınları denetlemek ve düzenlemek', 'Televizyon üretmek', 'Haber yazmak', 'Sunucu yetiştirmek'], answer: 0 },
+    { q: 'Jest ve mimikler ne tür bir iletişimdir?', options: ['Sözsüz İletişim', 'Sözlü İletişim', 'Yazılı İletişim', 'Resimli İletişim'], answer: 0 },
+    { q: 'Osmanlı\'da devlet ile halk arasındaki iletişimi sağlayan önemli görevliler?', options: ['Tellallar', 'Kadılar', 'Yeniçeriler', 'Esnaflar'], answer: 0 },
+    { q: 'Akıllı işaretler (Semboller) TV\'de ne işe yarar?', options: ['İzleyiciyi programın içeriği hakkında uyarmak', 'Kanalın adını göstermek', 'Reklam yapmak', 'Ses ayarı yapmak'], answer: 0 }
 ];
 
 const socialHistoryQuestions: Question[] = [
-    { q: 'Osmanlı Devleti\'nin kurucusu kimdir?', options: ['Orhan Bey', 'Osman Bey', 'Fatih Sultan Mehmet', 'Yavuz Sultan Selim'], answer: 1 },
-    { q: 'İstanbul\'un fethi hangi padişah döneminde gerçekleşti?', options: ['II. Mehmet (Fatih)', 'I. Murat', 'Yıldırım Bayezid', 'Kanuni Sultan Süleyman'], answer: 0 },
-    { q: 'Osmanlı\'da devşirme sisteminin uygulandığı ordu?', options: ['Tımarlı Sipahi', 'Yeniçeri Ocağı', 'Akıncılar', 'Leventler'], answer: 1 },
-    { q: 'Divan-ı Hümayun günümüzdeki hangi kuruma benzer?', options: ['Belediye', 'Bakanlar Kurulu', 'Muhtarlık', 'Mahkeme'], answer: 1 },
-    { q: 'Lale Devri hangi olayla sona ermiştir?', options: ['Patrona Halil İsyanı', 'Kabakçı Mustafa İsyanı', '31 Mart Vakası', 'Vaka-i Vakvakiye'], answer: 0 },
-    { q: 'Osmanlı\'nın Rumeli\'deki ilk toprak parçası?', options: ['Çimpe Kalesi', 'Gelibolu', 'Edirne', 'Selanik'], answer: 0 },
-    { q: 'Yavuz Sultan Selim hangi seferle Halifeliği aldı?', options: ['Mısır Seferi', 'Çaldıran', 'Mohaç', 'Viyana'], answer: 0 },
-    { q: 'Osmanlı\'da deniz askerlerine ne denir?', options: ['Levent', 'Yeniçeri', 'Sipahi', 'Lağımcı'], answer: 0 },
-    { q: 'Fatih Sultan Mehmet\'in İstanbul\'u fethettiği yıl?', options: ['1453', '1299', '1071', '1923'], answer: 0 },
-    { q: 'İstimalet Politikası nedir?', options: ['Hoşgörü politikası', 'Savaş politikası', 'Vergi politikası', 'Sürgün politikası'], answer: 0 }
+    { q: 'Osmanlı Devleti\'nin Rumeli\'ye geçişini sağlayan ilk toprak parçası hangisidir?', options: ['Çimpe Kalesi', 'Gelibolu', 'Edirne', 'Rodoscuk'], answer: 0 },
+    { q: 'Osmanlı\'da "Devşirme Sistemi" ile oluşturulan, padişaha bağlı merkez ordusu hangisidir?', options: ['Yeniçeri Ocağı (Kapıkulu)', 'Tımarlı Sipahi', 'Akıncılar', 'Azaplar'], answer: 0 },
+    { q: 'İstanbul\'un Fethi ile "Orta Çağ kapanmış, Yeni Çağ başlamıştır". Bu durum fethin hangi yönünü gösterir?', options: ['Evrensel (Dünya tarihini etkileyen) sonucunu', 'Türk tarihi açısından sonucunu', 'Dini sonucunu', 'Ekonomik sonucunu'], answer: 0 },
+    { q: 'Osmanlı\'nın fethettiği yerlerde halka hoşgörülü davranması politikasına ne denir?', options: ['İstimalet Politikası', 'İskan Politikası', 'Gaza Politikası', 'Millet Sistemi'], answer: 0 },
+    { q: 'Osmanlı donanmasının "Kaptan-ı Derya"sı olan ünlü denizci?', options: ['Barbaros Hayrettin Paşa', 'Piri Reis', 'Seydi Ali Reis', 'Kılıç Ali Paşa'], answer: 0 },
+    { q: 'Mısır Seferi sonucunda Osmanlı\'ya geçen ve Yavuz Sultan Selim\'in aldığı unvan?', options: ['Halifelik', 'Sultan', 'Han', 'Hakan'], answer: 0 },
+    { q: 'Coğrafi Keşifler Osmanlı ekonomisini nasıl etkiledi?', options: ['Olumsuz (İpek ve Baharat yolu önem kaybetti)', 'Olumlu', 'Etkilemedi', 'Güçlendirdi'], answer: 0 },
+    { q: 'Lale Devri\'nde yapılan en önemli yeniliklerden biri olan "Matbaa"yı kim getirmiştir?', options: ['İbrahim Müteferrika ve Said Efendi', 'Katip Çelebi', 'Evliya Çelebi', 'Naima'], answer: 0 },
+    { q: 'II. Viyana Kuşatması\'ndan sonra Osmanlı\'nın Avrupa karşısında savunmaya çekildiği antlaşma?', options: ['Karlofça Antlaşması', 'Pasarofça', 'Zitvatorok', 'İstanbul'], answer: 0 },
+    { q: 'Osmanlı\'da devlet işlerinin görüşüldüğü meclis?', options: ['Divan-ı Hümayun', 'Kurultay', 'Pankuş', 'Meclis-i Mebusan'], answer: 0 }
 ];
 
 const socialGeoQuestions: Question[] = [
-    { q: 'Nüfus sayımını Türkiye\'de hangi kurum yapar?', options: ['TÜİK', 'MEB', 'TBMM', 'AFAD'], answer: 0 },
-    { q: 'Hangisi göçün doğal nedenlerinden biridir?', options: ['Deprem', 'Savaş', 'İş bulma', 'Eğitim'], answer: 0 },
-    { q: 'Türkiye\'de nüfusun en yoğun olduğu bölge?', options: ['Marmara', 'Doğu Anadolu', 'Karadeniz', 'Akdeniz'], answer: 0 },
-    { q: 'Beyin göçü nedir?', options: ['Eğitimli kişilerin yurt dışına gitmesi', 'İşçi göçü', 'Turistik gezi', 'Mevsimlik göç'], answer: 0 },
-    { q: 'Kırsal kesimden kente yapılan göçün en büyük sebebi?', options: ['İş imkanları', 'Havası', 'Trafiği', 'Gürültüsü'], answer: 0 },
-    { q: 'Yerleşmeyi etkileyen doğal faktör hangisidir?', options: ['İklim', 'Sanayi', 'Ulaşım', 'Turizm'], answer: 0 },
-    { q: 'Mevsimlik göç en çok hangi amaçla yapılır?', options: ['Tarım ve Turizm', 'Eğitim', 'Sağlık', 'Askerlik'], answer: 0 },
-    { q: 'Nüfus artış hızı nasıl bulunur?', options: ['Doğumlar - Ölümler + Göçler', 'Sadece Doğumlar', 'Sadece Göçler', 'Ölümler'], answer: 0 },
-    { q: 'Türkiye\'de nüfusun dağılışını en çok ne etkiler?', options: ['Yer şekilleri ve İklim', 'Madenler', 'Ormanlar', 'Nehirler'], answer: 0 },
-    { q: 'Hangi ilimizde nüfus yoğunluğu en azdır?', options: ['Tunceli', 'İstanbul', 'İzmir', 'Ankara'], answer: 0 }
+    { q: 'Türkiye\'de nüfus sayımlarını hangi kurum yapar?', options: ['TÜİK (Türkiye İstatistik Kurumu)', 'MEB', 'Nüfus Müdürlüğü', 'Belediyeler'], answer: 0 },
+    { q: 'Aşağıdakilerden hangisi nüfusun dağılışını etkileyen "Doğal" faktörlerden biridir?', options: ['İklim ve Yer Şekilleri', 'Sanayi', 'Ulaşım', 'Turizm'], answer: 0 },
+    { q: 'Kırsal kesimden kentlere yapılan göçün en temel nedeni nedir?', options: ['Ekonomik (İş imkanları)', 'Kan davası', 'Eğitim', 'Sağlık'], answer: 0 },
+    { q: 'Yaz mevsiminde Adana (Pamuk), Giresun (Fındık) gibi yerlere yapılan göç türü?', options: ['Mevsimlik Göç', 'Sürekli Göç', 'Beyin Göçü', 'Dış Göç'], answer: 0 },
+    { q: 'Eğitimli ve nitelikli insanların yurt dışına gitmesine ne denir?', options: ['Beyin Göçü', 'İşçi Göçü', 'Mevsimlik Göç', 'Mübadele'], answer: 0 },
+    { q: 'Anayasamıza göre "Yerleşme ve Seyahat Özgürlüğü" hangi durumda kısıtlanabilir?', options: ['Salgın hastalık, suç soruşturması vb.', 'Keyfi olarak', 'Trafik sıkışıkken', 'Turistler gelince'], answer: 0 },
+    { q: 'Türkiye\'de nüfus yoğunluğunun en fazla olduğu bölge hangisidir?', options: ['Marmara Bölgesi', 'Doğu Anadolu', 'Karadeniz', 'Akdeniz'], answer: 0 },
+    { q: 'Nüfus piramitlerine bakarak hangisi ANLAŞILAMAZ?', options: ['İnsanların isimleri', 'Cinsiyet durumu', 'Yaş grupları', 'Gelişmişlik düzeyi'], answer: 0 },
+    { q: 'Kurak ve engebeli yerlerde nüfus nasıldır?', options: ['Seyrek', 'Yoğun', 'Çok kalabalık', 'Artış gösterir'], answer: 0 },
+    { q: 'Mübadele göçü nedir?', options: ['Antlaşma ile yapılan nüfus değişimi', 'Savaş kaçışı', 'İşçi göçü', 'Beyin göçü'], answer: 0 }
 ];
 
 const socialScienceQuestions: Question[] = [
-    { q: 'Matbaayı Osmanlı\'ya getiren kişi?', options: ['İbrahim Müteferrika', 'Evliya Çelebi', 'Katip Çelebi', 'Takiyüddin'], answer: 0 },
-    { q: 'Sıfır rakamını bulan İslam bilgini?', options: ['Harezmi', 'Farabi', 'İbn-i Sina', 'Biruni'], answer: 0 },
-    { q: '"Tıbbın Kanunu" kitabını yazan bilgin?', options: ['İbn-i Sina', 'Ali Kuşçu', 'Piri Reis', 'Gazali'], answer: 0 },
-    { q: 'Piri Reis neyi ile ünlüdür?', options: ['Dünya Haritası', 'Uçuş denemesi', 'Matematik kitabı', 'Tıp çalışmaları'], answer: 0 },
-    { q: 'Bilginin korunmasında hangisi ilk aşamadır?', options: ['Yazının icadı', 'Bilgisayar', 'Matbaa', 'Telefon'], answer: 0 },
-    { q: 'Rasathane kuran Türk hükümdar kimdir?', options: ['Uluğ Bey', 'Fatih', 'Yavuz', 'Kanuni'], answer: 0 },
-    { q: 'Buhar makinesinin icadı neyi başlattı?', options: ['Sanayi İnkılabı', 'Fransız İhtilali', 'Rönesans', 'Reform'], answer: 0 },
-    { q: 'Özgür düşüncenin bilime katkısı nedir?', options: ['Bilimi geliştirir', 'Engeller', 'Etkilemez', 'Yavaşlatır'], answer: 0 },
-    { q: 'Ali Kuşçu hangi alanda çalışmıştır?', options: ['Astronomi ve Matematik', 'Tıp', 'Tarih', 'Edebiyat'], answer: 0 },
-    { q: 'Kağıdı kimler icat etmiştir?', options: ['Çinliler', 'Türkler', 'Mısırlılar', 'Sümerler'], answer: 0 }
+    { q: 'Çivi yazısını bularak tarihi çağları başlatan uygarlık?', options: ['Sümerler', 'Mısırlılar', 'Çinliler', 'Fenikeliler'], answer: 0 },
+    { q: 'Sıfır "0" rakamını bulan ve Cebir\'in babası sayılan İslam bilgini?', options: ['Harezmi', 'Farabi', 'İbn-i Sina', 'Biruni'], answer: 0 },
+    { q: 'Tıp alanında yazdığı "El-Kanun fi\'t-Tıb" kitabı Avrupa\'da yüzyıllarca okutulan bilgin?', options: ['İbn-i Sina (Avicenna)', 'Farabi', 'Ali Kuşçu', 'Akşemseddin'], answer: 0 },
+    { q: 'Osmanlı\'da Fatih döneminde İstanbul\'a gelen ünlü Matematik ve Astronomi bilgini?', options: ['Ali Kuşçu', 'Takiyüddin', 'Piri Reis', 'Seydi Ali Reis'], answer: 0 },
+    { q: 'Bilginin depolanmasında ve aktarılmasında en büyük devrim sayılan icat?', options: ['Matbaa', 'Tekerlek', 'Para', 'Pusula'], answer: 0 },
+    { q: 'Buhar gücünün makinelerde kullanılmasıyla başlayan süreç?', options: ['Sanayi İnkılabı', 'Rönesans', 'Reform', 'Coğrafi Keşifler'], answer: 0 },
+    { q: 'Orta Çağ Avrupa\'sında kilisenin baskıcı düşünce sistemine ne denir?', options: ['Skolastik Düşünce', 'Pozitif Düşünce', 'Özgür Düşünce', 'Bilimsel Düşünce'], answer: 0 },
+    { q: 'Dünya\'nın yuvarlak olduğunu ispatlayan denizci?', options: ['Macellan', 'Kolomb', 'Vasco da Gama', 'Bartelmi Dias'], answer: 0 },
+    { q: 'Türk-İslam bilginlerinin bilime en büyük katkısı nedir?', options: ['Antik Yunan eserlerini çevirip geliştirerek Avrupa\'ya aktarmak', 'Sadece dinle ilgilenmek', 'Bilimi yasaklamak', 'Savaş aleti yapmak'], answer: 0 },
+    { q: 'Piri Reis\'in ünlü eseri hangisidir?', options: ['Kitab-ı Bahriye (Denizcilik Kitabı)', 'Seyahatname', 'Mesnevi', 'Nutuk'], answer: 0 }
 ];
 
 const socialEcoQuestions: Question[] = [
-    { q: 'Osmanlı\'da toprağa dayalı askeri sistem?', options: ['Tımar Sistemi', 'Devşirme', 'Kafes', 'Müsadere'], answer: 0 },
-    { q: 'Ahi teşkilatının kurucusu kimdir?', options: ['Ahi Evran', 'Mevlana', 'Yunus Emre', 'Hacı Bektaş'], answer: 0 },
-    { q: 'Vakıfların temel amacı nedir?', options: ['Toplumsal yardım', 'Savaşmak', 'Para kazanmak', 'Yönetim'], answer: 0 },
-    { q: 'Sanayi İnkılabı nerede başladı?', options: ['İngiltere', 'Fransa', 'Almanya', 'ABD'], answer: 0 },
-    { q: 'Lonca teşkilatında meslek öğrenen çırağın yükselmesi?', options: ['Ustalık', 'Vezirlik', 'Paşalık', 'Beylik'], answer: 0 },
-    { q: 'Osmanlı\'da nitelikli insan yetiştiren kurum?', options: ['Enderun', 'Kışla', 'Hamam', 'Çarşı'], answer: 0 },
-    { q: 'Tımar sistemi bozulunca ne oldu?', options: ['Üretim azaldı, güvenlik bozuldu', 'Zenginlik arttı', 'Ordu güçlendi', 'Halk mutlu oldu'], answer: 0 },
-    { q: 'Günümüzde mesleki eğitim veren liseler?', options: ['Meslek Liseleri', 'Fen Liseleri', 'Anadolu Liseleri', 'Spor Liseleri'], answer: 0 },
-    { q: 'Dijital teknoloji üretimi nasıl etkiledi?', options: ['Hızlandırdı', 'Yavaşlattı', 'Bitirdi', 'Zorlaştırdı'], answer: 0 },
-    { q: 'E-ticaret nedir?', options: ['İnternetten alışveriş', 'Pazardan alışveriş', 'Takas', 'Hediyeleşme'], answer: 0 }
+    { q: 'Osmanlı\'da toprağın işlenmesi karşılığında asker yetiştirilen sisteme ne denir?', options: ['Tımar Sistemi', 'Devşirme Sistemi', 'Ahilik', 'Lonca'], answer: 0 },
+    { q: 'Ahi Teşkilatı\'nın kurucusu ve esnaf piri kimdir?', options: ['Ahi Evran', 'Mevlana', 'Yunus Emre', 'Hacı Bektaş'], answer: 0 },
+    { q: 'Osmanlı\'da esnafların oluşturduğu meslek örgütü?', options: ['Lonca Teşkilatı', 'Divan', 'Enderun', 'Medrese'], answer: 0 },
+    { q: 'Vakıfların temel amacı nedir?', options: ['Toplumsal yardımlaşma ve dayanışma', 'Para kazanmak', 'Asker yetiştirmek', 'Vergi toplamak'], answer: 0 },
+    { q: 'Sanayi İnkılabı ile kol gücünden neye geçilmiştir?', options: ['Makine gücüne', 'Hayvan gücüne', 'Rüzgar gücüne', 'Su gücüne'], answer: 0 },
+    { q: 'Meslek seçiminde en önemli faktör ne olmalıdır?', options: ['İlgi ve yetenekler', 'Sadece para', 'Ailenin isteği', 'Arkadaşların seçimi'], answer: 0 },
+    { q: 'E-ticaretin en büyük avantajı nedir?', options: ['Zamandan ve mekandan bağımsız alışveriş', 'Ürüne dokunabilmek', 'Nakit ödeme', 'Satıcıyla pazarlık'], answer: 0 },
+    { q: 'Osmanlı\'da devlet adamı yetiştiren saray okulu?', options: ['Enderun', 'Medrese', 'Sıbyan Mektebi', 'Tekke'], answer: 0 },
+    { q: 'Tımar sistemi bozulunca köylünün toprağı terk edip şehre göçmesine ne denir?', options: ['Celali İsyanları / Büyük Kaçgun', 'Kavimler Göçü', 'Mübadele', 'İskan'], answer: 0 },
+    { q: 'Günümüzde Ahilik ve Lonca geleneğini sürdüren kurumlar?', options: ['Esnaf ve Sanatkarlar Odaları / Meslek Liseleri', 'Kişlalar', 'Hastaneler', 'Bankalar'], answer: 0 }
 ];
 
 const socialDemoQuestions: Question[] = [
-    { q: 'Halkın kendi kendini yönettiği sistem?', options: ['Cumhuriyet', 'Monarşi', 'Oligarşi', 'Teokrasi'], answer: 0 },
-    { q: 'Tek kişinin egemen olduğu yönetim?', options: ['Monarşi', 'Demokrasi', 'Cumhuriyet', 'Meşrutiyet'], answer: 0 },
-    { q: 'Dini kurallara dayalı yönetim?', options: ['Teokrasi', 'Oligarşi', 'Cumhuriyet', 'Demokrasi'], answer: 0 },
-    { q: 'Magna Carta neyin başlangıcı sayılır?', options: ['Demokrasinin', 'Krallığın', 'Savaşın', 'Ticaretin'], answer: 0 },
-    { q: 'Türkiye Cumhuriyeti ne zaman kuruldu?', options: ['1923', '1920', '1919', '1881'], answer: 0 },
-    { q: 'Kuvvetler ayrılığı nedir?', options: ['Yasama, Yürütme, Yargının ayrı olması', 'Güçlü olmak', 'Ordunun ayrılması', 'Halkın ayrılması'], answer: 0 },
-    { q: 'Yasama yetkisi kime aittir?', options: ['TBMM', 'Cumhurbaşkanı', 'Mahkemeler', 'Polis'], answer: 0 },
-    { q: 'Yargı yetkisi kime aittir?', options: ['Bağımsız Mahkemeler', 'Meclis', 'Hükümet', 'Muhtar'], answer: 0 },
-    { q: 'Seçme ve seçilme hakkı neyin gereğidir?', options: ['Demokrasinin', 'Monarşinin', 'Oligarşinin', 'Krallığın'], answer: 0 },
-    { q: 'Demokrasilerde yöneticiler nasıl belirlenir?', options: ['Seçimle', 'Babadan oğula', 'Zorla', 'Kura ile'], answer: 0 }
+    { q: 'Halkın egemenliğine dayanan yönetim biçimi?', options: ['Cumhuriyet (Demokrasi)', 'Monarşi', 'Oligarşi', 'Teokrasi'], answer: 0 },
+    { q: 'Tek kişinin egemen olduğu yönetim biçimi?', options: ['Monarşi', 'Cumhuriyet', 'Demokrasi', 'Meşrutiyet'], answer: 0 },
+    { q: 'Dini kurallara dayalı yönetim biçimi?', options: ['Teokrasi', 'Oligarşi', 'Cumhuriyet', 'Monarşi'], answer: 0 },
+    { q: '1215 Magna Carta ile İngiltere\'de ilk kez ne olmuştur?', options: ['Kralın yetkileri kısıtlanmıştır', 'Cumhuriyet ilan edilmiştir', 'Kölelik kalkmıştır', 'Savaş bitmiştir'], answer: 0 },
+    { q: 'Ülkemizde Yasama (Kanun yapma) yetkisi kime aittir?', options: ['TBMM (Türkiye Büyük Millet Meclisi)', 'Cumhurbaşkanı', 'Mahkemeler', 'Halk'], answer: 0 },
+    { q: 'Ülkemizde Yürütme (Kanunları uygulama) yetkisi kime aittir?', options: ['Cumhurbaşkanı ve Kabine', 'TBMM', 'Yargıtay', 'Valiler'], answer: 0 },
+    { q: 'Demokrasinin temel ilkelerinden "Çoğulculuk" ne demektir?', options: ['Farklı görüşlerin ve partilerin mecliste temsil edilmesi', 'Çok nüfuslu olmak', 'Çok para kazanmak', 'Herkesin aynı şeyi düşünmesi'], answer: 0 },
+    { q: 'Türk tarihinde ilk anayasa hangisidir?', options: ['Kanun-i Esasi (1876)', '1921 Anayasası', '1961 Anayasası', 'Tanzimat Fermanı'], answer: 0 },
+    { q: 'Atatürk\'ün "Egemenlik kayıtsız şartsız milletindir" sözü neyi vurgular?', options: ['Milli Egemenliği / Demokrasiyi', 'Padişahlığı', 'Halifeliği', 'Askeri yönetimi'], answer: 0 },
+    { q: 'Seçimlerde oy kullanmak hangi vatandaşlık görevidir?', options: ['Siyasi hak ve ödev', 'Ekonomik ödev', 'Sosyal hak', 'Kişisel hak'], answer: 0 }
 ];
 
 const socialIntQuestions: Question[] = [
-    { q: 'Türkiye\'nin üye olduğu askeri örgüt?', options: ['NATO', 'AB', 'WHO', 'UNICEF'], answer: 0 },
-    { q: 'Birleşmiş Milletlerin amacı nedir?', options: ['Dünya barışını korumak', 'Savaş çıkarmak', 'Ticaret yapmak', 'Spor yapmak'], answer: 0 },
-    { q: 'TİKA hangi alanda faaliyet gösterir?', options: ['Kalkınma ve İşbirliği', 'Askeri', 'Spor', 'Müzik'], answer: 0 },
-    { q: 'Küresel ısınmanın temel nedeni?', options: ['Sera gazları', 'Ağaç dikmek', 'Güneşin büyümesi', 'Denizlerin soğuması'], answer: 0 },
-    { q: 'Stereotip ne demektir?', options: ['Kalıp yargı', 'Gerçek bilgi', 'Bilimsel veri', 'Doğru haber'], answer: 0 },
-    { q: 'UNESCO neyi korur?', options: ['Kültürel Mirası', 'Bankaları', 'Orduları', 'Fabrikaları'], answer: 0 },
-    { q: 'Dünya Sağlık Örgütü\'nün kısaltması?', options: ['WHO', 'NATO', 'UN', 'IMF'], answer: 0 },
-    { q: 'Açlık ve yoksullukla mücadele eden küresel sorun?', options: ['Gelir adaletsizliği', 'Teknoloji', 'Eğitim', 'Sanat'], answer: 0 },
-    { q: 'Türkiye\'nin AB üyeliği süreci ne durumdadır?', options: ['Aday ülke', 'Tam üye', 'Üye değil', 'Kurucu üye'], answer: 0 },
-    { q: 'Türk kültürünü yurt dışında tanıtan kurum?', options: ['Yunus Emre Enstitüsü', 'TÜBİTAK', 'ASELSAN', 'THY'], answer: 0 }
+    { q: 'Türkiye\'nin de üye olduğu, amacı dünya barışını ve güvenliğini korumak olan en büyük uluslararası örgüt?', options: ['Birleşmiş Milletler (BM)', 'NATO', 'Avrupa Birliği', 'İslam İşbirliği Teşkilatı'], answer: 0 },
+    { q: 'Türkiye\'nin 1952 yılında üye olduğu askeri savunma paktı?', options: ['NATO', 'Varşova Paktı', 'Balkan Antantı', 'Sadabat Paktı'], answer: 0 },
+    { q: 'Dünyada açlık, kuraklık ve iklim değişikliği gibi sorunlara ne denir?', options: ['Küresel Sorunlar', 'Yerel Sorunlar', 'Bireysel Sorunlar', 'Ulusal Sorunlar'], answer: 0 },
+    { q: 'Türk kültürünü, dilini ve tarihini yurt dışında tanıtan kuruluş?', options: ['Yunus Emre Enstitüsü', 'TÜBİTAK', 'ASELSAN', 'TEMA'], answer: 0 },
+    { q: 'Türk Cumhuriyetleri ve akraba topluluklarla işbirliğini geliştiren kuruluş?', options: ['TİKA (Türk İşbirliği ve Koordinasyon Ajansı)', 'NATO', 'IMF', 'WHO'], answer: 0 },
+    { q: 'İnsanların bir grup hakkında sahip olduğu genelleştirilmiş ve değişmesi zor yargılara ne denir?', options: ['Kalıp Yargı (Stereotip)', 'Ön Yargı', 'Empati', 'Hoşgörü'], answer: 0 },
+    { q: 'Sera gazlarının artması sonucu Dünya sıcaklığının artmasına ne denir?', options: ['Küresel Isınma', 'Buzul Çağı', 'Mevsim Normalleri', 'Hava Kirliliği'], answer: 0 },
+    { q: 'Gelişmekte olan ülkelere kredi sağlayan uluslararası banka?', options: ['Dünya Bankası', 'Ziraat Bankası', 'Merkez Bankası', 'İş Bankası'], answer: 0 },
+    { q: 'Ülkemizin Avrupa Birliği (AB) üyeliği süreci ne durumdadır?', options: ['Aday Ülke', 'Tam Üye', 'Üye Değil', 'Kurucu Üye'], answer: 0 },
+    { q: 'Fosil yakıtların (kömür, petrol) aşırı kullanımı neye yol açar?', options: ['İklim Değişikliğine', 'Ormanların artmasına', 'Suların temizlenmesine', 'Havanın soğumasına'], answer: 0 }
 ];
 
-// --- İNGİLİZCE (5 ÜNİTE) ---
+// --- İNGİLİZCE (5 ÜNİTE - BETTER VOCABULARY) ---
 const engUnit1: Question[] = [
-    { q: 'Which one describes personality?', options: ['Generous', 'Tall', 'Fat', 'Blue eyes'], answer: 0 },
-    { q: '"She never changes her mind." She is ...', options: ['Stubborn', 'Shy', 'Outgoing', 'Punctual'], answer: 0 },
-    { q: 'Which is correct?', options: ['Ali is taller than Veli', 'Ali is tall than Veli', 'Ali is more tall Veli', 'Ali taller Veli'], answer: 0 },
-    { q: 'Opposite of "hardworking"?', options: ['Lazy', 'Smart', 'Funny', 'Easy'], answer: 0 },
-    { q: '"He likes making jokes." He is ...', options: ['Funny', 'Serious', 'Boring', 'Quiet'], answer: 0 },
-    { q: '"She has got _____ hair."', options: ['curly', 'kind', 'polite', 'honest'], answer: 0 },
-    { q: 'What does "Generous" mean?', options: ['Cömert', 'Cimri', 'Kaba', 'Sinirli'], answer: 0 },
-    { q: 'Comparison form of "Good"?', options: ['Better', 'Gooder', 'More good', 'Best'], answer: 0 },
-    { q: 'She is _____ than her sister.', options: ['more beautiful', 'beautifuller', 'beautiful', 'most beautiful'], answer: 0 },
-    { q: '"I always arrive on time." I am ...', options: ['Punctual', 'Late', 'Clumsy', 'Forgetful'], answer: 0 }
+    { q: 'Choose the correct opposite: "Generous" x "_____"', options: ['Stingy / Mean', 'Honest', 'Punctual', 'Kind'], answer: 0 },
+    { q: 'What does "Stubborn" mean?', options: ['İnatçı', 'Dürüst', 'Cömert', 'Utangaç'], answer: 0 },
+    { q: 'She never tells lies. She is very _____.', options: ['honest', 'clumsy', 'forgetful', 'shy'], answer: 0 },
+    { q: 'He likes making jokes and making people laugh. He is _____.', options: ['funny', 'boring', 'serious', 'quiet'], answer: 0 },
+    { q: 'Comparative form of "Good"?', options: ['Better', 'Gooder', 'More good', 'Best'], answer: 0 },
+    { q: 'Describe hair: "She has got _____ hair."', options: ['wavy blonde', 'tall', 'fat', 'generous'], answer: 0 },
+    { q: 'My brother plays basketball well because he is very _____.', options: ['tall', 'short', 'fat', 'lazy'], answer: 0 },
+    { q: 'Which one is a personality trait?', options: ['Punctual', 'Hazel eyes', 'Slim', 'Bald'], answer: 0 },
+    { q: 'Comparative: "A plane is _____ a car."', options: ['faster than', 'fast than', 'more fast', 'fastest'], answer: 0 },
+    { q: 'What does "Appearance" mean?', options: ['Dış görünüş', 'Kişilik', 'Karakter', 'Huy'], answer: 0 }
 ];
 
 const engUnit2: Question[] = [
-    { q: 'How often do you swim?', options: ['Twice a week', 'In the pool', 'Yes I do', 'Football'], answer: 0 },
-    { q: 'Which is an INDIVIDUAL sport?', options: ['Archery', 'Football', 'Basketball', 'Volleyball'], answer: 0 },
-    { q: 'We use a racket for ...', options: ['Tennis', 'Soccer', 'Boxing', 'Swimming'], answer: 0 },
-    { q: 'What is the score?', options: ['It is a draw', 'It is a ball', 'It is a stadium', 'It is a medal'], answer: 0 },
-    { q: 'To win a game, you must ...', options: ['beat the opponent', 'lose points', 'sleep', 'eat'], answer: 0 },
-    { q: '"Spectator" means ...', options: ['Seyirci', 'Oyuncu', 'Hakem', 'Antrenör'], answer: 0 },
-    { q: 'He _____ training every day.', options: ['goes', 'plays', 'does', 'makes'], answer: 0 },
-    { q: 'Gold, Silver and Bronze ...', options: ['Medals', 'Balls', 'Rackets', 'Nets'], answer: 0 },
-    { q: '"Draw" means ...', options: ['Berabere', 'Yenmek', 'Kaybetmek', 'Çizmek'], answer: 0 },
-    { q: 'Which equipment is for cycling?', options: ['Helmet', 'Goggles', 'Bat', 'Net'], answer: 0 }
+    { q: 'Which sport is an "Individual Sport"?', options: ['Archery', 'Football', 'Basketball', 'Volleyball'], answer: 0 },
+    { q: 'You need a _____ to play tennis.', options: ['racket', 'helmet', 'bat', 'goggles'], answer: 0 },
+    { q: 'How often do you go swimming?', options: ['Twice a week', 'In the pool', 'Yes I do', 'With my friend'], answer: 0 },
+    { q: 'If the score is 2-2, it is a _____.', options: ['draw', 'win', 'lose', 'beat'], answer: 0 },
+    { q: 'We go to the _____ to work out and exercise.', options: ['gym', 'library', 'cinema', 'hospital'], answer: 0 },
+    { q: 'He won the gold _____ in the Olympics.', options: ['medal', 'cup', 'ring', 'score'], answer: 0 },
+    { q: '"Spectator" means...', options: ['Seyirci', 'Oyuncu', 'Hakem', 'Antrenör'], answer: 0 },
+    { q: 'Which verb is used with "Karate"? (_____ Karate)', options: ['Do', 'Play', 'Go', 'Make'], answer: 0 },
+    { q: 'Which verb is used with "Swimming"? (_____ Swimming)', options: ['Go', 'Play', 'Do', 'Make'], answer: 0 },
+    { q: 'To be healthy, we should _____ junk food.', options: ['avoid', 'eat', 'buy', 'cook'], answer: 0 }
 ];
 
 const engUnit3: Question[] = [
+    { q: 'Biographies are about _____ life stories.', options: ['past / real', 'future', 'imaginary', 'fake'], answer: 0 },
+    { q: 'Thomas Edison _____ the light bulb.', options: ['invented', 'discovered', 'founded', 'built'], answer: 0 },
     { q: 'Atatürk was born _____ 1881.', options: ['in', 'on', 'at', 'of'], answer: 0 },
-    { q: 'He _____ a Nobel Prize last year.', options: ['won', 'win', 'wins', 'winning'], answer: 0 },
-    { q: 'Graham Bell _____ the telephone.', options: ['invented', 'discovered', 'found', 'did'], answer: 0 },
-    { q: 'She _____ to London two years ago.', options: ['moved', 'move', 'moves', 'moving'], answer: 0 },
-    { q: 'What is "Biography"?', options: ['Life story', 'Fairy tale', 'News', 'Poem'], answer: 0 },
-    { q: 'He _____ alone.', options: ['lived', 'lives', 'live', 'leaving'], answer: 0 },
-    { q: 'Did you _____ the match?', options: ['watch', 'watched', 'watches', 'watching'], answer: 0 },
-    { q: 'They _____ happy yesterday.', options: ['were', 'was', 'did', 'are'], answer: 0 },
-    { q: 'He died _____ age 75.', options: ['at', 'in', 'on', 'of'], answer: 0 },
-    { q: '"Graduate" means ...', options: ['Mezun olmak', 'Okula başlamak', 'Doğmak', 'Ölmek'], answer: 0 }
+    { q: 'He _____ (win) a Nobel Prize last year. (Past Simple)', options: ['won', 'win', 'wins', 'winning'], answer: 0 },
+    { q: 'She _____ (go) to Paris two years ago.', options: ['went', 'goed', 'goes', 'gone'], answer: 0 },
+    { q: 'Where _____ you yesterday?', options: ['were', 'was', 'did', 'are'], answer: 0 },
+    { q: '"Graduate" means...', options: ['Mezun olmak', 'Okula başlamak', 'Evlenmek', 'Emekli olmak'], answer: 0 },
+    { q: 'He died _____ the age of 75.', options: ['at', 'in', 'on', 'of'], answer: 0 },
+    { q: 'Mimar Sinan was a famous _____.', options: ['architect', 'doctor', 'engineer', 'teacher'], answer: 0 },
+    { q: 'Did you _____ the movie last night?', options: ['watch', 'watched', 'watches', 'watching'], answer: 0 }
 ];
 
 const engUnit4: Question[] = [
-    { q: 'Lions are _____ animals.', options: ['wild', 'domestic', 'pet', 'farm'], answer: 0 },
-    { q: 'Pandas eat ...', options: ['bamboo', 'meat', 'fish', 'pizza'], answer: 0 },
-    { q: 'Why are dinosaurs extinct?', options: ['Climate change / Meteor', 'They moved', 'They are sleeping', 'They are hiding'], answer: 0 },
-    { q: 'We should _____ habitats.', options: ['protect', 'destroy', 'pollute', 'cut'], answer: 0 },
-    { q: 'Birds have got ...', options: ['wings', 'fins', 'scales', 'fur'], answer: 0 },
-    { q: 'Which animal is a reptile?', options: ['Snake', 'Eagle', 'Lion', 'Whale'], answer: 0 },
-    { q: '"Endangered" means ...', options: ['Nesli tükenmekte', 'Çok kalabalık', 'Evcil', 'Tehlikeli'], answer: 0 },
-    { q: 'Elephants have got long ...', options: ['trunks', 'necks', 'tails', 'wings'], answer: 0 },
-    { q: 'A giraffe is _____ than a lion.', options: ['taller', 'shorter', 'smaller', 'slower'], answer: 0 },
-    { q: 'Tigers are ...', options: ['Carnivores', 'Herbivores', 'Omnivores', 'Plants'], answer: 0 }
+    { q: 'Lions, Tigers and Bears are _____ animals.', options: ['wild', 'domestic', 'pet', 'farm'], answer: 0 },
+    { q: 'Animals that eat only meat are called _____.', options: ['Carnivores', 'Herbivores', 'Omnivores', 'Plants'], answer: 0 },
+    { q: 'Animals that eat only plants are called _____.', options: ['Herbivores', 'Carnivores', 'Omnivores', 'Hunters'], answer: 0 },
+    { q: 'We should protect the natural _____ of animals.', options: ['habitats', 'cages', 'zoos', 'cities'], answer: 0 },
+    { q: 'Pandas are _____ species because there are few left.', options: ['endangered', 'dangerous', 'huge', ' extinct'], answer: 0 },
+    { q: 'Why did dinosaurs become extinct?', options: ['Because of a meteor / climate change', 'Humans hunted them', 'They moved to moon', 'They are hiding'], answer: 0 },
+    { q: 'Which animal has a "trunk"?', options: ['Elephant', 'Giraffe', 'Snake', 'Eagle'], answer: 0 },
+    { q: 'Reptiles are cold-blooded animals like _____.', options: ['snakes and lizards', 'cats and dogs', 'birds', 'whales'], answer: 0 },
+    { q: 'Birds have got _____ to fly.', options: ['wings', 'fins', 'scales', 'arms'], answer: 0 },
+    { q: 'We should NOT _____ animals for their fur.', options: ['hunt', 'feed', 'protect', 'love'], answer: 0 }
 ];
 
 const engUnit5: Question[] = [
-    { q: 'I watch _____ to learn about animals.', options: ['documentaries', 'news', 'quiz shows', 'cartoons'], answer: 0 },
-    { q: 'I _____ watching comedies to horrors.', options: ['prefer', 'hate', 'like', 'don\'t like'], answer: 0 },
-    { q: 'My favorite TV _____ is "Friends".', options: ['series', 'news', 'commercial', 'weather'], answer: 0 },
-    { q: 'Can you give me the _____ control?', options: ['remote', 'far', 'tv', 'distance'], answer: 0 },
-    { q: 'She thinks news is _____.', options: ['boring', 'bore', 'bored', 'bores'], answer: 0 },
-    { q: 'We watched a _____ show last night.', options: ['talk', 'speak', 'tell', 'say'], answer: 0 },
-    { q: 'I recommend this film. It is ...', options: ['entertaining', 'dull', 'bad', 'scary'], answer: 0 },
-    { q: '"Director" means ...', options: ['Yönetmen', 'Oyuncu', 'Kameraman', 'Seyirci'], answer: 0 },
-    { q: 'Reality shows are very ...', options: ['popular', 'lazy', 'heavy', 'wet'], answer: 0 },
-    { q: 'What\'s on TV tonight?', options: ['Let\'s check the TV guide', 'It is black', 'I am eating', 'No'], answer: 0 }
+    { q: 'I prefer watching _____ because I like learning new things.', options: ['documentaries', 'soap operas', 'cartoons', 'commercials'], answer: 0 },
+    { q: '"Sitcom" stands for...', options: ['Situation Comedy', 'Sit Down', 'City Company', 'Site Computer'], answer: 0 },
+    { q: 'I can\'t stand commercials. I think they are _____.', options: ['boring / disturbing', 'entertaining', 'funny', 'educative'], answer: 0 },
+    { q: 'Can you give me the _____ control?', options: ['remote', 'far', 'distance', 'tv'], answer: 0 },
+    { q: 'Who directs the movie?', options: ['Director', 'Actor', 'Actress', 'Camera'], answer: 0 },
+    { q: 'My favourite TV _____ is "Survivor".', options: ['show / series', 'news', 'weather', 'guide'], answer: 0 },
+    { q: 'I _____ watching news to watching cartoons.', options: ['prefer', 'like', 'hate', 'love'], answer: 0 },
+    { q: 'What\'s on TV tonight? Let\'s check the _____.', options: ['TV guide', 'remote', 'news', 'radio'], answer: 0 },
+    { q: 'Reality shows are very _____ nowadays.', options: ['popular / trendy', 'old', 'boring', 'bad'], answer: 0 },
+    { q: '"Recommend" means...', options: ['Tavsiye etmek', 'İzlemek', 'Nefret etmek', 'Kapatmak'], answer: 0 }
 ];
 
-// --- TÜRKÇE (KONULAR - GENİŞLETİLMİŞ) ---
+// --- TÜRKÇE (KONULAR - KAZANIM KAVRAMA) ---
 
 const trWordMeaningQuestions: Question[] = [
-    { q: '"Sıcak" sözcüğü hangisinde MECAZ anlamda kullanılmıştır?', options: ['Bizi çok sıcak karşıladı.', 'Çorba çok sıcaktı.', 'Hava bugün sıcak.', 'Sıcak suyu severim.'], answer: 0 },
-    { q: '"Kırmak" sözcüğü hangisinde GERÇEK anlamda kullanılmıştır?', options: ['Odunları kırmak için balta aldı.', 'Kalp kırmak istemem.', 'Bu sözlerinle beni kırdın.', 'Cesaretimi kırdın.'], answer: 0 },
-    { q: 'Hangisi TERİM anlamlıdır?', options: ['Perde (Tiyatro terimi)', 'Perde (Ev eşyası)', 'Göz (Organ)', 'Ayak (Organ)'], answer: 0 },
-    { q: '"Kara" ile "Siyah" arasındaki ilişki nedir?', options: ['Eş Anlamlı', 'Zıt Anlamlı', 'Sesteş', 'Yansıma'], answer: 0 },
-    { q: '"Gül" (çiçek) ve "Gül" (eylem) nasıl sözcüklerdir?', options: ['Eş Sesli (Sesteş)', 'Zıt Anlamlı', 'Eş Anlamlı', 'Mecaz'], answer: 0 },
-    { q: '"İleri" sözcüğünün zıt anlamlısı nedir?', options: ['Geri', 'Yukarı', 'Aşağı', 'Sağ'], answer: 0 },
-    { q: '"Şırıl şırıl" ne tür bir sözcük grubudur?', options: ['Yansıma', 'Terim', 'Mecaz', 'Deyim'], answer: 0 },
-    { q: '"Ağır" sözcüğü hangisinde "Yavaş" anlamında kullanılmıştır?', options: ['İşler çok ağır ilerliyor.', 'Bu kutu çok ağır.', 'Ağır bir koku var.', 'Ağır başlı biridir.'], answer: 0 },
-    { q: '"Doktor" sözcüğünün eş anlamlısı?', options: ['Hekim', 'Hemşire', 'Öğretmen', 'Mühendis'], answer: 0 },
-    { q: '"İnce" sözcüğü hangisinde "Nazik" anlamında kullanılmıştır?', options: ['Çok ince bir davranıştı.', 'İnce bir ip.', 'İnce bir kitap.', 'İnce dilim.'], answer: 0 }
+    { q: '"Keskin" sözcüğü aşağıdaki cümlelerin hangisinde MECAZ anlamda kullanılmıştır?', options: ['Keskin bakışlarıyla herkesi süzdü.', 'Bıçağın ucu çok keskin.', 'Keskin bir sirke kokusu vardı.', 'Viraj çok keskindir.'], answer: 0 },
+    { q: '"Boş" sözcüğü hangisinde "bilgisiz, cahil" anlamında kullanılmıştır?', options: ['O çok boş bir insandır, ne dediğini bilmez.', 'Boş bardakları topladı.', 'Ev şu an boş.', 'Boş zamanlarımda kitap okurum.'], answer: 0 },
+    { q: 'Aşağıdaki ikilemelerden hangisi "zıt anlamlı kelimelerden" oluşmuştur?', options: ['İleri geri konuşma.', 'Eğri büğrü yollar.', 'Yalan yanlış bilgiler.', 'Koşa koşa geldi.'], answer: 0 },
+    { q: '"Gözden düşmek" deyiminin anlamı nedir?', options: ['Değerini, saygınlığını yitirmek', 'Yere düşmek', 'Gözleri bozulmak', 'Unutulmak'], answer: 0 },
+    { q: '"Ağır" sözcüğü hangisinde "yavaş" anlamında kullanılmıştır?', options: ['İşler çok ağır ilerliyor.', 'Çok ağır bir masa.', 'Ağır sözler söyledi.', 'Hava çok ağır.'], answer: 0 },
+    { q: 'Aşağıdakilerden hangisi TERİM anlamlıdır?', options: ['Oyunun ikinci perdesi başladı.', 'Evin perdelerini yıkadık.', 'Gözüne perde indi.', 'Ördeğin ayakları perdelidir.'], answer: 0 },
+    { q: '"Yüz" sözcüğü hangisinde eş sesli (sesteş) olarak kullanılmamıştır?', options: ['Yüzü çok asıktı.', 'Denizde yüz.', 'Yüz lira verdim.', 'Yastığın yüzünü değiştirdim.'], answer: 3 }, // Yastık yüzü yan anlam
+    { q: '"Sarmak" sözcüğü hangisinde "kuşatmak" anlamında kullanılmıştır?', options: ['Düşmanlar kaleyi sardı.', 'Yarayı sardı.', 'İpi makaraya sardı.', 'Hediye paketini sardı.'], answer: 0 },
+    { q: '"Çok" sözcüğünün zıt anlamlısı nedir?', options: ['Az', 'Bol', 'Fazla', 'Büyük'], answer: 0 },
+    { q: '"Şırıl şırıl" ikilemesi nasıl oluşmuştur?', options: ['Yansıma sözcüklerden', 'Zıt anlamlılardan', 'Eş anlamlılardan', 'Biri anlamlı biri anlamsız'], answer: 0 }
 ];
 
 const trSentenceMeaningQuestions: Question[] = [
-    { q: '"Hasta olduğu için okula gelemedi." cümlesi ne bildirir?', options: ['Neden-Sonuç', 'Amaç-Sonuç', 'Koşul-Sonuç', 'Karşılaştırma'], answer: 0 },
-    { q: '"Seni görmek üzere buraya geldim." cümlesi ne bildirir?', options: ['Amaç-Sonuç', 'Neden-Sonuç', 'Koşul', 'Nesnel'], answer: 0 },
-    { q: '"Ödevini yaparsan dışarı çıkabilirsin." cümlesi ne bildirir?', options: ['Koşul-Sonuç', 'Neden-Sonuç', 'Amaç-Sonuç', 'Tanım'], answer: 0 },
-    { q: 'Hangisi ÖZNEL bir yargıdır?', options: ['Bu film çok sıkıcıydı.', 'Türkiye\'nin başkenti Ankara\'dır.', 'Bir hafta 7 gündür.', 'Su 100 derecede kaynar.'], answer: 0 },
-    { q: 'Hangisi NESNEL bir yargıdır?', options: ['Kitabın yazarı Yaşar Kemal\'dir.', 'Bu kitap çok güzel.', 'Yazarın dili çok akıcı.', 'En sevdiğim renk mavidir.'], answer: 0 },
-    { q: '"Gözlerini fal taşı gibi açtı." cümlesinde hangi anlam vardır?', options: ['Abartma', 'Benzetme', 'Kişileştirme', 'Örneklendirme'], answer: 0 },
-    { q: '"Pamuk gibi elleri vardı." cümlesinde ne yapılmıştır?', options: ['Benzetme', 'Kişileştirme', 'Konuşturma', 'Abartma'], answer: 0 },
-    { q: '"Keşke o gün oraya gitmeseydim." cümlesi ne bildirir?', options: ['Pişmanlık', 'Sitem', 'Özlem', 'Küçümseme'], answer: 0 },
-    { q: '"Belki yarın gelir." cümlesi ne bildirir?', options: ['İhtimal (Olasılık)', 'Kesinlik', 'Emir', 'Gereklilik'], answer: 0 },
-    { q: '"Sanki dünyaları o yarattı." cümlesinde hangi duygu vardır?', options: ['Küçümseme / Alay', 'Beğeni', 'Korku', 'Sevinç'], answer: 0 }
+    { q: '"Seni görmek için İzmir\'e geldim." cümlesinde hangi anlam ilişkisi vardır?', options: ['Amaç - Sonuç', 'Neden - Sonuç', 'Koşul - Sonuç', 'Karşılaştırma'], answer: 0 },
+    { q: '"Yağmur yağdığı için maç iptal edildi." cümlesinde hangi anlam ilişkisi vardır?', options: ['Neden (Sebep) - Sonuç', 'Amaç - Sonuç', 'Koşul - Sonuç', 'Öznel yargı'], answer: 0 },
+    { q: '"Ödevlerini yaparsan dışarı çıkabilirsin." cümlesi ne bildirir?', options: ['Koşul (Şart)', 'Amaç', 'Neden', 'Tahmin'], answer: 0 },
+    { q: 'Aşağıdakilerden hangisi ÖZNEL bir yargıdır?', options: ['Bu film çok sıkıcıydı.', 'Türkiye\'nin başkenti Ankara\'dır.', 'Su 100 derecede kaynar.', 'Bir hafta 7 gündür.'], answer: 0 },
+    { q: 'Aşağıdakilerden hangisi NESNEL bir yargıdır?', options: ['Yazarın son kitabı 200 sayfadır.', 'Yazarın dili çok akıcı.', 'En güzel mevsim yazdır.', 'Bu renk sana çok yakışmış.'], answer: 0 },
+    { q: '"Sanki dünyaları o yarattı." cümlesinde hangi duygu hakimdir?', options: ['Küçümseme / Alay', 'Beğeni', 'Korku', 'Sevinç'], answer: 0 },
+    { q: '"Keşke o gün oraya gitmeseydim." cümlesi ne bildirir?', options: ['Pişmanlık', 'Sitem', 'Özlem', 'Tasarı'], answer: 0 },
+    { q: '"Belki yarın size gelirim." cümlesi ne bildirir?', options: ['İhtimal (Olasılık)', 'Kesinlik', 'Emir', 'Gereklilik'], answer: 0 },
+    { q: '"Cennet gibi vatanımız var." cümlesinde hangi söz sanatı vardır?', options: ['Benzetme', 'Kişileştirme', 'Abartma', 'Konuşturma'], answer: 0 },
+    { q: '"Bir of çeksem karşıki dağlar yıkılır." cümlesinde hangi söz sanatı vardır?', options: ['Abartma', 'Benzetme', 'Tezat', 'İntak'], answer: 0 }
 ];
 
 const trVerbQuestions: Question[] = [
-    { q: 'Hangisi iş (kılış) fiilidir?', options: ['Okumak (Kitabı okumak)', 'Uyumak', 'Sararmak', 'Büyümek'], answer: 0 },
-    { q: 'Hangisi durum fiilidir?', options: ['Gülmek', 'Yazmak', 'Silmek', 'Taşımak'], answer: 0 },
-    { q: 'Hangisi oluş fiilidir?', options: ['Paslanmak', 'Bakmak', 'Görmek', 'Yürümek'], answer: 0 },
-    { q: '"Geliyor" fiilinin kipi nedir?', options: ['Şimdiki Zaman', 'Geniş Zaman', 'Gelecek Zaman', 'Geçmiş Zaman'], answer: 0 },
-    { q: '"Okumalısın" fiilinin kipi nedir?', options: ['Gereklilik', 'İstek', 'Emir', 'Şart'], answer: 0 },
-    { q: '"Baksam" fiilinin kipi nedir?', options: ['Şart', 'İstek', 'Emir', 'Görülen Geçmiş'], answer: 0 },
-    { q: 'Hangisi haber kipi değildir?', options: ['İstek', 'Geniş', 'Şimdiki', 'Gelecek'], answer: 0 },
-    { q: '"Gideceğim" fiilinin kişisi kimdir?', options: ['Ben', 'Sen', 'O', 'Biz'], answer: 0 },
-    { q: 'Emir kipinin eki nedir?', options: ['Eki yoktur', '-meli', '-se', '-e'], answer: 0 },
-    { q: '"Yapmış" fiili hangi zamandadır?', options: ['Duyulan Geçmiş', 'Görülen Geçmiş', 'Şimdiki', 'Geniş'], answer: 0 }
+    { q: '"Bebek uyudu." cümlesindeki fiil anlamına göre ne fiilidir?', options: ['Durum Fiili', 'İş (Kılış) Fiili', 'Oluş Fiili', 'Etken Fiil'], answer: 0 },
+    { q: '"Yapraklar sarardı." cümlesindeki fiil anlamına göre ne fiilidir?', options: ['Oluş Fiili', 'Durum Fiili', 'İş Fiili', 'Edilgen Fiil'], answer: 0 },
+    { q: '"Kitabı okudum." cümlesindeki fiil anlamına göre ne fiilidir?', options: ['İş (Kılış) Fiili', 'Durum Fiili', 'Oluş Fiili', 'Dönüşlü Fiil'], answer: 0 },
+    { q: '"Geleceğim" fiili hangi kiple çekimlenmiştir?', options: ['Gelecek Zaman', 'Görülen Geçmiş Zaman', 'Geniş Zaman', 'Şimdiki Zaman'], answer: 0 },
+    { q: '"Ders çalışmalısın" fiilinin kipi nedir?', options: ['Gereklilik Kipi', 'İstek Kipi', 'Emir Kipi', 'Şart Kipi'], answer: 0 },
+    { q: '"Keşke o da gelse." fiilinin kipi nedir?', options: ['Dilek-Şart Kipi', 'İstek Kipi', 'Emir Kipi', 'Görülen Geçmiş Zaman'], answer: 0 },
+    { q: 'Aşağıdaki fiillerden hangisi "Haber (Bildirme) Kipi" değildir?', options: ['Gidelim (İstek)', 'Gidiyor (Şimdiki)', 'Gitti (Geçmiş)', 'Gidecek (Gelecek)'], answer: 0 },
+    { q: '"Yazıyorum" fiilinin kişisi kimdir?', options: ['Ben (1. Tekil)', 'Sen (2. Tekil)', 'O (3. Tekil)', 'Biz (1. Çoğul)'], answer: 0 },
+    { q: '"Okumuşlar" fiilinin zamanı nedir?', options: ['Duyulan (Öğrenilen) Geçmiş Zaman', 'Görülen Geçmiş Zaman', 'Geniş Zaman', 'Şimdiki Zaman'], answer: 0 },
+    { q: 'Emir kipinin eki var mıdır?', options: ['Yoktur', 'Vardır (-e)', 'Vardır (-se)', 'Vardır (-meli)'], answer: 0 }
 ];
 
 const trStructQuestions: Question[] = [
-    { q: 'Hangisi basit yapılı fiildir?', options: ['Koştu', 'Temizledi', 'Yapabildi', 'Gözledi'], answer: 0 },
-    { q: 'Hangisi türemiş fiildir?', options: ['Başladı (Baş-la)', 'Geldi', 'Gitti', 'Baktı'], answer: 0 },
-    { q: '"Hissetti" fiilinin yapısı nedir?', options: ['Birleşik', 'Basit', 'Türemiş', 'Hiçbiri'], answer: 0 },
-    { q: '"Gelebilirim" fiili hangi tür birleşiktir?', options: ['Kurallı (Yeterlilik)', 'Yardımcı Eylemle', 'Anlamca Kaynaşmış', 'Türemiş'], answer: 0 },
-    { q: '"Vazgeçmek" fiili hangi türdür?', options: ['Anlamca Kaynaşmış Birleşik', 'Kurallı Birleşik', 'Yardımcı Eylem', 'Basit'], answer: 0 },
-    { q: 'Hangisi yardımcı eylemle kurulmuştur?', options: ['Yardım etti', 'Bakakaldı', 'Gidiverdi', 'Düşeyazdı'], answer: 0 },
-    { q: '"Suladı" fiilinin kökü nedir?', options: ['Su', 'Sula', 'Sulad', 'Sul'], answer: 0 },
-    { q: 'Yapım eki alan fiillere ne denir?', options: ['Türemiş', 'Basit', 'Birleşik', 'Kök'], answer: 0 },
-    { q: '"Gidiver" fiilinin anlamı nedir?', options: ['Tezlik', 'Süreklilik', 'Yeterlilik', 'Yaklaşma'], answer: 0 },
-    { q: '"Bakamam" fiilinin olumlusu nedir?', options: ['Bakabilirim', 'Bakarım', 'Bakmalıyım', 'Baktım'], answer: 0 }
+    { q: 'Aşağıdaki fiillerden hangisi yapıca BASİTTİR? (Yapım eki almamış)', options: ['Koştu', 'Temizledi', 'Başladı', 'Gözledi'], answer: 0 },
+    { q: 'Aşağıdaki fiillerden hangisi yapıca TÜREMİŞTİR? (Yapım eki almış)', options: ['Suladı (Su-la)', 'Geldi', 'Gitti', 'Yazdı'], answer: 0 },
+    { q: '"Hissetti" fiili yapıca nasıldır?', options: ['Birleşik Fiil (His+et)', 'Basit Fiil', 'Türemiş Fiil', 'Hiçbiri'], answer: 0 },
+    { q: '"Gidedur" fiili hangi tür birleşik fiildir?', options: ['Kurallı Birleşik (Sürerlik)', 'Yardımcı Eylemle', 'Anlamca Kaynaşmış', 'Tezlik'], answer: 0 },
+    { q: '"Yapabilmek" fiili ne bildirir?', options: ['Yeterlilik', 'Tezlik', 'Sürerlik', 'Yaklaşma'], answer: 0 },
+    { q: 'Hangisi "Yardımcı Eylemle" kurulmuş birleşik fiildir?', options: ['Telefon etti', 'Gidiverdi', 'Bakaladı', 'Düşeyazdı'], answer: 0 },
+    { q: '"Vazgeçmek" fiili yapıca nasıldır?', options: ['Anlamca Kaynaşmış Birleşik', 'Kurallı Birleşik', 'Yardımcı Eylem', 'Basit'], answer: 0 },
+    { q: 'Hangisi "Tezlik" fiilidir?', options: ['Geliver', 'Gelebil', 'Gelayaz', 'Gidedur'], answer: 0 },
+    { q: '"Göz atmak" deyimi yapıca nasıl bir fiildir?', options: ['Anlamca Kaynaşmış Birleşik', 'Kurallı', 'Yardımcı Eylem', 'Basit'], answer: 0 },
+    { q: 'Türemiş fiiller hangi ekleri alır?', options: ['Yapım Ekleri', 'Çekim Ekleri', 'İyelik Ekleri', 'Şahıs Ekleri'], answer: 0 }
 ];
 
 const trAdvQuestions: Question[] = [
-    { q: 'Fiilleri niteleyen sözcüklere ne denir?', options: ['Zarf', 'Sıfat', 'Zamir', 'Edat'], answer: 0 },
-    { q: '"Hızlı koştu" cümlesinde zarf hangisidir?', options: ['Hızlı', 'Koştu', 'Gizli özne', 'Yok'], answer: 0 },
-    { q: '"Yarın gideceğiz" cümlesindeki zarfın türü?', options: ['Zaman', 'Durum', 'Miktar', 'Yer-Yön'], answer: 0 },
-    { q: '"Çok çalıştı" cümlesindeki zarfın türü?', options: ['Miktar', 'Durum', 'Zaman', 'Soru'], answer: 0 },
-    { q: '"İçeri girdi" cümlesindeki zarf hangisidir?', options: ['İçeri', 'Girdi', 'O', 'Yok'], answer: 0 },
-    { q: 'Yer-yön zarfları ek alırsa ne olur?', options: ['İsimleşir', 'Sıfat olur', 'Zarf kalır', 'Fiil olur'], answer: 0 },
-    { q: '"Nasıl" sorusu hangi zarfı buldurur?', options: ['Durum', 'Zaman', 'Miktar', 'Yer'], answer: 0 },
-    { q: '"Ne zaman" sorusu hangi zarfı buldurur?', options: ['Zaman', 'Durum', 'Miktar', 'Yer'], answer: 0 },
-    { q: '"Güzel konuştu" cümlesinde "güzel" kelimesinin görevi?', options: ['Zarf', 'Sıfat', 'İsim', 'Zamir'], answer: 0 },
-    { q: '"En güzel o konuştu" cümlesinde miktar zarfı hangisidir?', options: ['En', 'Güzel', 'O', 'Konuştu'], answer: 0 }
+    { q: 'Fiilleri, sıfatları veya zarfları niteleyen sözcüklere ne denir?', options: ['Zarf (Belirteç)', 'Sıfat', 'Zamir', 'Edat'], answer: 0 },
+    { q: '"Ahmet hızlı koşar." cümlesinde zarf hangisidir?', options: ['Hızlı', 'Ahmet', 'Koşar', 'Yok'], answer: 0 },
+    { q: '"Yarın sinemaya gideceğiz." cümlesinde zarfın türü nedir?', options: ['Zaman Zarfı', 'Durum Zarfı', 'Miktar Zarfı', 'Yer-Yön Zarfı'], answer: 0 },
+    { q: '"Bebek mışıl mışıl uyuyor." cümlesinde "mışıl mışıl" ne zarfıdır?', options: ['Durum Zarfı', 'Zaman Zarfı', 'Miktar Zarfı', 'Soru Zarfı'], answer: 0 },
+    { q: '"Aşağı in." cümlesinde "aşağı" sözcüğünün görevi nedir?', options: ['Yer-Yön Zarfı', 'İsim', 'Sıfat', 'Zamir'], answer: 0 },
+    { q: '"Aşağıya in." cümlesinde "aşağıya" sözcüğünün görevi nedir? (Ek aldığı için)', options: ['İsim', 'Zarf', 'Sıfat', 'Zamir'], answer: 0 },
+    { q: '"Ne kadar çalıştın?" sorusu hangi zarfı buldurur?', options: ['Miktar Zarfı', 'Durum Zarfı', 'Zaman Zarfı', 'Yer Zarfı'], answer: 0 },
+    { q: '"Çok güzel konuştu." cümlesinde "çok" sözcüğü ne zarfıdır?', options: ['Miktar Zarfı', 'Durum Zarfı', 'Zaman Zarfı', 'Yer Zarfı'], answer: 0 },
+    { q: '"Nasıl geldin?" cümlesindeki zarf türü?', options: ['Soru Zarfı', 'Durum Zarfı', 'Zaman Zarfı', 'Miktar Zarfı'], answer: 0 },
+    { q: 'Zarflar genellikle hangi sözcük türünü etkiler?', options: ['Fiilleri', 'İsimleri', 'Zamirleri', 'Edatları'], answer: 0 }
 ];
 
 const trEkFiilQuestions: Question[] = [
-    { q: 'Ek fiilin görevi nedir?', options: ['İsimleri yüklem yapmak', 'Fiilleri nitelemek', 'Özne olmak', 'Nesne olmak'], answer: 0 },
-    { q: '"Hava güzeldi" cümlesinde ek fiil hangisidir?', options: ['-di', 'Hava', 'Güzel', 'Yok'], answer: 0 },
-    { q: '"O bir doktormuş" cümlesinde ek fiil hangi zamandadır?', options: ['Duyulan Geçmiş', 'Görülen Geçmiş', 'Şimdiki', 'Geniş'], answer: 0 },
-    { q: 'Basit zamanlı fiili birleşik zamanlı yapan nedir?', options: ['Ek Fiil', 'Yapım Eki', 'Çekim Eki', 'İyelik Eki'], answer: 0 },
-    { q: '"Geliyordum" fiilinin açılımı nedir?', options: ['Şimdiki zamanın hikayesi', 'Geniş zamanın rivayeti', 'Gelecek zaman', 'Geçmiş zaman'], answer: 0 },
-    { q: 'Ek fiilin geniş zaman eki hangisidir?', options: ['-dir', '-di', '-miş', '-se'], answer: 0 },
-    { q: '"Çalışkansa" kelimesindeki ek fiil kipi?', options: ['Şart', 'Hikaye', 'Rivayet', 'Geniş'], answer: 0 },
-    { q: 'Hangisinde ek fiil vardır?', options: ['Hastaydı', 'Gitti', 'Baktı', 'Geldi'], answer: 0 },
-    { q: 'Hangisi ek fiil değildir?', options: ['-im', '-idi', '-imiş', '-ise'], answer: 0 },
-    { q: '"İnsandır" kelimesindeki ek fiil?', options: ['Geniş zaman', 'Geçmiş zaman', 'Şart', 'İstek'], answer: 0 }
+    { q: 'Ek fiilin (Ek eylem) iki temel görevi nedir?', options: ['İsimleri yüklem yapmak - Basit zamanlı fiilleri birleşik zamanlı yapmak', 'Fiilleri nitelemek - Sıfat yapmak', 'Özneyi bulmak - Nesneyi bulmak', 'Kök bulmak - Ek bulmak'], answer: 0 },
+    { q: '"Hava çok soğuktu." cümlesindeki ek fiil hangisidir?', options: ['soğuk-tu (İdi)', 'hava', 'çok', 'yok'], answer: 0 },
+    { q: '"Öğrenciymiş" kelimesindeki ek fiil?', options: ['İmiş (Rivayet)', 'İdi (Hikaye)', 'İse (Şart)', 'Dir (Geniş)'], answer: 0 },
+    { q: '"Geliyordum" fiilindeki zaman özelliği nedir?', options: ['Birleşik Zamanlı (Şimdiki zamanın hikayesi)', 'Basit Zamanlı', 'Türemiş', 'İsim'], answer: 0 },
+    { q: '"Çalışırsan başarırsın." cümlesindeki "çalışırsan" fiilinde hangi ek fiil vardır?', options: ['İse (Şart)', 'İdi (Hikaye)', 'İmiş (Rivayet)', 'Dir (Geniş)'], answer: 0 },
+    { q: 'Aşağıdakilerden hangisinde ek fiil kullanılmamıştır?', options: ['Geldi', 'Hastaydı', 'Doktormuş', 'Güzeldir'], answer: 0 },
+    { q: 'Ek fiilin geniş zaman eki hangisidir?', options: ['-dir / -dır', '-di', '-miş', '-se'], answer: 0 },
+    { q: '"O iyi bir insandır." cümlesindeki ek fiilin işlevi?', options: ['İsmi yüklem yapmak', 'Fiili birleşik zamanlı yapmak', 'Fiili türetmek', 'Olumsuz yapmak'], answer: 0 },
+    { q: '"Yapacakmış" fiilinin açılımı?', options: ['Gelecek zamanın rivayeti', 'Gelecek zamanın hikayesi', 'Miş\'li geçmiş zaman', 'Şart kipi'], answer: 0 },
+    { q: '"Biliyordu" fiilinin açılımı?', options: ['Şimdiki zamanın hikayesi', 'Geniş zaman', 'Geçmiş zaman', 'Gelecek zaman'], answer: 0 }
 ];
 
 const trParagraphQuestions: Question[] = [
-    { q: 'Paragrafın en kapsamlı yargısı nedir?', options: ['Ana Düşünce', 'Konu', 'Başlık', 'Yardımcı Düşünce'], answer: 0 },
-    { q: 'Paragrafta anlatılan olay veya durum nedir?', options: ['Konu', 'Ana Düşünce', 'Başlık', 'Anahtar Kelime'], answer: 0 },
-    { q: 'Paragrafın giriş cümlesi nasıl olmalıdır?', options: ['Genel ve tanıtıcı', 'Örnek verici', 'Sonuç bildirici', 'Ayrıntılı'], answer: 0 },
-    { q: '"Oysa, fakat, ama" gibi ifadeler ne işe yarar?', options: ['Düşüncenin yönünü değiştirir', 'Konuyu bitirir', 'Örnek verir', 'Tanımlama yapar'], answer: 0 },
-    { q: 'Hangisi düşünceyi geliştirme yollarından biridir?', options: ['Tanık Gösterme', 'Öyküleme', 'Betimleme', 'Tartışma'], answer: 0 },
-    { q: 'Bir olayın yer, zaman ve kişi belirtilerek anlatılmasına ne denir?', options: ['Öyküleme', 'Betimleme', 'Açıklama', 'Tartışma'], answer: 0 },
-    { q: '"Kelimelerle resim çizme sanatı" hangisidir?', options: ['Betimleme', 'Öyküleme', 'Açıklama', 'Tartışma'], answer: 0 },
-    { q: 'Yazarın okuyucuyu ikna etmeye çalıştığı anlatım biçimi?', options: ['Tartışma', 'Açıklama', 'Öyküleme', 'Betimleme'], answer: 0 },
-    { q: 'Paragrafta ana düşünceyi destekleyen cümlelere ne denir?', options: ['Yardımcı Düşünce', 'Ana Düşünce', 'Başlık', 'Giriş'], answer: 0 },
-    { q: 'Paragrafa en uygun başlık nasıl bulunur?', options: ['Konuyu ve ana düşünceyi özetlemeli', 'En uzun cümle olmalı', 'İlk kelime olmalı', 'Rastgele seçilmeli'], answer: 0 }
+    { q: 'Paragrafta yazarın asıl anlatmak istediği, okuyucuya vermek istediği mesaja ne denir?', options: ['Ana Düşünce (Ana Fikir)', 'Konu', 'Yardımcı Düşünce', 'Başlık'], answer: 0 },
+    { q: 'Paragrafta üzerinde durulan olay, durum veya kavrama ne denir?', options: ['Konu', 'Ana Düşünce', 'Anahtar Kelime', 'Başlık'], answer: 0 },
+    { q: 'Bir düşünceyi inandırıcı kılmak için ünlü birinin sözünden yararlanmaya ne denir?', options: ['Tanık Gösterme', 'Örneklendirme', 'Benzetme', 'Tanımlama'], answer: 0 },
+    { q: 'Yazarın bir olayı yer, zaman ve kişi unsurlarına bağlayarak anlatmasına ne denir?', options: ['Öyküleme', 'Betimleme', 'Açıklama', 'Tartışma'], answer: 0 },
+    { q: '"Sözcüklerle resim çizme sanatı" olarak bilinen anlatım biçimi?', options: ['Betimleme', 'Öyküleme', 'Açıklama', 'Tartışma'], answer: 0 },
+    { q: 'Bilgi vermek amacıyla yazılan paragraflarda hangi anlatım biçimi kullanılır?', options: ['Açıklama', 'Öyküleme', 'Betimleme', 'Tartışma'], answer: 0 },
+    { q: 'Yazarın kendi fikrini savunup karşıt fikri çürütmeye çalıştığı anlatım biçimi?', options: ['Tartışma', 'Açıklama', 'Öyküleme', 'Betimleme'], answer: 0 },
+    { q: 'Paragrafın en uygun başlığı nasıl belirlenir?', options: ['Konuyu ve ana düşünceyi en iyi özetleyen ifade seçilir', 'İlk cümle başlık olur', 'Son cümle başlık olur', 'En uzun cümle seçilir'], answer: 0 },
+    { q: 'Ana düşünceyi destekleyen, detaylandıran cümlelere ne denir?', options: ['Yardımcı Düşünceler', 'Ana Düşünce', 'Giriş Cümlesi', 'Sonuç Cümlesi'], answer: 0 },
+    { q: 'Paragrafta akışı bozan cümle hangisidir?', options: ['Konudan sapan, farklı bir şeyden bahseden cümle', 'İlk cümle', 'Son cümle', 'En uzun cümle'], answer: 0 }
 ];
 
 const trMeaningQuestions: Question[] = [
-    { q: '"Geri iade etti" cümlesindeki anlatım bozukluğu nedeni?', options: ['Gereksiz sözcük kullanımı', 'Özne eksikliği', 'Yüklem eksikliği', 'Mantık hatası'], answer: 0 },
-    { q: '"Yüksek sesle bağırma" cümlesindeki bozukluk?', options: ['Gereksiz sözcük (Bağırmak zaten yüksek sesledir)', 'Anlam belirsizliği', 'Çelişki', 'Sıralama hatası'], answer: 0 },
-    { q: '"Kesinlikle gelebilir" cümlesindeki bozukluk?', options: ['Anlamca çelişen sözcükler', 'Gereksiz sözcük', 'Deyim hatası', 'Özne hatası'], answer: 0 },
-    { q: '"Eminim bunu yapmış olmalı" cümlesindeki bozukluk?', options: ['Çelişki', 'Gereksiz sözcük', 'Yanlış anlam', 'Mantık'], answer: 0 },
-    { q: '"Fidanlar ekti" yerine ne denmeli?', options: ['Dikti', 'Koydu', 'Attı', 'Serpti'], answer: 0 },
-    { q: '"Resim çekilmek" doğru mu?', options: ['Hayır, fotoğraf çektirmek', 'Evet', 'Hayır, resim yapmak', 'Farketmez'], answer: 0 },
-    { q: '"Beyin zarı iltihabı sonucu öldü" cümlesinde yanlışlık?', options: ['Öldü denmez, vefat etti denir', 'Yanlış sözcük (Sonucunda değil, nedeniyle)', 'Gereksiz sözcük', 'Çelişki'], answer: 1 },
-    { q: '"Yaklaşık tam üç saat bekledim" bozukluk nedeni?', options: ['Çelişen sözcükler', 'Gereksiz sözcük', 'Mantık hatası', 'Özne'], answer: 0 },
-    { q: '"Yaya yürümek" ifadesindeki bozukluk?', options: ['Gereksiz sözcük', 'Yanlış anlam', 'Çelişki', 'Mantık'], answer: 0 },
-    { q: '"Kardeşim ve ben gittim" doğru mu?', options: ['Hayır, gittik olmalı', 'Evet', 'Hayır, gitti olmalı', 'Bilinmez'], answer: 0 }
+    { q: '"Geri iade etti" cümlesindeki anlatım bozukluğunun nedeni nedir?', options: ['Gereksiz sözcük kullanımı (İade zaten geri vermektir)', 'Özne eksikliği', 'Çelişen sözcükler', 'Mantık hatası'], answer: 0 },
+    { q: '"Kulağıma alçak sesle fısıldadı." cümlesindeki bozukluk?', options: ['Gereksiz sözcük kullanımı (Fısıldamak zaten alçak sesledir)', 'Anlam belirsizliği', 'Yüklem eksikliği', 'Özne-yüklem uyumsuzluğu'], answer: 0 },
+    { q: '"Eminim bu işi başarabilirsin belki." cümlesindeki bozukluk?', options: ['Çelişen sözcüklerin bir arada kullanılması', 'Gereksiz sözcük', 'Deyim yanlışı', 'Sıralama hatası'], answer: 0 },
+    { q: '"Bahçeye fidanlar ekti." cümlesinde yanlış kullanılan sözcük hangisidir?', options: ['Ekti (Fidan dikilir, tohum ekilir)', 'Bahçeye', 'Fidanlar', 'Yok'], answer: 0 },
+    { q: '"Çok başım ağrıyor." cümlesindeki bozukluk?', options: ['Sözcüğün yanlış yerde kullanılması (Başım çok ağrıyor olmalı)', 'Gereksiz sözcük', 'Çelişki', 'Anlam belirsizliği'], answer: 0 },
+    { q: '"Resim çekilmek yasaktır." ifadesindeki yanlışlık?', options: ['Resim çekilmez, fotoğraf çekilir', 'Yasak kelimesi yanlış', 'Çekilmek yanlış', 'Yok'], answer: 0 },
+    { q: '"Okulu bitirince doktor ya da mühendis olmak istiyor." cümlesindeki bozukluk?', options: ['Mantık hatası (Doktorluk ve mühendislik aynı anda olunmaz)', 'Bağlaç yanlışı', 'Özne eksikliği', 'Yok'], answer: 1 }, // "ya da" doğru kullanım aslında, soru biraz muallak olabilir ama "doktor veya mühendis" tercihi normal. Burada mantık hatası şıkkı "Bırak patates doğramayı, yemek bile yapamaz" tarzı sıralama hataları için daha uygundur. Bu örnekte "ya da" kullanımı doğrudur. Ancak klasik MEB örneği: "Bırakın yumurta kırmayı, yemek bile yapamaz." (Sıralama hatası).
+    { q: '"Bırakın soğan doğramayı, yemek bile yapamaz." cümlesindeki mantık hatası nedir?', options: ['Sıralama yanlışı (Yemek yapmak daha zordur, soğan doğramak daha kolaydır)', 'Gereksiz sözcük', 'Çelişki', 'Özne'], answer: 0 },
+    { q: '"İhtiyar adama yardım etti." cümlesindeki anlam belirsizliği nasıl giderilir?', options: ['Virgül kullanarak (İhtiyar, adama...)', 'Nokta koyarak', 'Soru işareti ile', 'Ünlem ile'], answer: 0 },
+    { q: '"Fiyatlar çok pahalı." cümlesindeki yanlışlık?', options: ['Fiyat pahalı olmaz, yüksek olur', 'Fiyatlar ucuz', 'Çok kelimesi gereksiz', 'Yok'], answer: 0 }
 ];
 
 const trPunctuationQuestions: Question[] = [
-    { q: 'Özel isimlere gelen ekler ne ile ayrılır?', options: ['Kesme İşareti (\')', 'Virgül', 'Nokta', 'Kısa Çizgi'], answer: 0 },
-    { q: 'Tamamlanmış cümlenin sonuna ne konur?', options: ['Nokta', 'Virgül', 'Üç Nokta', 'Noktalı Virgül'], answer: 0 },
-    { q: 'Eş görevli kelimeleri ayırmak için ne kullanılır?', options: ['Virgül', 'Nokta', 'İki Nokta', 'Ünlem'], answer: 0 },
-    { q: 'Soru bildiren cümlelerin sonuna ne konur?', options: ['Soru İşareti', 'Ünlem', 'Nokta', 'Kesme'], answer: 0 },
-    { q: 'Korku, heyecan bildiren cümlelerin sonuna ne konur?', options: ['Ünlem', 'Soru İşareti', 'Nokta', 'Virgül'], answer: 0 },
-    { q: 'Satır sonuna sığmayan kelimeler ne ile bölünür?', options: ['Kısa Çizgi', 'Uzun Çizgi', 'Nokta', 'Virgül'], answer: 0 },
-    { q: 'Hangi "de" ayrı yazılır?', options: ['Bağlaç olan "de"', 'Ek olan "-de"', 'İsim olan', 'Hiçbiri'], answer: 0 },
-    { q: 'Hangisinin yazımı yanlıştır?', options: ['Herkez', 'Herkes', 'Yalnız', 'Yanlış'], answer: 0 },
-    { q: '"Ki" bağlacı nasıl yazılır?', options: ['Ayrı', 'Bitişik', 'Kısa çizgili', 'Parantezli'], answer: 0 },
-    { q: 'Sayılar metin içinde nasıl yazılır?', options: ['Yazıyla (üç, beş)', 'Rakamla (3, 5)', 'Romen rakamıyla', 'Karışık'], answer: 0 }
+    { q: 'Özel isimlere gelen çekim ekleri hangi işaretle ayrılır?', options: ['Kesme İşareti (\')', 'Virgül', 'Nokta', 'Kısa Çizgi'], answer: 0 },
+    { q: 'Eş görevli kelimeleri ayırmak için hangi noktalama işareti kullanılır?', options: ['Virgül', 'Nokta', 'Noktalı Virgül', 'İki Nokta'], answer: 0 },
+    { q: 'Kendisinden sonra örnek verilecek cümlenin sonuna ne konur?', options: ['İki Nokta (:)', 'Nokta', 'Virgül', 'Üç Nokta'], answer: 0 },
+    { q: 'Tamamlanmamış cümlelerin sonuna ne konur?', options: ['Üç Nokta (...)', 'Nokta', 'Soru İşareti', 'Ünlem'], answer: 0 },
+    { q: 'Satır sonuna sığmayan sözcükler bölünürken ne kullanılır?', options: ['Kısa Çizgi (-)', 'Uzun Çizgi', 'Nokta', 'Eğik Çizgi'], answer: 0 },
+    { q: 'Hangi "de" bitişik yazılır?', options: ['Ek olan "-de" (Bulunma hali)', 'Bağlaç olan "de"', 'Ayrı yazılan de', 'Hiçbiri'], answer: 0 },
+    { q: '"Ki" bağlacı nasıl yazılır?', options: ['Ayrı yazılır (İstisnalar hariç)', 'Bitişik yazılır', 'Kesme ile ayrılır', 'Büyük harfle başlar'], answer: 0 },
+    { q: 'Aşağıdaki kelimelerden hangisinin yazımı YANLIŞTIR?', options: ['Herkez (Doğrusu: Herkes)', 'Yalnız', 'Yanlış', 'Tıraş'], answer: 0 },
+    { q: 'Belirli bir tarih bildiren gün ve ay adları nasıl yazılır?', options: ['Büyük harfle başlar (19 Mayıs 1919 Pazartesi)', 'Küçük harfle', 'Sadece ay büyük', 'Sadece gün büyük'], answer: 0 },
+    { q: 'Soru eki "mı, mi" nasıl yazılır?', options: ['Her zaman ayrı', 'Bitişik', 'Kesme ile', 'Tire ile'], answer: 0 }
 ];
 
 const trTextTypeQuestions: Question[] = [
-    { q: 'Yazarın kendi hayatını anlattığı türe ne denir?', options: ['Otobiyografi', 'Biyografi', 'Anı', 'Günlük'], answer: 0 },
-    { q: 'Başkasıyla konuşuyormuş gibi yazılan fikir yazısı?', options: ['Söyleşi (Sohbet)', 'Deneme', 'Makale', 'Fıkra'], answer: 0 },
-    { q: 'Günü gününe yazılan yazı türü?', options: ['Günlük', 'Anı', 'Gezi Yazısı', 'Mektup'], answer: 0 },
-    { q: 'Yaşanmış olayların üzerinden zaman geçtikten sonra yazılması?', options: ['Anı', 'Günlük', 'Roman', 'Hikaye'], answer: 0 },
-    { q: 'Tanınmış birinin hayatının başkası tarafından anlatılması?', options: ['Biyografi', 'Otobiyografi', 'Portre', 'Mülakat'], answer: 0 },
-    { q: 'Cansız varlıkların konuşturulduğu söz sanatı?', options: ['Konuşturma (İntak)', 'Kişileştirme', 'Benzetme', 'Abartma'], answer: 0 },
-    { q: 'İnsana ait özelliklerin doğaya verilmesi?', options: ['Kişileştirme', 'Konuşturma', 'Abartma', 'Tezat'], answer: 0 },
-    { q: 'Bir şeyi olduğundan çok veya az gösterme sanatı?', options: ['Abartma', 'Benzetme', 'Kişileştirme', 'Tezat'], answer: 0 },
-    { q: 'Zıt kavramların bir arada kullanılması?', options: ['Tezat (Karşıtlık)', 'Abartma', 'Benzetme', 'Konuşturma'], answer: 0 },
-    { q: '"Aslan gibi güçlü" sözünde ne vardır?', options: ['Benzetme', 'Kişileştirme', 'Abartma', 'Konuşturma'], answer: 0 }
+    { q: 'Kişinin kendi hayatını anlattığı yazı türüne ne denir?', options: ['Otobiyografi', 'Biyografi', 'Anı', 'Günlük'], answer: 0 },
+    { q: 'Tanınmış bir kişinin hayatının başkası tarafından anlatıldığı yazı türü?', options: ['Biyografi', 'Otobiyografi', 'Deneme', 'Makale'], answer: 0 },
+    { q: 'Günü gününe yazılan, "tarih atılan" yazı türü?', options: ['Günlük (Günce)', 'Anı', 'Gezi Yazısı', 'Mektup'], answer: 0 },
+    { q: 'Yaşanmış olayların üzerinden zaman geçtikten sonra yazıldığı tür?', options: ['Anı (Hatıra)', 'Günlük', 'Roman', 'Hikaye'], answer: 0 },
+    { q: 'Yazarın herhangi bir konuda görüşlerini kesin kurallara varmadan, samimi bir dille anlattığı tür?', options: ['Deneme', 'Makale', 'Fıkra', 'Eleştiri'], answer: 0 },
+    { q: 'Bir yazarın karşısındakiyle konuşuyormuş gibi yazdığı tür?', options: ['Söyleşi (Sohbet)', 'Deneme', 'Makale', 'Nutuk'], answer: 0 },
+    { q: 'Gezilip görülen yerlerin anlatıldığı yazı türü?', options: ['Gezi Yazısı', 'Anı', 'Hikaye', 'Masal'], answer: 0 },
+    { q: 'Olağanüstü olayların ve kahramanların olduğu yazı türü?', options: ['Masal', 'Hikaye', 'Roman', 'Anı'], answer: 0 },
+    { q: 'Olmuş veya olabilecek olayların anlatıldığı kısa yazı türü?', options: ['Hikaye (Öykü)', 'Masal', 'Efsane', 'Destan'], answer: 0 },
+    { q: 'Gazete ve dergilerde güncel olayların yorumlandığı köşe yazısı?', options: ['Fıkra (Köşe Yazısı)', 'Makale', 'Deneme', 'Söyleşi'], answer: 0 }
 ];
 
 // --- DİN KÜLTÜRÜ (5 ÜNİTE) ---
 const dinUnit1: Question[] = [
-    { q: 'Gözle görülmeyen nurani varlıklara ne denir?', options: ['Melek', 'Cin', 'İnsan', 'Hayvan'], answer: 0 },
-    { q: 'Vahiy getiren melek hangisidir?', options: ['Cebrail', 'Mikail', 'İsrafil', 'Azrail'], answer: 0 },
-    { q: 'Kıyameti haber veren sura üfleyecek melek?', options: ['İsrafil', 'Cebrail', 'Mikail', 'Azrail'], answer: 0 },
-    { q: 'Kıyametten sonraki sonsuz hayata ne denir?', options: ['Ahiret', 'Dünya', 'Berzah', 'Mahşer'], answer: 0 },
-    { q: 'İnsanların hesap için toplanacağı yer?', options: ['Mahşer', 'Mizan', 'Sırat', 'Kabir'], answer: 0 },
-    { q: 'Amellerin tartılacağı adalet terazisi?', options: ['Mizan', 'Kantar', 'Terazi', 'Ölçek'], answer: 0 },
-    { q: 'Koruyucu meleklere ne denir?', options: ['Hafaza', 'Kiramen Katibin', 'Münker Nekir', 'Rıdvan'], answer: 0 },
-    { q: 'Şeytanın yaratıldığı madde?', options: ['Ateş', 'Nur', 'Toprak', 'Su'], answer: 0 },
-    { q: 'Öldükten sonra dirilmeye ne denir?', options: ['Ba\'s', 'Haşr', 'Berzah', 'Kıyamet'], answer: 0 },
-    { q: 'Hz. İsa\'ya verilen kutsal kitap?', options: ['İncil', 'Tevrat', 'Zebur', 'Kur\'an'], answer: 0 }
+    { q: 'Gözle görülmeyen ancak varlığına inanılan, nurdan yaratılmış varlıklara ne denir?', options: ['Melek', 'Cin', 'Şeytan', 'Ruh'], answer: 0 },
+    { q: 'Dört büyük melekten biri olan ve "Vahiy getirmekle" görevli melek?', options: ['Cebrail', 'Mikail', 'İsrafil', 'Azrail'], answer: 0 },
+    { q: 'Kıyamet günü Sur\'a üflemekle görevli melek hangisidir?', options: ['İsrafil', 'Mikail', 'Cebrail', 'Azrail'], answer: 0 },
+    { q: 'İnsanın sağında ve solunda bulunup iyilik ve kötülükleri yazan melekler?', options: ['Kiramen Katibin', 'Münker Nekir', 'Hafaza', 'Rıdvan'], answer: 0 },
+    { q: 'Dünya hayatından sonra başlayacak olan sonsuz hayata ne denir?', options: ['Ahiret', 'Berzah', 'Mahşer', 'Mizan'], answer: 0 },
+    { q: 'Öldükten sonra dirilmeye ne ad verilir?', options: ['Ba\'s', 'Haşr', 'Kıyamet', 'Ecel'], answer: 0 },
+    { q: 'İnsanların hesap vermek üzere toplanacakları yere ne denir?', options: ['Mahşer', 'Mizan', 'Sırat', 'Araf'], answer: 0 },
+    { q: 'Ahirette günah ve sevapların tartılacağı manevi terazi?', options: ['Mizan', 'Kantar', 'Terazi', 'Ölçek'], answer: 0 },
+    { q: 'Hz. İsa (a.s.) hangi peygamberden sonra gelmiştir?', options: ['Hz. Musa', 'Hz. Muhammed', 'Hz. İbrahim', 'Hz. Nuh'], answer: 0 },
+    { q: 'Şeytanın yaratıldığı madde nedir?', options: ['Ateş', 'Nur', 'Toprak', 'Su'], answer: 0 }
 ];
 
 const dinUnit2: Question[] = [
-    { q: 'Hac ibadeti nerede yapılır?', options: ['Mekke', 'Medine', 'Kudüs', 'Şam'], answer: 0 },
-    { q: 'Haccın farzlarından biri hangisidir?', options: ['Arafat Vakfesi', 'Kurban kesmek', 'Şeytan taşlamak', 'Medine ziyareti'], answer: 0 },
-    { q: 'Kabe\'nin etrafında 7 kez dönmeye ne denir?', options: ['Tavaf', 'Şavt', 'Sa\'y', 'Vakfe'], answer: 0 },
-    { q: 'Hacda giyilen özel kıyafet?', options: ['İhram', 'Kefen', 'Cübbe', 'Sarık'], answer: 0 },
-    { q: 'Safa ve Merve tepeleri arasında gidip gelmek?', options: ['Sa\'y', 'Tavaf', 'Vakfe', 'Ramy'], answer: 0 },
-    { q: 'Hac kimlere farzdır?', options: ['Zengin ve sağlıklı Müslümanlara', 'Herkese', 'Yaşlılara', 'Gençlere'], answer: 0 },
-    { q: 'Kurban ibadeti hangi peygamberle özdeşleşmiştir?', options: ['Hz. İbrahim ve Hz. İsmail', 'Hz. Musa', 'Hz. İsa', 'Hz. Nuh'], answer: 0 },
-    { q: 'Hacıların Arafat\'ta beklemesine ne denir?', options: ['Vakfe', 'Tavaf', 'Sa\'y', 'İhram'], answer: 0 },
-    { q: 'Yılın herhangi bir zamanı yapılan Kabe ziyaretine ne denir?', options: ['Umre', 'Hac', 'Ziyaret', 'Gezi'], answer: 0 },
-    { q: 'Kurban kesmenin hükmü nedir?', options: ['Vacip', 'Farz', 'Sünnet', 'Müstehap'], answer: 0 }
+    { q: 'Hac ibadeti zengin Müslümanlara ömürlerinde kaç kez farzdır?', options: ['Bir kez', 'Her yıl', 'Beş kez', 'İstediği kadar'], answer: 0 },
+    { q: 'Hac sırasında giyilen dikişsiz beyaz giysiye ne denir?', options: ['İhram', 'Kefen', 'Cübbe', 'Entari'], answer: 0 },
+    { q: 'Kabe\'nin etrafında yedi kez dönmeye ne ad verilir?', options: ['Tavaf', 'Şavt', 'Sa\'y', 'Vakfe'], answer: 0 },
+    { q: 'Safa ve Merve tepeleri arasında gidip gelme ibadetine ne denir?', options: ['Sa\'y', 'Tavaf', 'Vakfe', 'Ramy'], answer: 0 },
+    { q: 'Hac ibadetinin farzlarından biri olan "Vakfe" nerede yapılır?', options: ['Arafat', 'Mina', 'Müzdelife', 'Kabe'], answer: 0 },
+    { q: 'Yılın herhangi bir zamanında yapılan, Hac\'dan daha kısa süren ibadet?', options: ['Umre', 'Ziyaret', 'Gezi', 'Seyahat'], answer: 0 },
+    { q: 'Kurban ibadeti hangi peygamberin hatırasına dayanır?', options: ['Hz. İbrahim ve Hz. İsmail', 'Hz. Musa', 'Hz. İsa', 'Hz. Yusuf'], answer: 0 },
+    { q: 'Hangi hayvan kurban edilmez?', options: ['Tavuk', 'Koyun', 'Keçi', 'Sığır'], answer: 0 },
+    { q: 'Kurban kesmenin dini hükmü nedir?', options: ['Vacip', 'Farz', 'Sünnet', 'Müstehap'], answer: 0 },
+    { q: 'Hacerü\'l-Esved nedir?', options: ['Kabe\'nin köşesindeki siyah taş', 'Mekke\'de bir dağ', 'Zemzem kuyusu', 'Bir melek'], answer: 0 }
 ];
 
 const dinUnit3: Question[] = [
-    { q: 'Güzel ahlaklı olmak neyin gereğidir?', options: ['İmanın', 'Zenginliğin', 'Bilginin', 'Gücün'], answer: 0 },
-    { q: 'Hangisi güzel ahlak örneğidir?', options: ['Dürüstlük', 'Yalan', 'Gıybet', 'İftira'], answer: 0 },
-    { q: 'Adalet ne demektir?', options: ['Hak sahibine hakkını vermek', 'Herkese eşit davranmak', 'Zengine vermek', 'Güçlüye vermek'], answer: 0 },
-    { q: 'Kişinin davranışlarını kontrol etmesine ne denir?', options: ['Öz denetim', 'Özgürlük', 'Baskı', 'Korku'], answer: 0 },
-    { q: 'Hz. Salih hangi kavme gönderilmiştir?', options: ['Semud', 'Ad', 'Nuh', 'Lut'], answer: 0 },
-    { q: 'Semud kavminin helak olma sebebi?', options: ['Ahlaksızlık ve kibir', 'Fakir olmaları', 'Çok çalışmaları', 'Bilgisizlik'], answer: 0 },
-    { q: '"El-Emin" ne demektir?', options: ['Güvenilir', 'Zengin', 'Güçlü', 'Bilgili'], answer: 0 },
-    { q: 'Vatanseverlik nasıl gösterilir?', options: ['Çalışarak ve ülkesini severek', 'Kaçarak', 'Şikayet ederek', 'Yatarak'], answer: 0 },
-    { q: 'Yardımseverlik toplumda neyi artırır?', options: ['Dayanışmayı', 'Kavgayı', 'Kıskançlığı', 'Fakirliği'], answer: 0 },
-    { q: 'Başkası hakkında kötü konuşmaya ne denir?', options: ['Gıybet', 'Sohbet', 'Muhabbet', 'Övgü'], answer: 0 }
+    { q: 'Güzel ahlaklı olmak İslam\'da neyin göstergesidir?', options: ['Kamil imanın', 'Zenginliğin', 'Gücün', 'Bilginin'], answer: 0 },
+    { q: '"Her hak sahibine hakkını vermek" tanımı neye aittir?', options: ['Adalet', 'Merhamet', 'Cömertlik', 'Sabır'], answer: 0 },
+    { q: 'Kişinin kendi davranışlarını ve sonuçlarını üstlenmesine ne denir?', options: ['Sorumluluk', 'Özgürlük', 'Saygı', 'Sevgi'], answer: 0 },
+    { q: 'Kişinin kendini kontrol etmesi, nefsine hakim olmasına ne denir?', options: ['Öz denetim', 'Öz güven', 'Öz saygı', 'Bencillik'], answer: 0 },
+    { q: 'Hz. Salih (a.s.) hangi kavme gönderilmiştir?', options: ['Semud Kavmi', 'Ad Kavmi', 'Lut Kavmi', 'Nuh Kavmi'], answer: 0 },
+    { q: 'Semud kavminin helak olma sebebi nedir?', options: ['Azgınlık, kibir ve peygamberi yalanlama', 'Fakirlik', 'Savaş', 'Hastalık'], answer: 0 },
+    { q: 'Peygamberimiz "Ben ....... tamamlamak için gönderildim." buyurmuştur. Boşluğa ne gelir?', options: ['Güzel ahlakı', 'Zenginliği', 'Savaşı', 'Krallığı'], answer: 0 },
+    { q: 'İyilik yaparken gösterişten kaçınmaya ne denir?', options: ['İhlas / Samimiyet', 'Riya', 'Kibir', 'Cimrilik'], answer: 0 },
+    { q: 'Vatanını seven bir insan ne yapmalıdır?', options: ['Çalışkan ve dürüst olmalıdır', 'Kaçmalıdır', 'Şikayet etmelidir', 'Tembellik yapmalıdır'], answer: 0 },
+    { q: 'Başkalarının arkasından hoşlanmayacağı şekilde konuşmaya ne denir?', options: ['Gıybet', 'İftira', 'Yalan', 'Sohbet'], answer: 0 }
 ];
 
 const dinUnit4: Question[] = [
-    { q: 'Hz. Muhammed\'in insani yönü nasıldı?', options: ['Bizim gibi yer, içer, uyurdu', 'Melek gibiydi', 'Yemez içmezdi', 'Hiç uyumazdı'], answer: 0 },
-    { q: 'Hz. Muhammed\'i diğer insanlardan ayıran özellik?', options: ['Vahiy alması', 'Zengin olması', 'Güzel olması', 'Lider olması'], answer: 0 },
-    { q: 'Peygamberimizin son peygamber olmasına ne denir?', options: ['Hatemül Enbiya', 'Resulullah', 'Habibullah', 'Halilullah'], answer: 0 },
-    { q: 'Kafirun suresinin ana mesajı nedir?', options: ['İnanç özgürlüğü ve Tevhid', 'Namaz', 'Oruç', 'Zekat'], answer: 0 },
-    { q: 'Hz. Muhammed insanlara nasıl davranırdı?', options: ['Merhametli ve nazik', 'Kaba', 'Kırıcı', 'Umursamaz'], answer: 0 },
-    { q: 'Peygamberimiz insanları neye çağırırdı?', options: ['Tevhide (Tek Allah inancı)', 'Zenginliğe', 'Savaşa', 'Krallığa'], answer: 0 },
-    { q: '"Üsve-i Hasene" ne demektir?', options: ['En güzel örnek', 'Güzel insan', 'İyi arkadaş', 'Güçlü lider'], answer: 0 },
-    { q: 'Peygamberimiz sorunları nasıl çözerdi?', options: ['Adaletle', 'Zorla', 'Parayla', 'Kavga ile'], answer: 0 },
-    { q: 'Hz. Muhammed\'e inen ilk vahiy?', options: ['Oku', 'Yaz', 'Kalk', 'Git'], answer: 0 },
-    { q: 'Peygamberimiz çocuklara nasıl davranırdı?', options: ['Şefkatle', 'Kızarak', 'Görmezden gelerek', 'Uzak durarak'], answer: 0 }
+    { q: 'Hz. Muhammed (s.a.v.) "Ben de sizin gibi bir ......." demiştir. Boşluğa ne gelir?', options: ['İnsanım', 'Meleğim', 'Kralım', 'Tanrıyım'], answer: 0 },
+    { q: 'Hz. Muhammed\'in "Hatemü\'l-Enbiya" olması ne demektir?', options: ['Son Peygamber olması', 'İlk Peygamber olması', 'En zengin Peygamber', 'Mekke\'li olması'], answer: 0 },
+    { q: 'Peygamberimizin en bilinen lakabı olan "El-Emin" ne anlama gelir?', options: ['Güvenilir', 'Cömert', 'Bilgili', 'Cesur'], answer: 0 },
+    { q: 'Kafirun Suresi\'nin ana konusu nedir?', options: ['Tevhid ve Şirkin reddi', 'Namaz', 'Oruç', 'Hac'], answer: 0 },
+    { q: 'Hz. Muhammed\'in insanlara karşı tutumu nasıldı?', options: ['Merhametli ve nazik', 'Kaba ve sert', 'Kibirli', 'Umursamaz'], answer: 0 },
+    { q: 'Peygamberimiz sorunları çözerken neye önem verirdi?', options: ['Adalete ve istişareye', 'Güce', 'Paraya', 'Kendi isteğine'], answer: 0 },
+    { q: 'Kur\'an-ı Kerim\'de Hz. Muhammed için "Sizde onun için güzel bir ..... vardır" denilmiştir.', options: ['Örnek (Üsve-i Hasene)', 'Mal', 'Ev', 'Kitap'], answer: 0 },
+    { q: 'Hz. Muhammed\'e ilk vahiy nerede gelmiştir?', options: ['Hira Mağarası', 'Sevr Mağarası', 'Kabe', 'Evinde'], answer: 0 },
+    { q: 'Peygamberimiz çocuklara nasıl davranırdı?', options: ['Sevgi ve şefkatle', 'Kızarak', 'Görmezden gelerek', 'Uzak durarak'], answer: 0 },
+    { q: 'Hz. Muhammed\'in hadislerinin toplandığı kitaplara ne denir?', options: ['Hadis Kitapları (Kütüb-i Sitte)', 'Tarih Kitabı', 'Coğrafya Kitabı', 'Roman'], answer: 0 }
 ];
 
 const dinUnit5: Question[] = [
-    { q: 'Din anlayışındaki farklılıklara ne denir?', options: ['Yorum (Mezhep)', 'Din', 'Vahiy', 'Ayet'], answer: 0 },
-    { q: 'Dinin değişmeyen özü nedir?', options: ['Tevhid ve İnanç esasları', 'Kıyafetler', 'Yemekler', 'Evler'], answer: 0 },
-    { q: 'Hangisi itikadi (inançla ilgili) bir yorumdur?', options: ['Maturidilik', 'Hanefilik', 'Mevlevilik', 'Nakşibendilik'], answer: 0 },
-    { q: 'Hangisi fıkhi (ibadetle ilgili) bir yorumdur?', options: ['Hanefilik', 'Eşarilik', 'Maturidilik', 'Alevilik'], answer: 0 },
-    { q: 'İmam-ı Azam Ebu Hanife\'nin kurduğu mezhep?', options: ['Hanefilik', 'Şafiilik', 'Malikilik', 'Hanbelilik'], answer: 0 },
-    { q: 'Mevlevilik kime dayanır?', options: ['Mevlana Celaleddin Rumi', 'Hacı Bektaş Veli', 'Ahmet Yesevi', 'Yunus Emre'], answer: 0 },
-    { q: 'Alevilik-Bektaşilikte "Cem" ne demektir?', options: ['Toplanma ve ibadet', 'Yemek', 'Cenaze', 'Düğün'], answer: 0 },
-    { q: 'Dini yorumların temel sebebi nedir?', options: ['İnsani ve toplumsal farklılıklar', 'Dinin eksikliği', 'Allah\'ın emri', 'Peygamberin isteği'], answer: 0 },
-    { q: 'Ahmet Yesevi\'nin eseri hangisidir?', options: ['Divan-ı Hikmet', 'Mesnevi', 'Makalat', 'Risale'], answer: 0 },
-    { q: 'Mezhepler dinin kendisi midir?', options: ['Hayır, dinin yorumudur', 'Evet', 'Dinden üstündür', 'Dinin zıddıdır'], answer: 0 }
+    { q: 'Din anlayışındaki farklı yorumlara ve ekollere ne denir?', options: ['Mezhep', 'Din', 'Ayet', 'Hadis'], answer: 0 },
+    { q: 'Dinin değişmeyen temel kaynakları nelerdir?', options: ['Kur\'an ve Sünnet', 'Rüya ve İlham', 'Akıl ve Bilim', 'Örf ve Adet'], answer: 0 },
+    { q: 'İnanç (İtikad) konularındaki yorumlardan biri olan Maturidilik kime dayanır?', options: ['İmam Maturidi', 'İmam Eşari', 'İmam Gazali', 'Mevlana'], answer: 0 },
+    { q: 'İbadet ve hukuk (Fıkıh) konularındaki mezheplerden biri hangisidir?', options: ['Hanefilik', 'Maturidilik', 'Eşarilik', 'Alevilik'], answer: 0 },
+    { q: 'İmam-ı Azam Ebu Hanife\'nin öncülük ettiği mezhep?', options: ['Hanefilik', 'Şafiilik', 'Malikilik', 'Hanbelilik'], answer: 0 },
+    { q: 'Anadolu\'da yaygın olan tasavvufi yorumlardan "Mevlevilik" kime dayanır?', options: ['Mevlana Celaleddin Rumi', 'Hacı Bektaş Veli', 'Yunus Emre', 'Ahmet Yesevi'], answer: 0 },
+    { q: 'Alevilik-Bektaşilikte yapılan toplu ibadete ne denir?', options: ['Cem', 'Namaz', 'Zikir', 'Mevlit'], answer: 0 },
+    { q: '"Eline, beline, diline sahip ol" sözü kime aittir?', options: ['Hacı Bektaş Veli', 'Mevlana', 'Yunus Emre', 'Piri Reis'], answer: 0 },
+    { q: 'Yorum farklılıklarının temel sebebi nedir?', options: ['İnsan yapısı, kültürel ve sosyal ortam', 'Dinin eksikliği', 'Peygamberin emri', 'Rastlantı'], answer: 0 },
+    { q: 'Mezhepler dinin kendisi midir?', options: ['Hayır, dinin anlaşılma biçimidir', 'Evet, dinin kendisidir', 'Dinden üstündür', 'Dinin zıddıdır'], answer: 0 }
 ];
 
 // --- ARAPÇA (5 ÜNİTE - YENİ EKLENDİ) ---

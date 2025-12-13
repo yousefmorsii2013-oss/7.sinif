@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { generateBigRiskBoard } from '../services/geminiService';
-import { LoadingState, RiskCategory, RiskQuestion, Team, Topic } from '../types';
+import { LoadingState, RiskCategory, Team } from '../types';
 import { SUBJECTS, TOPICS } from '../constants';
 
 // Formatting helper for math content
@@ -23,457 +23,440 @@ const formatText = (text: string) => {
 };
 
 const CompetitionView: React.FC = () => {
-  const [setupStep, setSetupStep] = useState<'TEAM_SELECT' | 'SUBJECT_SELECT' | 'TOPIC_SELECT' | 'PLAYING'>('TEAM_SELECT');
-  const [teams, setTeams] = useState<Team[]>([]);
-  const [currentTurnIndex, setCurrentTurnIndex] = useState(0); // Tracks whose turn it is
+  const [setupStep, setSetupStep] = useState<'TEAM_SELECT' | 'SUBJECT_SELECT' | 'TOPIC_SELECT' | 'PLAYING' | 'WINNER'>('TEAM_SELECT');
+  // We initialize with 3 teams. Names are placeholders, we will render 1, 2, 3 based on index.
+  const [teams, setTeams] = useState<Team[]>([
+    { id: 1, name: '1', score: 0, color: 'bg-slate-700' },
+    { id: 2, name: '2', score: 0, color: 'bg-slate-700' },
+    { id: 3, name: '3', score: 0, color: 'bg-slate-700' }
+  ]);
+  const [currentTeamIndex, setCurrentTeamIndex] = useState(0); // Tracks whose turn it is
+  
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);
-  const [gameTitle, setGameTitle] = useState<string>("Karma");
   const [categories, setCategories] = useState<RiskCategory[]>([]);
   const [loadingState, setLoadingState] = useState<LoadingState>(LoadingState.IDLE);
-  const [activeQuestion, setActiveQuestion] = useState<{catIndex: number, qIndex: number, question: RiskQuestion} | null>(null);
+  const [activeQuestion, setActiveQuestion] = useState<{ categoryIndex: number, questionIndex: number } | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const teamColors = [
-      'border-red-400 bg-red-600 text-white', 
-      'border-blue-400 bg-blue-600 text-white', 
-      'border-green-400 bg-green-600 text-white', 
-      'border-yellow-400 bg-yellow-600 text-white', 
-      'border-purple-400 bg-purple-600 text-white'
-  ];
+  // Helper to get number from index (0->1, 1->2, 2->3)
+  const getTeamName = (index: number) => (index + 1).toString();
 
-  // CSS for Fireworks
-  const fireworkStyles = `
-    @keyframes firework {
-      0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
-      50% { width: 0.5vmin; opacity: 1; }
-      100% { width: var(--finalSize); opacity: 0; }
-    }
-    .firework,
-    .firework::before,
-    .firework::after {
-      --initialSize: 0.5vmin;
-      --finalSize: 45vmin;
-      --particleSize: 0.2vmin;
-      --color1: yellow;
-      --color2: khaki;
-      --color3: white;
-      --color4: lime;
-      --color5: gold;
-      --color6: mediumseagreen;
-      --y: -30vmin;
-      --x: -50%;
-      --initialY: 60vmin;
-      content: "";
-      animation: firework 2s infinite;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, var(--y));
-      width: var(--initialSize);
-      aspect-ratio: 1;
-      background: 
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
-        radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 50%,
-        radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50% 100%,
-        radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 0% 50%,
-        radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 80% 90%,
-        radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 95% 90%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 90% 70%,
-        radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 60%,
-        radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 55% 80%,
-        radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 70% 77%,
-        radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 22% 90%,
-        radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 45% 90%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 70%,
-        radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 10% 60%,
-        radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 31% 80%,
-        radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 28% 77%,
-        radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 13% 72%,
-        radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 80% 10%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 95% 14%,
-        radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 90% 23%,
-        radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 100% 43%,
-        radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 85% 27%,
-        radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 77% 37%,
-        radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 60% 7%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22% 14%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 45% 20%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 34%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10% 29%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 31% 37%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 28% 7%,
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
-      background-size: var(--initialSize) var(--initialSize);
-      background-repeat: no-repeat;
-    }
-    .firework::before {
-      --x: -50%;
-      --y: -50%;
-      --initialY: -50%;
-      transform: translate(-50%, -50%) rotate(40deg) scale(1.3) rotateY(40deg);
-    }
-    .firework::after {
-      --x: -50%;
-      --y: -50%;
-      --initialY: -50%;
-      transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
-    }
-    .firework:nth-child(2) { --x: 30vmin; --initialY: 55vmin; }
-    .firework:nth-child(2)::before { transform: translate(-50%, -50%) rotate(10deg) scale(0.9) rotateY(20deg); }
-    .firework:nth-child(2)::after { transform: translate(-50%, -50%) rotate(120deg) scale(1) rotateY(-10deg); }
-    .firework:nth-child(3) { --x: -30vmin; --initialY: 70vmin; }
-    .firework:nth-child(3)::before { transform: translate(-50%, -50%) rotate(90deg) scale(1.1) rotateY(60deg); }
-    .firework:nth-child(3)::after { transform: translate(-50%, -50%) rotate(10deg) scale(0.8) rotateY(-5deg); }
-  `;
-
-  // STEP 1: Set up teams
-  const handleTeamCount = (count: number) => {
-      const newTeams = Array.from({ length: count }, (_, i) => ({
-          id: i,
-          name: `${i + 1}. Grup`,
-          score: 0,
-          color: teamColors[i % teamColors.length]
-      }));
-      setTeams(newTeams);
-      setCurrentTurnIndex(0); // Start with 1st group
-      setSetupStep('SUBJECT_SELECT');
-  };
-
-  // STEP 2: Select Subject
-  const handleSubjectSelect = (subjectId: string) => {
-    if (subjectId === 'Karma') {
-      setSelectedSubjectId('Karma');
-      setGameTitle("Karma (Tüm Dersler)");
-      generateGame('Karma', false);
-    } else {
-      setSelectedSubjectId(subjectId);
-      const sub = SUBJECTS.find(s => s.id === subjectId);
-      setGameTitle(sub?.title || "Ders");
-      setSetupStep('TOPIC_SELECT');
+  // Initial Setup helpers
+  const handleAddTeam = () => {
+    if (teams.length < 5) {
+      setTeams([...teams, { 
+        id: teams.length + 1, 
+        name: getTeamName(teams.length), 
+        score: 0,
+        color: 'bg-slate-700'
+      }]);
     }
   };
 
-  // STEP 3: Select Topic
-  const handleTopicSelect = (topic: Topic) => {
-    setGameTitle(topic.title);
-    // PASS PROMPT CONTEXT instead of title to ensure questions match the lesson content!
-    generateGame(topic.promptContext, true);
-  };
-
-  // STEP 4: Generate Game
-  const generateGame = async (context: string, isTopic: boolean) => {
-    setLoadingState(LoadingState.LOADING);
-    setSetupStep('PLAYING');
-    
-    try {
-        const boardData = await generateBigRiskBoard(context, isTopic);
-        setCategories(boardData);
-        setLoadingState(LoadingState.SUCCESS);
-    } catch (e) {
-        setLoadingState(LoadingState.ERROR);
-    }
-  };
-
-  // GAMEPLAY: Open Question
-  const handleQuestionClick = (catIndex: number, qIndex: number) => {
-      if (categories[catIndex].questions[qIndex].isOpened) return;
-      setActiveQuestion({ catIndex, qIndex, question: categories[catIndex].questions[qIndex] });
-      setShowAnswer(false);
-  };
-
-  // GAMEPLAY: Handle Result
-  const handleTurnResult = (isCorrect: boolean) => {
-      if (!activeQuestion) return;
-
-      const { catIndex, qIndex, question } = activeQuestion;
-      const points = question.points;
-
-      // Update current team's score
-      setTeams(prevTeams => {
-          const updated = [...prevTeams];
-          const currentTeam = updated[currentTurnIndex];
-          
-          if (isCorrect) {
-              currentTeam.score += points;
-          } else {
-              currentTeam.score -= points; // Penalty logic
-          }
-          return updated;
-      });
-
-      // Mark question as opened
-      setCategories(prev => {
-          const updated = [...prev];
-          updated[catIndex].questions[qIndex].isOpened = true;
-          return updated;
-      });
-
-      setActiveQuestion(null);
-
-      // Rotate turn
-      setCurrentTurnIndex(prev => (prev + 1) % teams.length);
-
-      // Check Game Over
-      const allOpened = categories.every(cat => cat.questions.every(q => q.isOpened));
-      if (allOpened) {
-          setIsGameOver(true);
+  const handleRemoveTeam = () => {
+      if (teams.length > 2) {
+          setTeams(teams.slice(0, -1));
       }
   };
 
+  const handleSubjectSelect = (subjectId: string) => {
+    setSelectedSubjectId(subjectId);
+    setSetupStep('TOPIC_SELECT');
+  };
+
+  const handleTopicSelect = async (topicOrMix: string) => {
+    setLoadingState(LoadingState.LOADING);
+    
+    try {
+      const currentSubject = SUBJECTS.find(s => s.id === selectedSubjectId);
+      const isSpecific = topicOrMix !== "Karma";
+      
+      const data = await generateBigRiskBoard(isSpecific ? topicOrMix : currentSubject!.title, isSpecific);
+      setCategories(data);
+      setSetupStep('PLAYING');
+      setCurrentTeamIndex(0); // Reset to first team
+      setLoadingState(LoadingState.SUCCESS);
+    } catch (error) {
+      console.error(error);
+      setLoadingState(LoadingState.ERROR);
+    }
+  };
+
+  const handleQuestionClick = (catIndex: number, qIndex: number) => {
+    if (categories[catIndex].questions[qIndex].isOpened) return;
+    setActiveQuestion({ categoryIndex: catIndex, questionIndex: qIndex });
+    setShowAnswer(false);
+  };
+
+  // Turn Logic: Answer Correct or Incorrect
+  const handleAnswerResult = (isCorrect: boolean) => {
+    if (!activeQuestion) return;
+    
+    const points = categories[activeQuestion.categoryIndex].questions[activeQuestion.questionIndex].points;
+
+    // Update Score
+    const updatedTeams = [...teams];
+    if (isCorrect) {
+        updatedTeams[currentTeamIndex].score += points;
+    } else {
+        updatedTeams[currentTeamIndex].score -= points;
+    }
+    setTeams(updatedTeams);
+
+    // Close Question
+    const newCategories = [...categories];
+    newCategories[activeQuestion.categoryIndex].questions[activeQuestion.questionIndex].isOpened = true;
+    setCategories(newCategories);
+    setActiveQuestion(null);
+    setShowAnswer(false);
+    
+    // Check Game Over (Are all questions opened?)
+    const allOpened = newCategories.every(cat => cat.questions.every(q => q.isOpened));
+    if (allOpened) {
+        setSetupStep('WINNER');
+    } else {
+        // Switch to next team only if game continues
+        setCurrentTeamIndex((prev) => (prev + 1) % teams.length);
+    }
+  };
+
+  const closeQuestionWithoutScore = () => {
+      setActiveQuestion(null);
+      setShowAnswer(false);
+  };
+
+  const resetGame = () => {
+      setSetupStep('SUBJECT_SELECT');
+      setCategories([]);
+      setTeams(teams.map(t => ({ ...t, score: 0 })));
+      setCurrentTeamIndex(0);
+  };
+
+  const getWinners = () => {
+      if (teams.length === 0) return [];
+      const maxScore = Math.max(...teams.map(t => t.score));
+      return teams.filter(t => t.score === maxScore);
+  };
+
+  // --- RENDER ---
+
   if (setupStep === 'TEAM_SELECT') {
-      return (
-          <div className="min-h-[80vh] flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800 rounded-3xl p-8 text-white shadow-2xl">
-              <h2 className="text-5xl font-bold mb-12 text-yellow-300 font-handwritten drop-shadow-md">Riskli Yusuf</h2>
-              <p className="text-2xl mb-8 font-bold">Kaç grup yarışacak?</p>
-              <div className="flex gap-6 flex-wrap justify-center">
-                  {[1, 2, 3, 4, 5].map(num => (
-                      <button 
-                          key={num}
-                          onClick={() => handleTeamCount(num)}
-                          className="w-20 h-20 rounded-2xl bg-white text-indigo-900 text-4xl font-black shadow-lg hover:bg-yellow-400 hover:scale-110 transition-all border-4 border-indigo-200"
-                      >
-                          {num}
-                      </button>
-                  ))}
-              </div>
-          </div>
-      );
+    return (
+      <div className="max-w-4xl mx-auto py-10 px-4 animate-fade-in-up text-center">
+        <h2 className="text-4xl font-black text-indigo-900 mb-8 font-handwritten">Yarışmacı Gruplar</h2>
+        
+        <div className="flex justify-center gap-6 mb-12">
+          {teams.map((team, index) => (
+            <div key={team.id} className="w-32 h-32 bg-white rounded-2xl shadow-xl border-4 border-slate-200 flex flex-col items-center justify-center">
+              <span className="text-sm text-gray-400 font-bold uppercase tracking-wider mb-2">TAKIM</span>
+              <span className="text-6xl font-black text-slate-700">{getTeamName(index)}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex justify-center gap-4 mb-8">
+            <button onClick={handleAddTeam} disabled={teams.length >= 5} className="px-6 py-2 bg-green-100 text-green-700 rounded-full font-bold hover:bg-green-200 disabled:opacity-50">
+                + Takım Ekle
+            </button>
+            <button onClick={handleRemoveTeam} disabled={teams.length <= 2} className="px-6 py-2 bg-red-100 text-red-700 rounded-full font-bold hover:bg-red-200 disabled:opacity-50">
+                - Çıkar
+            </button>
+        </div>
+
+        <button 
+            onClick={() => setSetupStep('SUBJECT_SELECT')}
+            className="px-12 py-4 bg-indigo-600 text-white rounded-full font-bold shadow-lg hover:bg-indigo-700 text-xl transition-transform hover:-translate-y-1"
+        >
+            BAŞLA &rarr;
+        </button>
+      </div>
+    );
   }
 
   if (setupStep === 'SUBJECT_SELECT') {
     return (
-      <div className="min-h-[80vh] p-8 bg-gradient-to-br from-indigo-900 to-purple-800 rounded-3xl text-white shadow-2xl">
-        <h2 className="text-4xl font-bold mb-10 text-center text-yellow-300 font-handwritten">Hangi Dersten Yarışmak İstersin?</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-           <button 
-             onClick={() => handleSubjectSelect('Karma')}
-             className="p-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-2xl shadow-xl hover:scale-105 transition-transform font-bold text-2xl flex items-center justify-center border-4 border-white border-opacity-20"
-           >
-             🎲 Karma (Hepsi)
-           </button>
-           {SUBJECTS.map(sub => (
-             <button 
-               key={sub.id}
-               onClick={() => handleSubjectSelect(sub.id)}
-               className={`p-6 rounded-2xl shadow-xl hover:scale-105 transition-transform font-bold text-xl flex flex-col items-center justify-center gap-4 bg-white bg-opacity-10 border-2 border-white border-opacity-30 hover:bg-opacity-20`}
-             >
-               <span className="text-5xl drop-shadow-md">{sub.icon}</span>
-               <span className="text-center">{sub.title}</span>
-             </button>
-           ))}
+      <div className="max-w-5xl mx-auto py-10 px-4 animate-fade-in">
+        <button onClick={() => setSetupStep('TEAM_SELECT')} className="mb-6 text-gray-500 font-bold hover:text-indigo-600">&larr; Gruplara Dön</button>
+        <h2 className="text-3xl font-black text-center mb-10 text-gray-800">Yarışma Konusunu Seç</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {SUBJECTS.map(subject => (
+            <button
+              key={subject.id}
+              onClick={() => handleSubjectSelect(subject.id)}
+              className={`p-6 rounded-2xl shadow-md border-b-4 bg-white hover:bg-gray-50 transition-all ${subject.colorClass}`}
+            >
+              <div className="text-5xl mb-4">{subject.icon}</div>
+              <h3 className="text-xl font-bold">{subject.title}</h3>
+            </button>
+          ))}
         </div>
       </div>
     );
   }
 
-  if (setupStep === 'TOPIC_SELECT') {
-    const subTopics = TOPICS.filter(t => t.subjectId === selectedSubjectId);
+  if (setupStep === 'TOPIC_SELECT' && selectedSubjectId) {
+    const subject = SUBJECTS.find(s => s.id === selectedSubjectId);
+    const topics = TOPICS.filter(t => t.subjectId === selectedSubjectId);
+
     return (
-      <div className="min-h-[80vh] p-8 bg-gradient-to-br from-indigo-900 to-purple-800 rounded-3xl text-white shadow-2xl">
-        <button onClick={() => setSetupStep('SUBJECT_SELECT')} className="mb-6 px-4 py-2 bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 font-bold">&larr; Geri</button>
-        <h2 className="text-4xl font-bold mb-10 text-center text-yellow-300 font-handwritten">{gameTitle} Konusu Seç</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           {subTopics.map(topic => (
-             <button 
-               key={topic.id}
-               onClick={() => handleTopicSelect(topic)}
-               className="p-6 bg-indigo-800 border-l-8 border-yellow-400 rounded-r-xl shadow-md hover:bg-indigo-700 text-left transition-all"
-             >
-               <h3 className="font-bold text-xl text-yellow-100 mb-1">{topic.title}</h3>
-               <p className="text-sm text-indigo-200">{topic.description}</p>
-             </button>
-           ))}
-        </div>
+      <div className="max-w-4xl mx-auto py-10 px-4 animate-fade-in">
+        <button onClick={() => setSetupStep('SUBJECT_SELECT')} className="mb-6 text-gray-500 font-bold hover:text-indigo-600">&larr; Derslere Dön</button>
+        
+        {loadingState === LoadingState.LOADING ? (
+           <div className="text-center py-20">
+             <div className="animate-spin w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+             <p className="text-xl font-bold text-indigo-800">Yarışma Hazırlanıyor...</p>
+           </div>
+        ) : (
+          <>
+            <h2 className="text-3xl font-bold text-center mb-2">{subject?.title} Yarışması</h2>
+            <p className="text-center text-gray-600 mb-8">İstersen belirli bir ünite seç, istersen karma yap.</p>
+            
+            <div className="grid grid-cols-1 gap-4">
+              <button
+                onClick={() => handleTopicSelect("Karma")}
+                className="p-6 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-xl shadow-lg font-bold text-xl hover:shadow-xl transition-transform hover:-translate-y-1"
+              >
+                🔀 Karma Yarışma (Tüm Üniteler)
+              </button>
+              {topics.map(topic => (
+                <button
+                  key={topic.id}
+                  onClick={() => handleTopicSelect(topic.promptContext)}
+                  className="p-5 bg-white border-2 border-gray-100 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all"
+                >
+                  <span className="font-bold text-gray-800 block">{topic.title}</span>
+                  <span className="text-sm text-gray-500">{topic.description}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     );
   }
 
-  // --- PLAYING STATE ---
-
-  if (loadingState === LoadingState.LOADING) {
+  // WINNER SCREEN
+  if (setupStep === 'WINNER') {
+      const winners = getWinners();
       return (
-          <div className="min-h-[80vh] flex flex-col items-center justify-center bg-indigo-900 rounded-3xl text-white">
-              <div className="animate-spin text-6xl mb-6">⚙️</div>
-              <p className="text-2xl animate-pulse font-bold">Yarışma Hazırlanıyor...</p>
-          </div>
-      );
-  }
-
-  if (isGameOver) {
-      // Find winner(s)
-      const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
-      const winner = sortedTeams[0];
-
-      return (
-          <div className="min-h-[80vh] bg-gradient-to-b from-slate-900 to-indigo-900 rounded-3xl relative overflow-hidden flex flex-col items-center justify-center text-white shadow-2xl">
-              <style>{fireworkStyles}</style>
-              <div className="firework"></div>
-              <div className="firework"></div>
-              <div className="firework"></div>
-              <div className="firework"></div>
-              
-              <div className="z-10 text-center animate-fade-in-up p-8">
-                  <div className="text-9xl mb-6 drop-shadow-2xl">🏆</div>
-                  <h1 className="text-6xl font-bold text-yellow-400 mb-4 font-handwritten drop-shadow-md">TEBRİKLER!</h1>
-                  <h2 className="text-5xl font-bold mb-8">{winner.name} Kazandı!</h2>
-                  <div className="bg-white bg-opacity-20 p-8 rounded-3xl backdrop-blur-md border border-white border-opacity-30 inline-block">
-                      <p className="text-3xl">Puan: <span className="text-yellow-300 font-black text-4xl ml-2">{winner.score}</span></p>
-                  </div>
-                  
-                  <div className="mt-12 space-y-3">
-                      {sortedTeams.slice(1).map((t, i) => (
-                          <div key={t.id} className="text-xl text-indigo-200 font-medium">
-                              {i+2}. {t.name}: <span className="text-white">{t.score} Puan</span>
-                          </div>
-                      ))}
-                  </div>
-
-                  <button 
-                    onClick={() => setSetupStep('TEAM_SELECT')}
-                    className="mt-12 px-10 py-4 bg-yellow-500 hover:bg-yellow-400 text-yellow-900 rounded-full font-black text-xl shadow-xl hover:scale-105 transition-transform"
-                  >
-                    Yeni Yarışma Başlat
-                  </button>
-              </div>
-          </div>
-      );
-  }
-
-  return (
-    <div className="bg-gradient-to-br from-indigo-800 via-purple-900 to-slate-900 min-h-screen p-2 sm:p-6 rounded-3xl text-white font-sans relative shadow-2xl">
-        {/* Header */}
-        <div className="flex flex-col xl:flex-row justify-between items-center mb-8 bg-white bg-opacity-10 p-6 rounded-2xl border border-white border-opacity-10 backdrop-blur-sm">
-            <div className="mb-4 xl:mb-0 text-center xl:text-left">
-                <h1 className="text-4xl font-black text-yellow-400 font-handwritten tracking-wider drop-shadow-md">Riskli Yusuf</h1>
-                <p className="text-sm text-indigo-200 uppercase tracking-widest font-bold mt-1">{gameTitle}</p>
-                <p className="text-xs text-indigo-300 mt-2 italic">* Soruları bilemezsen ders notlarına bakabilirsin. Oyun kaybolmaz.</p>
+        <div className={`fixed inset-0 z-[200] bg-slate-900 flex flex-col items-center justify-center overflow-hidden text-white`}>
+            {/* Fireworks Background */}
+            <div className="absolute inset-0 pointer-events-none opacity-50">
+               <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-yellow-500 rounded-full animate-ping"></div>
+               <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-red-500 rounded-full animate-ping delay-100"></div>
+               <div className="absolute bottom-1/4 left-1/3 w-5 h-5 bg-blue-500 rounded-full animate-ping delay-200"></div>
+               <div className="absolute top-1/2 left-1/2 w-8 h-8 bg-green-500 rounded-full animate-ping delay-500"></div>
+               <div className="absolute top-10 left-10 w-2 h-2 bg-white rounded-full animate-ping"></div>
+               <div className="absolute bottom-10 right-10 w-3 h-3 bg-white rounded-full animate-ping delay-300"></div>
             </div>
-            
-            {/* Scoreboard */}
-            <div className="flex gap-4 overflow-x-auto w-full xl:w-auto pb-2 xl:pb-0 px-2 justify-center xl:justify-end">
-                {teams.map((team, idx) => (
-                    <div 
-                        key={team.id}
-                        className={`px-4 py-3 rounded-xl border-b-4 min-w-[110px] text-center transition-all duration-300 ${
-                            currentTurnIndex === idx 
-                            ? `${team.color.replace('text-', 'text-opacity-100 ')} transform scale-110 shadow-lg z-10 ring-2 ring-yellow-400` 
-                            : 'bg-slate-800 border-slate-700 opacity-60'
-                        } ${team.color}`}
-                    >
-                        <div className="text-xs font-bold mb-1 opacity-80 uppercase tracking-wide">
-                            {team.name}
+
+            <div className="z-10 text-center animate-scale-in">
+                <div className="text-8xl mb-6">🏆</div>
+                <h1 className="text-6xl font-black mb-4 text-yellow-400 drop-shadow-lg">TEBRİKLER!</h1>
+                
+                {winners.map((winner, idx) => (
+                    <div key={idx} className="mb-8">
+                        <div className="text-8xl font-black mb-2">TAKIM {getTeamName(teams.indexOf(winner))}</div>
+                        <div className="text-3xl font-bold bg-white text-slate-900 px-8 py-2 rounded-full inline-block">
+                            {winner.score} PUAN
                         </div>
-                        <div className="text-3xl font-black">{team.score}</div>
-                        {currentTurnIndex === idx && (
-                            <div className="text-[10px] mt-1 font-bold bg-white text-black rounded-full px-2 py-0.5 animate-pulse">SIRA SİZDE</div>
-                        )}
                     </div>
                 ))}
+
+                <button 
+                    onClick={resetGame}
+                    className="mt-8 px-12 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-bold text-2xl shadow-xl transition-transform hover:scale-105"
+                >
+                    Yeni Oyun Başlat
+                </button>
             </div>
         </div>
+      );
+  }
 
-        {/* Game Board */}
-        <div className="grid grid-cols-5 gap-3 lg:gap-4 max-w-7xl mx-auto h-full">
-            {/* Category Headers */}
-            {categories.map((cat, i) => (
-                <div key={i} className="bg-indigo-950 text-center p-3 rounded-lg border-2 border-indigo-700 flex items-center justify-center min-h-[80px] shadow-lg">
-                    <h3 className="font-bold text-xs sm:text-base text-indigo-100 uppercase leading-snug">{cat.title}</h3>
-                </div>
+  // GAME BOARD LAYOUT
+  return (
+    <div className={`
+      ${isFullScreen ? 'fixed inset-0 z-[100]' : 'min-h-screen'} 
+      bg-slate-900 text-white font-sans flex flex-col md:flex-row transition-all duration-300
+    `}>
+      
+      {/* LEFT SIDEBAR: TEAMS */}
+      <div className={`
+        ${isFullScreen ? 'w-24 md:w-48' : 'w-full md:w-64'} 
+        bg-slate-800 p-4 border-r border-slate-700 flex flex-col items-center transition-all duration-300
+      `}>
+          {!isFullScreen && (
+            <button onClick={() => setSetupStep('SUBJECT_SELECT')} className="self-start mb-6 px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 text-xs font-bold">
+                &larr; Çıkış
+            </button>
+          )}
+          
+          <h3 className="text-gray-400 font-bold uppercase tracking-widest mb-6 text-xs md:text-sm">SKORLAR</h3>
+          
+          <div className="space-y-6 w-full flex flex-col items-center">
+              {teams.map((team, index) => {
+                  const isTurn = index === currentTeamIndex;
+                  return (
+                      <div 
+                        key={team.id}
+                        className={`
+                            relative rounded-2xl flex flex-col items-center justify-center transition-all duration-300
+                            ${isFullScreen ? 'w-16 h-16 md:w-32 md:h-32' : 'w-20 h-20 md:w-32 md:h-32'}
+                            ${isTurn ? 'bg-white text-slate-900 scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] ring-4 ring-yellow-400' : 'bg-slate-700 text-gray-400 opacity-80'}
+                        `}
+                      >
+                          {isTurn && (
+                              <div className="absolute -top-3 px-2 py-0.5 bg-yellow-400 text-yellow-900 text-[10px] font-bold rounded-full animate-bounce">
+                                  SIRA
+                              </div>
+                          )}
+                          <span className="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-70">TAKIM</span>
+                          <span className={`font-black ${isFullScreen ? 'text-2xl md:text-5xl' : 'text-3xl md:text-5xl'}`}>{getTeamName(index)}</span>
+                          <div className={`mt-1 font-bold px-2 py-0.5 rounded-full text-xs md:text-base ${isTurn ? 'bg-slate-100 text-slate-800' : 'bg-slate-800'}`}>
+                              {team.score}
+                          </div>
+                      </div>
+                  );
+              })}
+          </div>
+
+          {/* FULL SCREEN TOGGLE BUTTON - BOTTOM LEFT */}
+          <button 
+            onClick={() => setIsFullScreen(!isFullScreen)}
+            className="absolute bottom-4 left-4 p-3 bg-slate-700 hover:bg-slate-600 rounded-full text-white shadow-lg transition-colors border border-slate-600 group"
+            title={isFullScreen ? "Küçült" : "Tam Ekran Yap"}
+          >
+            {isFullScreen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9L4 14m0 0l5 5m-5-5h16M15 15l5-5m0 0l-5-5m5 5H4" />
+                </svg>
+            ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                </svg>
+            )}
+          </button>
+      </div>
+
+      {/* MAIN CONTENT: RISK BOARD */}
+      <div className="flex-1 p-2 md:p-8 flex items-center justify-center overflow-auto">
+        <div className={`grid grid-cols-5 gap-2 w-full ${isFullScreen ? 'h-[90vh]' : 'max-w-6xl'}`}>
+            {/* Categories Header */}
+            {categories.map((cat, idx) => (
+            <div key={idx} className="bg-indigo-600 p-1 sm:p-4 rounded-lg flex items-center justify-center text-center shadow-md border-b-4 border-indigo-800 min-h-[60px]">
+                <h3 className={`font-bold leading-tight uppercase ${isFullScreen ? 'text-lg md:text-2xl' : 'text-[10px] sm:text-sm md:text-base'}`}>{cat.title}</h3>
+            </div>
             ))}
 
             {/* Questions Grid */}
             {Array.from({ length: 5 }).map((_, rowIndex) => (
-                <React.Fragment key={rowIndex}>
-                    {categories.map((cat, colIndex) => {
-                        const q = cat.questions[rowIndex];
-                        return (
-                            <button
-                                key={`${colIndex}-${rowIndex}`}
-                                onClick={() => handleQuestionClick(colIndex, rowIndex)}
-                                disabled={q.isOpened}
-                                className={`
-                                    h-20 sm:h-32 rounded-xl flex items-center justify-center text-2xl sm:text-4xl font-black shadow-lg transition-all duration-200
-                                    ${q.isOpened 
-                                        ? 'bg-slate-800 text-slate-600 cursor-default border-2 border-slate-700' 
-                                        : 'bg-gradient-to-b from-blue-500 to-blue-700 text-yellow-300 hover:from-blue-400 hover:to-blue-600 border-b-4 border-blue-900 active:translate-y-1 hover:shadow-yellow-400/20'
-                                    }
-                                `}
-                            >
-                                {q.isOpened ? '' : q.points}
-                            </button>
-                        );
-                    })}
-                </React.Fragment>
+            <React.Fragment key={rowIndex}>
+                {categories.map((cat, colIndex) => {
+                const question = cat.questions[rowIndex];
+                return (
+                    <button
+                    key={`${colIndex}-${rowIndex}`}
+                    onClick={() => handleQuestionClick(colIndex, rowIndex)}
+                    disabled={question.isOpened}
+                    className={`
+                        rounded-lg font-black shadow-md transition-all transform
+                        flex items-center justify-center relative overflow-hidden group
+                        ${isFullScreen ? 'text-4xl md:text-6xl' : 'text-xl sm:text-3xl h-16 sm:h-24'}
+                        ${question.isOpened 
+                        ? 'bg-slate-800 text-slate-600 cursor-default border border-slate-700' 
+                        : 'bg-yellow-400 text-yellow-900 hover:bg-yellow-300 hover:scale-105 border-b-4 border-yellow-600'
+                        }
+                    `}
+                    >
+                    {!question.isOpened && (
+                        <>
+                        <span className="relative z-10">{question.points}</span>
+                        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                        </>
+                    )}
+                    </button>
+                );
+                })}
+            </React.Fragment>
             ))}
         </div>
+      </div>
 
-        {/* Question Modal */}
-        {activeQuestion && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900 bg-opacity-95 backdrop-blur-md animate-fade-in">
-                <div className="bg-indigo-900 w-full max-w-5xl rounded-3xl border-4 border-yellow-500 shadow-[0_0_50px_rgba(234,179,8,0.3)] overflow-hidden flex flex-col max-h-[90vh]">
-                    
-                    {/* Header */}
-                    <div className="bg-yellow-500 p-6 text-center shadow-lg relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-full bg-white opacity-10 transform -skew-x-12"></div>
-                        <h3 className="text-yellow-900 font-black text-3xl tracking-widest uppercase relative z-10">
-                            {categories[activeQuestion.catIndex].title} &bull; <span className="text-white drop-shadow-md">{activeQuestion.question.points} PUAN</span>
-                        </h3>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-8 sm:p-16 text-center flex-1 overflow-y-auto flex flex-col items-center justify-center bg-indigo-900">
-                        {!showAnswer ? (
-                            <div className="prose prose-invert prose-2xl max-w-4xl">
-                                <p className="text-4xl sm:text-5xl leading-tight font-bold text-white drop-shadow-lg">
-                                    {formatText(activeQuestion.question.question)}
-                                </p>
-                            </div>
-                        ) : (
-                            <div className="animate-flip-in-x bg-white bg-opacity-10 p-10 rounded-3xl border border-white border-opacity-20">
-                                <p className="text-green-400 text-2xl font-bold mb-4 uppercase tracking-wide">Doğru Cevap</p>
-                                <p className="text-4xl sm:text-6xl font-black text-white drop-shadow-xl">
-                                    {formatText(activeQuestion.question.answer)}
-                                </p>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Footer / Controls */}
-                    <div className="p-8 bg-indigo-950 border-t border-indigo-800 flex flex-col sm:flex-row justify-between items-center gap-6">
-                        <div className="text-indigo-300 text-lg hidden sm:block font-medium">
-                            Sıra Kimde? <span className="text-yellow-400 font-bold text-xl ml-2 bg-indigo-800 px-3 py-1 rounded-lg">{teams[currentTurnIndex].name}</span>
-                        </div>
-
-                        {!showAnswer ? (
-                            <button 
-                                onClick={() => setShowAnswer(true)}
-                                className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold text-2xl shadow-xl transition-transform hover:scale-105 border-b-4 border-blue-800"
-                            >
-                                Cevabı Göster
-                            </button>
-                        ) : (
-                            <div className="flex gap-6 w-full sm:w-auto justify-center">
-                                <button 
-                                    onClick={() => handleTurnResult(false)}
-                                    className="flex-1 sm:flex-none px-8 py-4 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-bold shadow-lg border-b-4 border-red-800 text-lg flex flex-col items-center"
-                                >
-                                    <span>YANLIŞ</span>
-                                    <span className="text-sm opacity-80 mt-1">Puan Sil</span>
-                                </button>
-                                <button 
-                                    onClick={() => handleTurnResult(true)}
-                                    className="flex-1 sm:flex-none px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-2xl font-bold shadow-lg border-b-4 border-green-800 text-lg flex flex-col items-center"
-                                >
-                                    <span>DOĞRU</span>
-                                    <span className="text-sm opacity-80 mt-1">Puan Ver</span>
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+      {/* QUESTION MODAL */}
+      {activeQuestion && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black bg-opacity-95 backdrop-blur-sm animate-fade-in">
+          <div className="bg-indigo-800 w-full max-w-5xl rounded-3xl shadow-2xl border-4 border-yellow-400 overflow-hidden flex flex-col max-h-[95vh]">
+            
+            {/* Modal Header */}
+            <div className="bg-indigo-900 p-6 flex justify-between items-center border-b border-indigo-700">
+              <div className="flex items-center gap-4">
+                  <div className="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-lg font-bold text-2xl">
+                      {categories[activeQuestion.categoryIndex].questions[activeQuestion.questionIndex].points} Puan
+                  </div>
+                  <span className="text-gray-300 font-bold tracking-wide text-xl">
+                      {categories[activeQuestion.categoryIndex].title}
+                  </span>
+              </div>
+              <button onClick={closeQuestionWithoutScore} className="text-gray-400 hover:text-white text-4xl">&times;</button>
             </div>
-        )}
+
+            {/* Content */}
+            <div className="p-8 sm:p-16 flex-1 flex flex-col items-center justify-center text-center overflow-y-auto">
+              {/* CURRENT TEAM INDICATOR IN MODAL */}
+              <div className="mb-12">
+                  <span className="block text-indigo-300 text-sm font-bold uppercase tracking-widest mb-2">CEVAP SIRASI</span>
+                  <div className="inline-block bg-white text-indigo-900 text-4xl font-black px-10 py-3 rounded-2xl shadow-lg transform -rotate-2 border-b-8 border-indigo-200">
+                      TAKIM {getTeamName(currentTeamIndex)}
+                  </div>
+              </div>
+
+              {!showAnswer ? (
+                <div className="animate-scale-in w-full">
+                  <p className="text-3xl sm:text-5xl font-medium leading-relaxed text-white mb-16">
+                    {formatText(categories[activeQuestion.categoryIndex].questions[activeQuestion.questionIndex].question)}
+                  </p>
+                  <button 
+                    onClick={() => setShowAnswer(true)}
+                    className="px-12 py-5 bg-yellow-500 hover:bg-yellow-400 text-yellow-900 rounded-full font-bold text-2xl shadow-xl transition-transform hover:scale-105"
+                  >
+                    Cevabı Göster 👁️
+                  </button>
+                </div>
+              ) : (
+                <div className="animate-fade-in w-full">
+                  <p className="text-base text-indigo-300 uppercase font-bold mb-6 tracking-widest">DOĞRU CEVAP</p>
+                  <p className="text-4xl sm:text-6xl font-black text-green-400 mb-16 drop-shadow-lg leading-tight">
+                    {formatText(categories[activeQuestion.categoryIndex].questions[activeQuestion.questionIndex].answer)}
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-8 max-w-xl mx-auto">
+                      <button 
+                        onClick={() => handleAnswerResult(true)}
+                        className="p-8 bg-green-600 hover:bg-green-500 text-white rounded-3xl shadow-xl transition-transform hover:scale-105 border-b-8 border-green-800 flex flex-col items-center"
+                      >
+                          <span className="text-5xl mb-3">✅</span>
+                          <span className="text-3xl font-black">DOĞRU</span>
+                          <span className="text-sm opacity-90 mt-2 font-bold">Takım {getTeamName(currentTeamIndex)} Kazanır</span>
+                      </button>
+
+                      <button 
+                        onClick={() => handleAnswerResult(false)}
+                        className="p-8 bg-red-600 hover:bg-red-500 text-white rounded-3xl shadow-xl transition-transform hover:scale-105 border-b-8 border-red-800 flex flex-col items-center"
+                      >
+                          <span className="text-5xl mb-3">❌</span>
+                          <span className="text-3xl font-black">YANLIŞ</span>
+                          <span className="text-sm opacity-90 mt-2 font-bold">Takım {getTeamName(currentTeamIndex)} Kaybeder</span>
+                      </button>
+                  </div>
+              </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

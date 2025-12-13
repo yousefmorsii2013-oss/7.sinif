@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Subject, LoadingState } from '../types';
 import { askTeacher } from '../services/geminiService';
@@ -8,7 +9,8 @@ const formatText = (text: string) => {
     const parts = text.split(/(\*\*.*?\*\*|\$.*?\$)/g);
     return parts.map((part, index) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={index} className="text-indigo-900 font-bold">{part.slice(2, -2)}</strong>;
+        // Updated to use "dark black" (font-black, text-black) for emphasized answers
+        return <strong key={index} className="text-black font-black">{part.slice(2, -2)}</strong>;
       } else if (part.startsWith('$') && part.endsWith('$')) {
         return (
           <span key={index} className="font-serif italic px-1 mx-0.5 bg-slate-100 rounded text-slate-900 inline-block border border-slate-200">
