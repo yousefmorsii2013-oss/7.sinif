@@ -42,6 +42,14 @@ export const streamLessonContent = async function* (topicContext: string, subjec
       - Ahlaki değerleri (Adalet, Merhamet) güncel örneklerle anlat.
       - Saygılı, manevi ve öğretici bir dil kullan.
       - Hac gibi ibadet konularında aşamaları maddeler halinde sırala.`;
+    } else if (subjectName === "Peygamberimizin Hayatı") {
+      customInstructions = `
+      - Hz. Muhammed (s.a.v.) ifadesini kullan.
+      - Olayları kronolojik ve akıcı bir hikaye diliyle anlat.
+      - Peygamberimizin ahlaki yönünü, merhametini ve güvenilirliğini vurgula.
+      - "Örnek Olay" başlığı altında hayatından kısa, eğitici kıssalar ekle.
+      - Hadislerden örnekler ver.
+      - Saygılı ve edebi bir dil kullan.`;
     } else if (subjectName === "Arapça") {
       customInstructions = `
       - BU DERS SADECE KELİME VE ANLAMLARI ÜZERİNEDİR.

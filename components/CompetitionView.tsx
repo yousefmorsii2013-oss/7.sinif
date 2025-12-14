@@ -294,6 +294,12 @@ const CompetitionView: React.FC = () => {
             </button>
           )}
           
+          <div className="mb-4 text-center">
+              <h1 className={`font-black text-yellow-400 tracking-tighter leading-none ${isFullScreen ? 'text-xs md:text-xl' : 'text-2xl'} font-handwritten transform -rotate-2 shadow-black drop-shadow-md`}>
+                  RİSKLİ<br/>YUSUF
+              </h1>
+          </div>
+
           <h3 className="text-gray-400 font-bold uppercase tracking-widest mb-6 text-xs md:text-sm">SKORLAR</h3>
           
           <div className="space-y-6 w-full flex flex-col items-center">

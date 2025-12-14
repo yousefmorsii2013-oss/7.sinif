@@ -622,6 +622,20 @@ const arpUnit5: Question[] = [
     { q: 'Banyo ne demektir?', options: ['Hammam', 'Matbah', 'Gurfe', 'Salon'], answer: 0 }
 ];
 
+// --- SİYER (YENİ EKLENDİ) ---
+const siyerQuestions: Question[] = [
+    { q: 'Peygamberimizin gençliğinde katıldığı, haksızlığa uğrayanları korumak için kurulan dernek hangisidir?', options: ['Hılfu\'l-Fudul (Erdemliler Topluluğu)', 'Darun Nedve', 'Kabe Hakemliği', 'Akabe Biatı'], answer: 0 },
+    { q: 'Peygamberimizin "El-Emin" sıfatı ne anlama gelir?', options: ['Güvenilir', 'Cömert', 'Bilgili', 'Zengin'], answer: 0 },
+    { q: 'Peygamberimizin süt annesinin adı nedir?', options: ['Halime', 'Amine', 'Fatıma', 'Hatice'], answer: 0 },
+    { q: 'Peygamberimizin 35 yaşındayken Kabe\'nin onarımı sırasında yaptığı görev nedir?', options: ['Kabe Hakemliği (Hacerü\'l-Esved\'i yerine koyma)', 'Kabe\'nin anahtarlarını taşıma', 'Hacılara su dağıtma', 'Kabe\'yi yıkma'], answer: 0 },
+    { q: 'Akraba ziyaretine ne ad verilir?', options: ['Sıla-i Rahim', 'Sadaka', 'Zekat', 'Fitre'], answer: 0 },
+    { q: 'Peygamberimizin Veda Hutbesi\'nde "Arabın Arap olmayana ...... yoktur" sözünde boşluğa ne gelir?', options: ['Üstünlüğü', 'Benzerliği', 'Saygısı', 'Yakınlığı'], answer: 0 },
+    { q: 'Peygamberimizin vefat ettiği şehir hangisidir?', options: ['Medine', 'Mekke', 'Taif', 'Kudüs'], answer: 0 },
+    { q: 'Peygamberimizin çocuklarına karşı tutumu nasıldı?', options: ['Şefkatli ve merhametli', 'Kızgın', 'İlgisiz', 'Sert'], answer: 0 },
+    { q: 'Peygamberimizin ilk eşi kimdir?', options: ['Hz. Hatice', 'Hz. Aişe', 'Hz. Fatıma', 'Hz. Zeynep'], answer: 0 },
+    { q: 'Peygamberimiz ticaret yaparken neye en çok dikkat ederdi?', options: ['Dürüstlüğe', 'Çok kazanmaya', 'Pahalı satmaya', 'Rakiplerini yenmeye'], answer: 0 }
+];
+
 
 const generateTestsFromPool = (pool: Question[], baseId: string, baseTitle: string): TestPaper[] => {
     // Helper to rotate questions to create 5 distinct tests of 10 questions
@@ -722,6 +736,12 @@ const TEST_DATABASE: Record<string, SubjectTests> = {
        { id: 'arp-3', title: '3. Ünite: Sağlık (Es-Sıhha)', tests: generateTestsFromPool(arpUnit3, 'arp-u3', 'Sağlık Test') },
        { id: 'arp-4', title: '4. Ünite: Spor ve Oyunlar', tests: generateTestsFromPool(arpUnit4, 'arp-u4', 'Spor Test') },
        { id: 'arp-5', title: '5. Ünite: Evim ve Ailem', tests: generateTestsFromPool(arpUnit5, 'arp-u5', 'Aile Test') },
+    ]
+  },
+  'siyer': {
+    title: 'Peygamberimizin Hayatı',
+    topics: [
+       { id: 'siyer-1', title: 'Genel Tekrar', tests: generateTestsFromPool(siyerQuestions, 'siyer-gen', 'Siyer Test') },
     ]
   }
 };

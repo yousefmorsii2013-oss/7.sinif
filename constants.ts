@@ -45,6 +45,13 @@ export const SUBJECTS: Subject[] = [
     headerColor: 'bg-emerald-600'
   },
   {
+    id: 'siyer',
+    title: 'Peygamberimizin Hayatı',
+    icon: '🌹',
+    colorClass: 'bg-rose-100 text-rose-600 border-rose-200',
+    headerColor: 'bg-rose-600'
+  },
+  {
     id: 'tdb',
     title: 'Temel Dini Bilgiler',
     icon: '🌙',
@@ -61,6 +68,48 @@ export const SUBJECTS: Subject[] = [
 ];
 
 export const TOPICS: Topic[] = [
+  // --- SİYER (PEYGAMBERİMİZİN HAYATI) ---
+  {
+    id: 'siyer-1',
+    subjectId: 'siyer',
+    title: '1. Ünite: Peygamberimizin Çocukluk ve Gençlik Yılları',
+    description: 'Doğumu, ailesi, çocukluğu ve gençlik erdemleri.',
+    icon: '👶',
+    promptContext: 'MEB 7. Sınıf Peygamberimizin Hayatı 1. Ünite. Konular: Peygamberimizin doğduğu çevre, ailesi (Hz. Amine, Abdulmuttalip, Ebu Talip), çocukluğu, süt annesi Halime, gençliği, Hılfu\'l-Fudul (Erdemliler Topluluğu) cemiyetine katılması, Kabe hakemliği.'
+  },
+  {
+     id: 'siyer-2',
+     subjectId: 'siyer',
+     title: '2. Ünite: Peygamberimiz ve Yakın Çevresi',
+     description: 'Ailesi, akrabaları, komşuları ve arkadaşlarıyla ilişkileri.',
+     icon: '👨‍👩‍👧‍👦',
+     promptContext: 'MEB 7. Sınıf Peygamberimizin Hayatı 2. Ünite. Konular: Peygamberimizin aile büyüklerine saygısı, akraba ziyareti (Sıla-i Rahim), komşuluk ilişkileri, çocuklarla iletişimi, yetimlere ve kimsesizlere yaklaşımı.'
+  },
+  {
+     id: 'siyer-3',
+     subjectId: 'siyer',
+     title: '3. Ünite: Peygamberimizin Örnek Ahlakı',
+     description: 'Güvenilirliği, merhameti, adaleti ve sabrı.',
+     icon: '💖',
+     promptContext: 'MEB 7. Sınıf Peygamberimizin Hayatı 3. Ünite. Konular: El-Emin oluşu, merhameti, affediciliği, cömertliği, adaleti, istişareye verdiği önem, sabrı ve kararlılığı.'
+  },
+  {
+     id: 'siyer-4',
+     subjectId: 'siyer',
+     title: '4. Ünite: Peygamberimiz ve Toplumsal Hayat',
+     description: 'Ticaret ahlakı, yardımlaşma ve nezaket.',
+     icon: '🤝',
+     promptContext: 'MEB 7. Sınıf Peygamberimizin Hayatı 4. Ünite. Konular: Peygamberimizin ticaret ahlakı, yardımlaşma ve dayanışma, misafire ikram, sofra adabı, selamlaşma, hasta ziyareti.'
+  },
+   {
+     id: 'siyer-5',
+     subjectId: 'siyer',
+     title: '5. Ünite: Veda Haccı ve Vefatı',
+     description: 'Veda Hutbesi\'ndeki evrensel mesajlar ve vefatı.',
+     icon: '📜',
+     promptContext: 'MEB 7. Sınıf Peygamberimizin Hayatı 5. Ünite. Konular: Veda Haccı, Veda Hutbesi\'ndeki mesajlar (İnsan hakları, kadın hakları, ırkçılığın reddi, kan davasının kaldırılması), Vefatı ve Mescid-i Nebevi.'
+  },
+
   // --- ARAPÇA (7. SINIF MÜFREDATI) ---
   {
     id: 'arp-1',
