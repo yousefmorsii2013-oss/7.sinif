@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Topic, LoadingState, QuizQuestion, Subject } from '../types';
 import { streamLessonContent, generateQuizQuestions } from '../services/geminiService';
@@ -8,20 +9,125 @@ interface LessonViewProps {
   onBack: () => void;
 }
 
+// Math Rendering Helper
+const renderMath = (latex: string): React.ReactNode[] => {
+    // 1. Pre-process to fix common AI formatting issues
+    // Convert 1/2 to \frac{1}{2} strictly within math contexts
+    let text = latex
+        .replace(/(\d+)\/(\d+)/g, '\\frac{$1}{$2}') 
+        .replace(/\\times/g, '×')
+        .replace(/\\cdot/g, '·')
+        .replace(/\\div/g, '÷')
+        .replace(/\\circ/g, '°')
+        .replace(/\\leq/g, '≤')
+        .replace(/\\geq/g, '≥')
+        .replace(/\\neq/g, '≠')
+        .replace(/\\approx/g, '≈')
+        .replace(/\\pi/g, 'π');
+
+    // 2. Parser for \frac{num}{den}, ^{sup}, _{sub}
+    const output: React.ReactNode[] = [];
+    let i = 0;
+    
+    // Helper to extract content inside {} starting at index start
+    const extractBraceContent = (str: string, start: number) => {
+        let depth = 1;
+        let content = "";
+        let j = start + 1; // skip first {
+        while (j < str.length && depth > 0) {
+            if (str[j] === '{') depth++;
+            else if (str[j] === '}') depth--;
+            
+            if (depth > 0) content += str[j];
+            j++;
+        }
+        return { content, nextIndex: j };
+    };
+
+    while (i < text.length) {
+        if (text.substr(i, 5) === '\\frac') {
+            i += 5;
+            // Expect {num}
+            let num = "";
+            let den = "";
+            
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                num = res.content;
+                i = res.nextIndex;
+            } else {
+                num = text[i];
+                i++;
+            }
+
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                den = res.content;
+                i = res.nextIndex;
+            } else {
+                den = text[i];
+                i++;
+            }
+
+            output.push(
+                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle">
+                    <span className="border-b-2 border-current px-1 pb-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(num)}</span>
+                    <span className="px-1 pt-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(den)}</span>
+                </span>
+            );
+
+        } else if (text[i] === '^') {
+            i++; // skip ^
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else if (i < text.length) {
+                content = text[i];
+                i++;
+            }
+            output.push(<sup key={`sup-${i}`} className="text-[0.6em] align-super ml-0.5 font-bold">{renderMath(content)}</sup>);
+        } else if (text[i] === '_') {
+            i++; // skip _
+             let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else if (i < text.length) {
+                content = text[i];
+                i++;
+            }
+            output.push(<sub key={`sub-${i}`} className="text-[0.6em] align-baseline ml-0.5">{renderMath(content)}</sub>);
+        } else {
+            // Collect text until next special char
+            let buffer = "";
+            while (i < text.length && text.substr(i, 5) !== '\\frac' && text[i] !== '^' && text[i] !== '_') {
+                buffer += text[i];
+                i++;
+            }
+            output.push(<span key={`txt-${i}`}>{buffer}</span>);
+        }
+    }
+    
+    return output;
+};
+
 // Helper to format text with bold (**text**) and math ($text$) support
 const formatText = (text: string) => {
   // Split by bold (**) or math ($) patterns
-  // The regex captures the delimiters so they appear in the parts array
   const parts = text.split(/(\*\*.*?\*\*|\$.*?\$)/g);
   
   return parts.map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       return <strong key={index} className="text-indigo-900 font-bold">{part.slice(2, -2)}</strong>;
     } else if (part.startsWith('$') && part.endsWith('$')) {
-      // Basic math styling: serif font, italic, slight background
+      // Basic math styling with new renderMath parser
+      const mathContent = part.slice(1, -1);
       return (
         <span key={index} className="font-serif italic px-1 mx-0.5 bg-slate-100 rounded text-slate-900 inline-block border border-slate-200">
-          {part.slice(1, -1)}
+          {renderMath(mathContent)}
         </span>
       );
     } else {
@@ -73,6 +179,13 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
 
+  // Clear cache if needed (for debugging or manual refresh)
+  const refreshLesson = () => {
+      localStorage.removeItem(`lesson_content_${topic.id}`);
+      localStorage.removeItem(`lesson_quiz_${topic.id}`);
+      window.location.reload(); // Simple reload to re-fetch
+  };
+
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -80,28 +193,67 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
         setLoadingState(LoadingState.LOADING);
         setContent("");
         
-        // 1. Start Quiz Generation in Background
-        generateQuizQuestions(topic.promptContext, subject.title)
-          .then(questions => {
-            if (isMounted) {
-              setQuizQuestions(questions);
-              setIsQuizReady(true);
-            }
-          })
-          .catch(error => {
-            console.error("Quiz generation failed:", error);
-          });
+        const contentKey = `lesson_content_${topic.id}`;
+        const quizKey = `lesson_quiz_${topic.id}`;
 
-        // 2. Stream Lesson Content
-        const stream = streamLessonContent(topic.promptContext, subject.title);
-        let fullText = "";
-        
-        for await (const chunk of stream) {
-          if (!isMounted) break;
-          fullText += chunk;
-          setContent(fullText);
-          setLoadingState(LoadingState.SUCCESS);
+        const cachedContent = localStorage.getItem(contentKey);
+        const cachedQuiz = localStorage.getItem(quizKey);
+
+        // 1. Handle Quiz (Load Cache or Generate)
+        if (cachedQuiz) {
+            try {
+                const parsedQuiz = JSON.parse(cachedQuiz);
+                if (isMounted) {
+                    setQuizQuestions(parsedQuiz);
+                    setIsQuizReady(true);
+                }
+            } catch (e) {
+                console.error("Cache parse error", e);
+                // Fallback to generation
+                generateQuizQuestions(topic.promptContext, subject.title)
+                .then(questions => {
+                    if (isMounted) {
+                    setQuizQuestions(questions);
+                    setIsQuizReady(true);
+                    localStorage.setItem(quizKey, JSON.stringify(questions));
+                    }
+                });
+            }
+        } else {
+            generateQuizQuestions(topic.promptContext, subject.title)
+            .then(questions => {
+                if (isMounted) {
+                setQuizQuestions(questions);
+                setIsQuizReady(true);
+                localStorage.setItem(quizKey, JSON.stringify(questions));
+                }
+            })
+            .catch(error => {
+                console.error("Quiz generation failed:", error);
+            });
         }
+
+        // 2. Handle Lesson Content (Load Cache or Stream)
+        if (cachedContent) {
+            if (isMounted) {
+                setContent(cachedContent);
+                setLoadingState(LoadingState.SUCCESS);
+            }
+        } else {
+            const stream = streamLessonContent(topic.promptContext, subject.title);
+            let fullText = "";
+            
+            for await (const chunk of stream) {
+                if (!isMounted) break;
+                fullText += chunk;
+                setContent(fullText);
+                setLoadingState(LoadingState.SUCCESS);
+            }
+            if (isMounted && fullText) {
+                localStorage.setItem(contentKey, fullText);
+            }
+        }
+
       } catch (error) {
         console.error(error);
         if (isMounted && content.length === 0) {
@@ -146,7 +298,7 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
         <div className={`animate-spin rounded-full h-16 w-16 border-b-4 ${subject.colorClass.includes('teal') ? 'border-teal-600' : 'border-indigo-600'}`}></div>
-        <p className="mt-4 text-xl font-handwritten text-gray-600">Yusuf bunu hızlı açılmasını çok denedi ama elinden geleni buydu</p>
+        <p className="mt-4 text-xl font-handwritten text-gray-600">Yusuf ders notlarını hazırlıyor...</p>
       </div>
     );
   }
@@ -165,12 +317,21 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
 
   return (
     <div className="max-w-4xl mx-auto pb-12">
-      <button 
-        onClick={onBack}
-        className="mb-6 flex items-center text-gray-600 hover:text-gray-900 font-medium"
-      >
-        &larr; Konulara Dön
-      </button>
+      <div className="flex justify-between items-center mb-6">
+        <button 
+            onClick={onBack}
+            className="flex items-center text-gray-600 hover:text-gray-900 font-medium"
+        >
+            &larr; Konulara Dön
+        </button>
+        <button 
+            onClick={refreshLesson}
+            className="text-xs text-gray-400 hover:text-indigo-600 underline"
+            title="İçeriği Yeniden Oluştur"
+        >
+            Dersi Yenile ↻
+        </button>
+      </div>
 
       {!showQuiz ? (
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
@@ -211,7 +372,7 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
             <div className="p-8 lg:p-12">
                 {!quizFinished ? (
                     <div>
-                        <p className="text-xl font-medium text-gray-800 mb-8">{quizQuestions[currentQuestionIndex].question}</p>
+                        <p className="text-xl font-medium text-gray-800 mb-8">{formatText(quizQuestions[currentQuestionIndex].question)}</p>
                         <div className="space-y-3">
                             {quizQuestions[currentQuestionIndex].options.map((option, idx) => (
                                 <button
@@ -228,7 +389,7 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
                                             : 'border-gray-200 hover:border-gray-400 hover:bg-gray-50'
                                     }`}
                                 >
-                                    <span className="font-bold mr-2">{String.fromCharCode(65 + idx)}.</span> {option}
+                                    <span className="font-bold mr-2">{String.fromCharCode(65 + idx)}.</span> {formatText(option)}
                                 </button>
                             ))}
                         </div>
@@ -236,7 +397,7 @@ const LessonView: React.FC<LessonViewProps> = ({ topic, subject, onBack }) => {
                         {showExplanation && (
                             <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100 animate-fade-in">
                                 <p className="font-bold text-blue-800">Açıklama:</p>
-                                <p className="text-blue-700">{quizQuestions[currentQuestionIndex].explanation}</p>
+                                <p className="text-blue-700">{formatText(quizQuestions[currentQuestionIndex].explanation)}</p>
                                 <div className="mt-4 text-right">
                                     <button 
                                         onClick={nextQuestion}

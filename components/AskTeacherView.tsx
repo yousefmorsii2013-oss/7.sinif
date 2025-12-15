@@ -4,6 +4,110 @@ import { Subject, LoadingState } from '../types';
 import { askTeacher } from '../services/geminiService';
 import { SUBJECTS } from '../constants';
 
+// Math Rendering Helper
+const renderMath = (latex: string): React.ReactNode[] => {
+    // 1. Symbol Replacements
+    let text = latex
+        .replace(/(\d+)\/(\d+)/g, '\\frac{$1}{$2}')
+        .replace(/\\times/g, '×')
+        .replace(/\\cdot/g, '·')
+        .replace(/\\div/g, '÷')
+        .replace(/\\circ/g, '°')
+        .replace(/\\leq/g, '≤')
+        .replace(/\\geq/g, '≥')
+        .replace(/\\neq/g, '≠')
+        .replace(/\\approx/g, '≈')
+        .replace(/\\pi/g, 'π');
+
+    // 2. Parser for \frac{num}{den}, ^{sup}, _{sub}
+    const output: React.ReactNode[] = [];
+    let i = 0;
+    
+    // Helper to extract content inside {} starting at index start
+    const extractBraceContent = (str: string, start: number) => {
+        let depth = 1;
+        let content = "";
+        let j = start + 1; // skip first {
+        while (j < str.length && depth > 0) {
+            if (str[j] === '{') depth++;
+            else if (str[j] === '}') depth--;
+            
+            if (depth > 0) content += str[j];
+            j++;
+        }
+        return { content, nextIndex: j };
+    };
+
+    while (i < text.length) {
+        if (text.substr(i, 5) === '\\frac') {
+            i += 5;
+            // Expect {num}
+            let num = "";
+            let den = "";
+            
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                num = res.content;
+                i = res.nextIndex;
+            } else {
+                num = text[i];
+                i++;
+            }
+
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                den = res.content;
+                i = res.nextIndex;
+            } else {
+                den = text[i];
+                i++;
+            }
+
+            output.push(
+                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle">
+                    <span className="border-b-2 border-current px-1 pb-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(num)}</span>
+                    <span className="px-1 pt-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(den)}</span>
+                </span>
+            );
+
+        } else if (text[i] === '^') {
+            i++; // skip ^
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else if (i < text.length) {
+                content = text[i];
+                i++;
+            }
+            output.push(<sup key={`sup-${i}`} className="text-[0.6em] align-super ml-0.5 font-bold">{renderMath(content)}</sup>);
+        } else if (text[i] === '_') {
+            i++; // skip _
+             let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else if (i < text.length) {
+                content = text[i];
+                i++;
+            }
+            output.push(<sub key={`sub-${i}`} className="text-[0.6em] align-baseline ml-0.5">{renderMath(content)}</sub>);
+        } else {
+            // Collect text until next special char
+            let buffer = "";
+            while (i < text.length && text.substr(i, 5) !== '\\frac' && text[i] !== '^' && text[i] !== '_') {
+                buffer += text[i];
+                i++;
+            }
+            output.push(<span key={`txt-${i}`}>{buffer}</span>);
+        }
+    }
+    
+    return output;
+};
+
 // Reusing the formatting helper
 const formatText = (text: string) => {
     const parts = text.split(/(\*\*.*?\*\*|\$.*?\$)/g);
@@ -12,9 +116,10 @@ const formatText = (text: string) => {
         // Updated to use "dark black" (font-black, text-black) for emphasized answers
         return <strong key={index} className="text-black font-black">{part.slice(2, -2)}</strong>;
       } else if (part.startsWith('$') && part.endsWith('$')) {
+        const mathContent = part.slice(1, -1);
         return (
           <span key={index} className="font-serif italic px-1 mx-0.5 bg-slate-100 rounded text-slate-900 inline-block border border-slate-200">
-            {part.slice(1, -1)}
+            {renderMath(mathContent)}
           </span>
         );
       } else {

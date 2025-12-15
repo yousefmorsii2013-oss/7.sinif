@@ -15,7 +15,12 @@ export const streamLessonContent = async function* (topicContext: string, subjec
     
     if (subjectName === "Matematik") {
       customInstructions = `
-      - Bu bir matematik dersi. İŞLEMLERİ VE SAYILARI MUTLAKA LaTeX FORMATINDA YAZ ($x^2$, $3/4$, $30^\\circ$ gibi).
+      - Bu bir matematik dersi.
+      - Rasyonel sayıları ve kesirleri ASLA '3/4', '3/5' veya '3÷5' şeklinde yazma.
+      - Kesirleri MUTLAKA dikey kesir formatında LaTeX kodu ile yaz: '\\frac{3}{4}', '\\frac{x}{y}'.
+      - Tam sayılı kesirleri '1 \\frac{1}{2}' şeklinde yaz.
+      - Çarpma işlemi için 'x' veya '.' yerine '\\times' veya '\\cdot' kullan.
+      - Üslü sayıları '$x^2$' formatında yaz.
       - Konu anlatımında bol bol "Çözümlü Örnek" ver. Önce soruyu sor, sonra adım adım çözümünü göster.
       - "Sıra Sizde" bölümleri ekle.
       - Tanımları net ve kısa tut, işlem pratikliğine odaklan.`;
@@ -79,7 +84,7 @@ export const streamLessonContent = async function* (topicContext: string, subjec
     ## 📚 Konu Anlatımı
     *(MEB ders kitabı dilini kullanarak anlat. Arapça için örnek cümleler kur. Diğer dersler için detaylı açıklama yap.)*
     
-    ${subjectName === 'Matematik' ? '### ✏️ Birlikte Çözelim\n*(Adım adım çözümlü örnek soru)*' : ''}
+    ${subjectName === 'Matematik' ? '### ✏️ Birlikte Çözelim\n*(Adım adım çözümlü örnek soru. Kesirleri \\frac{a}{b} formatında yaz)*' : ''}
 
     ## 💡 Bunları Biliyor musunuz?
     *(Konuyla ilgili şaşırtıcı, güncel veya tarihi kısa bir anekdot)*
@@ -113,7 +118,7 @@ export const generateQuizQuestions = async (topicContext: string, subjectName: s
     const prompt = `"${topicContext}" bağlamı için 7. sınıf ${subjectName} seviyesinde toplam 10 adet ÇOKTAN SEÇMELİ (Test) sınav sorusu hazırla.
     
     Sorular LGS tarzı, beceri temelli (eğer uygunsa), düşündürücü ve seçici sorular olsun.
-    Matematik ise işlem gerektirsin ve sayılar LaTeX formatında olsun ($x+y$).
+    Matematik ise işlem gerektirsin ve sayılar LaTeX formatında olsun ($x+y$, $\\frac{1}{2}$).
     Sosyal Bilgiler ise harita yorumlama veya paragraf yorumlama içersin.
     Arapça ise kelime bilgisi veya basit cümle tamamlama sor.
     Her soru için 4 seçenek (A, B, C, D) ve 1 doğru cevap indexi (0-3) ver.
@@ -200,7 +205,7 @@ export const askTeacher = async (question: string, subjectName: string): Promise
            - Soru: "55 eksi 54 kaç?" -> Cevap: "Sonuç **1** eder."
            - Soru: "Beautiful ne demek?" -> Cevap: "**Güzel** anlamına gelir." veya "Waseem = **Yakışıklı**"
            - Soru: "Başkent neresi?" -> Cevap: "**Ankara**'dır."
-        3. ${subjectName === 'Matematik' ? 'Formülleri $ işaretleri içinde yaz ($x^2$). ANCAK basit sayısal cevapları (1, -5 gibi) SADECE ** (yıldız) içine alarak DÜZ METİN yaz, LaTeX veya süslü parantez kullanma.' : ''}
+        3. Matematik işlemlerinde kesirleri MUTLAKA '\\frac{a}{b}' formatında yaz. '3/4' gibi çizgili yazma. Üslüleri 'x^2' formatında yaz.
         4. Cevap KISA ve ÖZ olmalı. En fazla 6-7 satır uzunluğunda yaz.
         5. Karmaşık detaylara girme, öğrencinin seviyesine in.`,
       }
@@ -288,7 +293,6 @@ export const generateGameData = async (subjectName: string, selectedContexts?: s
 
 export const generateBigRiskBoard = async (context: string, isSpecificTopic: boolean): Promise<RiskCategory[]> => {
   // SPECIAL HANDLING: If context implies Science (Fen Bilimleri), return the specific requested questions from Fen Aktivite.
-  // This satisfies the user requirement to "Change the questions" to the specific set, without altering the generic structure of the app.
   if (context.includes("Fen Bilimleri") || context.includes("Güneş Sistemi") || context.includes("Hücre") || context.includes("Kuvvet") || context.includes("Madde") || context.includes("Işık")) {
       return [
         {
@@ -336,7 +340,7 @@ export const generateBigRiskBoard = async (context: string, isSpecificTopic: boo
           questions: [
             { points: 50, question: "Işığın madde tarafından tutulmasına ne denir?", answer: "Soğurulma", isOpened: false },
             { points: 100, question: "Üzerine düşen ışığı yansıtmayıp büyük oranda geçiren maddelere ne denir?", answer: "Saydam Madde", isOpened: false },
-            { points: 150, question: "Görüntünün her zaman düz ve cisimle aynı boyda olduğu ayna çeşidi hangisidir?", answer: "Düz Ayna", isOpened: false },
+            { points: 150, question: "Görüntünün her zaman düz ve cisimle aynı boyda olduğu ayna türü hangisidir?", answer: "Düz Ayna", isOpened: false },
             { points: 200, question: "Işığın yoğunlukları farklı bir ortamdan diğerine geçerken doğrultu değiştirmesine ne denir?", answer: "Kırılma", isOpened: false },
             { points: 250, question: "Beyaz ışık prizmadan geçirildiğinde en az kırılan renk hangisidir?", answer: "Kırmızı", isOpened: false }
           ]
@@ -382,7 +386,7 @@ export const generateBigRiskBoard = async (context: string, isSpecificTopic: boo
     2. Amaç: Öğrencinin derste öğrendiği veya kitapta okuduğu bilgiyi ölçmek. Eğer öğrenci cevabı bilmiyorsa, ders kitabını açıp okuduğunda cevabı bulabilmeli.
     3. Sorular kısa ve net bilgi sorusu olsun.
     4. Cevaplar kısa ve öz olsun.
-    5. Matematik soruları zihinden veya kağıt üzerinde yapılabilecek işlemler olsun ($x^2$ formatı kullan).
+    5. Matematik soruları zihinden veya kağıt üzerinde yapılabilecek işlemler olsun ($x^2$ veya $\\frac{a}{b}$ formatı kullan).
     
     JSON formatında döndür.`;
 
