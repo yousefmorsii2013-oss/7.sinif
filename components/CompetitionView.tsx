@@ -4,9 +4,7 @@ import { generateBigRiskBoard } from '../services/geminiService';
 import { LoadingState, RiskCategory, Team } from '../types';
 import { SUBJECTS, TOPICS } from '../constants';
 
-// Math Rendering Helper (Copied for consistency, normally would be a utility)
 const renderMath = (latex: string): React.ReactNode[] => {
-    // 1. Symbol Replacements
     let text = latex
         .replace(/(\d+)\/(\d+)/g, '\\frac{$1}{$2}')
         .replace(/\\times/g, '×')
@@ -17,17 +15,23 @@ const renderMath = (latex: string): React.ReactNode[] => {
         .replace(/\\geq/g, '≥')
         .replace(/\\neq/g, '≠')
         .replace(/\\approx/g, '≈')
-        .replace(/\\pi/g, 'π');
+        .replace(/\\pi/g, 'π')
+        .replace(/\\dots/g, '...')
+        .replace(/\\ldots/g, '...')
+        .replace(/\\cdots/g, '...')
+        .replace(/\\rightarrow/g, '→')
+        .replace(/\\Rightarrow/g, '⇒')
+        .replace(/\\leftarrow/g, '←')
+        .replace(/\\left/g, '')
+        .replace(/\\right/g, '');
 
-    // 2. Parser for \frac{num}{den}, ^{sup}, _{sub}
     const output: React.ReactNode[] = [];
     let i = 0;
     
-    // Helper to extract content inside {} starting at index start
     const extractBraceContent = (str: string, start: number) => {
         let depth = 1;
         let content = "";
-        let j = start + 1; // skip first {
+        let j = start + 1; 
         while (j < str.length && depth > 0) {
             if (str[j] === '{') depth++;
             else if (str[j] === '}') depth--;
@@ -41,7 +45,6 @@ const renderMath = (latex: string): React.ReactNode[] => {
     while (i < text.length) {
         if (text.substr(i, 5) === '\\frac') {
             i += 5;
-            // Expect {num}
             let num = "";
             let den = "";
             
@@ -64,14 +67,50 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
 
             output.push(
-                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle">
+                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle relative group">
                     <span className="border-b-2 border-current px-1 pb-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(num)}</span>
+                    <span className="w-[1px] h-[1px] overflow-hidden opacity-0 absolute left-0 top-1/2 -z-10 select-all">/</span>
                     <span className="px-1 pt-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(den)}</span>
                 </span>
             );
 
+        } else if (text.substr(i, 9) === '\\overline') {
+            i += 9;
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else {
+                content = text[i];
+                i++;
+            }
+            output.push(
+                <span key={`over-${i}`} className="border-t border-current inline-block">{renderMath(content)}</span>
+            );
+
+        } else if (text.substr(i, 7) === '\\cancel') {
+            i += 7;
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else {
+                content = text[i];
+                i++;
+            }
+            output.push(
+                <span key={`cancel-${i}`} className="relative inline-block mx-0.5">
+                    {renderMath(content)}
+                    <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <span className="w-full border-t-2 border-red-500 transform -rotate-12 opacity-80"></span>
+                    </span>
+                </span>
+            );
+
         } else if (text[i] === '^') {
-            i++; // skip ^
+            i++;
             let content = "";
             if (i < text.length && text[i] === '{') {
                 const res = extractBraceContent(text, i);
@@ -83,7 +122,7 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
             output.push(<sup key={`sup-${i}`} className="text-[0.6em] align-super ml-0.5 font-bold">{renderMath(content)}</sup>);
         } else if (text[i] === '_') {
-            i++; // skip _
+            i++;
              let content = "";
             if (i < text.length && text[i] === '{') {
                 const res = extractBraceContent(text, i);
@@ -95,9 +134,15 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
             output.push(<sub key={`sub-${i}`} className="text-[0.6em] align-baseline ml-0.5">{renderMath(content)}</sub>);
         } else {
-            // Collect text until next special char
             let buffer = "";
-            while (i < text.length && text.substr(i, 5) !== '\\frac' && text[i] !== '^' && text[i] !== '_') {
+            while (
+                i < text.length && 
+                text.substr(i, 5) !== '\\frac' && 
+                text.substr(i, 9) !== '\\overline' && 
+                text.substr(i, 7) !== '\\cancel' &&
+                text[i] !== '^' && 
+                text[i] !== '_'
+            ) {
                 buffer += text[i];
                 i++;
             }
@@ -108,7 +153,6 @@ const renderMath = (latex: string): React.ReactNode[] => {
     return output;
 };
 
-// Formatting helper for math content
 const formatText = (text: string) => {
     const parts = text.split(/(\*\*.*?\*\*|\$.*?\$)/g);
     return parts.map((part, index) => {
@@ -129,13 +173,12 @@ const formatText = (text: string) => {
 
 const CompetitionView: React.FC = () => {
   const [setupStep, setSetupStep] = useState<'TEAM_SELECT' | 'SUBJECT_SELECT' | 'TOPIC_SELECT' | 'PLAYING' | 'WINNER'>('TEAM_SELECT');
-  // We initialize with 3 teams. Names are placeholders, we will render 1, 2, 3 based on index.
   const [teams, setTeams] = useState<Team[]>([
     { id: 1, name: '1', score: 0, color: 'bg-slate-700' },
     { id: 2, name: '2', score: 0, color: 'bg-slate-700' },
     { id: 3, name: '3', score: 0, color: 'bg-slate-700' }
   ]);
-  const [currentTeamIndex, setCurrentTeamIndex] = useState(0); // Tracks whose turn it is
+  const [currentTeamIndex, setCurrentTeamIndex] = useState(0); 
   
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);
   const [categories, setCategories] = useState<RiskCategory[]>([]);
@@ -144,10 +187,8 @@ const CompetitionView: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  // Helper to get number from index (0->1, 1->2, 2->3)
   const getTeamName = (index: number) => (index + 1).toString();
 
-  // Initial Setup helpers
   const handleAddTeam = () => {
     if (teams.length < 5) {
       setTeams([...teams, { 
@@ -180,7 +221,7 @@ const CompetitionView: React.FC = () => {
       const data = await generateBigRiskBoard(isSpecific ? topicOrMix : currentSubject!.title, isSpecific);
       setCategories(data);
       setSetupStep('PLAYING');
-      setCurrentTeamIndex(0); // Reset to first team
+      setCurrentTeamIndex(0); 
       setLoadingState(LoadingState.SUCCESS);
     } catch (error) {
       console.error(error);
@@ -194,13 +235,11 @@ const CompetitionView: React.FC = () => {
     setShowAnswer(false);
   };
 
-  // Turn Logic: Answer Correct or Incorrect
   const handleAnswerResult = (isCorrect: boolean) => {
     if (!activeQuestion) return;
     
     const points = categories[activeQuestion.categoryIndex].questions[activeQuestion.questionIndex].points;
 
-    // Update Score
     const updatedTeams = [...teams];
     if (isCorrect) {
         updatedTeams[currentTeamIndex].score += points;
@@ -209,19 +248,16 @@ const CompetitionView: React.FC = () => {
     }
     setTeams(updatedTeams);
 
-    // Close Question
     const newCategories = [...categories];
     newCategories[activeQuestion.categoryIndex].questions[activeQuestion.questionIndex].isOpened = true;
     setCategories(newCategories);
     setActiveQuestion(null);
     setShowAnswer(false);
     
-    // Check Game Over (Are all questions opened?)
     const allOpened = newCategories.every(cat => cat.questions.every(q => q.isOpened));
     if (allOpened) {
         setSetupStep('WINNER');
     } else {
-        // Switch to next team only if game continues
         setCurrentTeamIndex((prev) => (prev + 1) % teams.length);
     }
   };
@@ -243,8 +279,6 @@ const CompetitionView: React.FC = () => {
       const maxScore = Math.max(...teams.map(t => t.score));
       return teams.filter(t => t.score === maxScore);
   };
-
-  // --- RENDER ---
 
   if (setupStep === 'TEAM_SELECT') {
     return (
@@ -342,7 +376,6 @@ const CompetitionView: React.FC = () => {
     );
   }
 
-  // WINNER SCREEN
   if (setupStep === 'WINNER') {
       const winners = getWinners();
       return (
@@ -381,14 +414,11 @@ const CompetitionView: React.FC = () => {
       );
   }
 
-  // GAME BOARD LAYOUT
   return (
     <div className={`
       ${isFullScreen ? 'fixed inset-0 z-[100]' : 'min-h-screen'} 
       bg-slate-900 text-white font-sans flex flex-col md:flex-row transition-all duration-300
     `}>
-      
-      {/* LEFT SIDEBAR: TEAMS */}
       <div className={`
         ${isFullScreen ? 'w-24 md:w-48' : 'w-full md:w-64'} 
         bg-slate-800 p-4 border-r border-slate-700 flex flex-col items-center transition-all duration-300
@@ -434,7 +464,6 @@ const CompetitionView: React.FC = () => {
               })}
           </div>
 
-          {/* FULL SCREEN TOGGLE BUTTON - BOTTOM LEFT */}
           <button 
             onClick={() => setIsFullScreen(!isFullScreen)}
             className="absolute bottom-4 left-4 p-3 bg-slate-700 hover:bg-slate-600 rounded-full text-white shadow-lg transition-colors border border-slate-600 group"
@@ -452,17 +481,14 @@ const CompetitionView: React.FC = () => {
           </button>
       </div>
 
-      {/* MAIN CONTENT: RISK BOARD */}
       <div className="flex-1 p-2 md:p-8 flex items-center justify-center overflow-auto">
         <div className={`grid grid-cols-5 gap-2 w-full ${isFullScreen ? 'h-[90vh]' : 'max-w-6xl'}`}>
-            {/* Categories Header */}
             {categories.map((cat, idx) => (
             <div key={idx} className="bg-indigo-600 p-1 sm:p-4 rounded-lg flex items-center justify-center text-center shadow-md border-b-4 border-indigo-800 min-h-[60px]">
                 <h3 className={`font-bold leading-tight uppercase ${isFullScreen ? 'text-lg md:text-2xl' : 'text-[10px] sm:text-sm md:text-base'}`}>{cat.title}</h3>
             </div>
             ))}
 
-            {/* Questions Grid */}
             {Array.from({ length: 5 }).map((_, rowIndex) => (
             <React.Fragment key={rowIndex}>
                 {categories.map((cat, colIndex) => {
@@ -496,12 +522,9 @@ const CompetitionView: React.FC = () => {
         </div>
       </div>
 
-      {/* QUESTION MODAL */}
       {activeQuestion && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black bg-opacity-95 backdrop-blur-sm animate-fade-in">
           <div className="bg-indigo-800 w-full max-w-5xl rounded-3xl shadow-2xl border-4 border-yellow-400 overflow-hidden flex flex-col max-h-[95vh]">
-            
-            {/* Modal Header */}
             <div className="bg-indigo-900 p-6 flex justify-between items-center border-b border-indigo-700">
               <div className="flex items-center gap-4">
                   <div className="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-lg font-bold text-2xl">
@@ -514,9 +537,7 @@ const CompetitionView: React.FC = () => {
               <button onClick={closeQuestionWithoutScore} className="text-gray-400 hover:text-white text-4xl">&times;</button>
             </div>
 
-            {/* Content */}
             <div className="p-8 sm:p-16 flex-1 flex flex-col items-center justify-center text-center overflow-y-auto">
-              {/* CURRENT TEAM INDICATOR IN MODAL */}
               <div className="mb-12">
                   <span className="block text-indigo-300 text-sm font-bold uppercase tracking-widest mb-2">CEVAP SIRASI</span>
                   <div className="inline-block bg-white text-indigo-900 text-4xl font-black px-10 py-3 rounded-2xl shadow-lg transform -rotate-2 border-b-8 border-indigo-200">

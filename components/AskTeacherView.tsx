@@ -4,9 +4,7 @@ import { Subject, LoadingState } from '../types';
 import { askTeacher } from '../services/geminiService';
 import { SUBJECTS } from '../constants';
 
-// Math Rendering Helper
 const renderMath = (latex: string): React.ReactNode[] => {
-    // 1. Symbol Replacements
     let text = latex
         .replace(/(\d+)\/(\d+)/g, '\\frac{$1}{$2}')
         .replace(/\\times/g, '×')
@@ -17,17 +15,23 @@ const renderMath = (latex: string): React.ReactNode[] => {
         .replace(/\\geq/g, '≥')
         .replace(/\\neq/g, '≠')
         .replace(/\\approx/g, '≈')
-        .replace(/\\pi/g, 'π');
+        .replace(/\\pi/g, 'π')
+        .replace(/\\dots/g, '...')
+        .replace(/\\ldots/g, '...')
+        .replace(/\\cdots/g, '...')
+        .replace(/\\rightarrow/g, '→')
+        .replace(/\\Rightarrow/g, '⇒')
+        .replace(/\\leftarrow/g, '←')
+        .replace(/\\left/g, '')
+        .replace(/\\right/g, '');
 
-    // 2. Parser for \frac{num}{den}, ^{sup}, _{sub}
     const output: React.ReactNode[] = [];
     let i = 0;
     
-    // Helper to extract content inside {} starting at index start
     const extractBraceContent = (str: string, start: number) => {
         let depth = 1;
         let content = "";
-        let j = start + 1; // skip first {
+        let j = start + 1; 
         while (j < str.length && depth > 0) {
             if (str[j] === '{') depth++;
             else if (str[j] === '}') depth--;
@@ -41,7 +45,6 @@ const renderMath = (latex: string): React.ReactNode[] => {
     while (i < text.length) {
         if (text.substr(i, 5) === '\\frac') {
             i += 5;
-            // Expect {num}
             let num = "";
             let den = "";
             
@@ -64,14 +67,50 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
 
             output.push(
-                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle">
+                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle relative group">
                     <span className="border-b-2 border-current px-1 pb-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(num)}</span>
+                    <span className="w-[1px] h-[1px] overflow-hidden opacity-0 absolute left-0 top-1/2 -z-10 select-all">/</span>
                     <span className="px-1 pt-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(den)}</span>
                 </span>
             );
 
+        } else if (text.substr(i, 9) === '\\overline') {
+            i += 9;
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else {
+                content = text[i];
+                i++;
+            }
+            output.push(
+                <span key={`over-${i}`} className="border-t border-current inline-block">{renderMath(content)}</span>
+            );
+
+        } else if (text.substr(i, 7) === '\\cancel') {
+            i += 7;
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else {
+                content = text[i];
+                i++;
+            }
+            output.push(
+                <span key={`cancel-${i}`} className="relative inline-block mx-0.5">
+                    {renderMath(content)}
+                    <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <span className="w-full border-t-2 border-red-500 transform -rotate-12 opacity-80"></span>
+                    </span>
+                </span>
+            );
+
         } else if (text[i] === '^') {
-            i++; // skip ^
+            i++; 
             let content = "";
             if (i < text.length && text[i] === '{') {
                 const res = extractBraceContent(text, i);
@@ -83,7 +122,7 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
             output.push(<sup key={`sup-${i}`} className="text-[0.6em] align-super ml-0.5 font-bold">{renderMath(content)}</sup>);
         } else if (text[i] === '_') {
-            i++; // skip _
+            i++; 
              let content = "";
             if (i < text.length && text[i] === '{') {
                 const res = extractBraceContent(text, i);
@@ -95,9 +134,15 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
             output.push(<sub key={`sub-${i}`} className="text-[0.6em] align-baseline ml-0.5">{renderMath(content)}</sub>);
         } else {
-            // Collect text until next special char
             let buffer = "";
-            while (i < text.length && text.substr(i, 5) !== '\\frac' && text[i] !== '^' && text[i] !== '_') {
+            while (
+                i < text.length && 
+                text.substr(i, 5) !== '\\frac' && 
+                text.substr(i, 9) !== '\\overline' && 
+                text.substr(i, 7) !== '\\cancel' && 
+                text[i] !== '^' && 
+                text[i] !== '_'
+            ) {
                 buffer += text[i];
                 i++;
             }
@@ -108,12 +153,10 @@ const renderMath = (latex: string): React.ReactNode[] => {
     return output;
 };
 
-// Reusing the formatting helper
 const formatText = (text: string) => {
     const parts = text.split(/(\*\*.*?\*\*|\$.*?\$)/g);
     return parts.map((part, index) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        // Updated to use "dark black" (font-black, text-black) for emphasized answers
         return <strong key={index} className="text-black font-black">{part.slice(2, -2)}</strong>;
       } else if (part.startsWith('$') && part.endsWith('$')) {
         const mathContent = part.slice(1, -1);
@@ -156,7 +199,6 @@ const AskTeacherView: React.FC = () => {
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden min-h-[600px] flex flex-col md:flex-row">
         
-        {/* Left Panel: Input */}
         <div className="w-full md:w-1/3 p-8 bg-gray-50 border-r border-gray-100 flex flex-col">
             <h2 className="text-2xl font-bold text-pink-600 font-handwritten mb-2">Yapay Zekaya Sor 🤖</h2>
             <p className="text-gray-600 text-sm mb-6">
@@ -210,10 +252,8 @@ const AskTeacherView: React.FC = () => {
             </form>
         </div>
 
-        {/* Right Panel: Answer */}
         <div className="w-full md:w-2/3 p-8 bg-slate-50 flex flex-col relative">
             
-            {/* Header for Chat */}
             <div className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${selectedSubject.colorClass.replace('bg-', 'from-').replace('text-', '').split(' ')[0]} to-gray-200`}></div>
 
             {loadingState === LoadingState.IDLE && (

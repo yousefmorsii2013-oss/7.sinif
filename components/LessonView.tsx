@@ -12,7 +12,6 @@ interface LessonViewProps {
 // Math Rendering Helper
 const renderMath = (latex: string): React.ReactNode[] => {
     // 1. Pre-process to fix common AI formatting issues
-    // Convert 1/2 to \frac{1}{2} strictly within math contexts
     let text = latex
         .replace(/(\d+)\/(\d+)/g, '\\frac{$1}{$2}') 
         .replace(/\\times/g, '×')
@@ -23,13 +22,21 @@ const renderMath = (latex: string): React.ReactNode[] => {
         .replace(/\\geq/g, '≥')
         .replace(/\\neq/g, '≠')
         .replace(/\\approx/g, '≈')
-        .replace(/\\pi/g, 'π');
+        .replace(/\\pi/g, 'π')
+        .replace(/\\dots/g, '...')
+        .replace(/\\ldots/g, '...')
+        .replace(/\\cdots/g, '...')
+        .replace(/\\rightarrow/g, '→')
+        .replace(/\\Rightarrow/g, '⇒')
+        .replace(/\\leftarrow/g, '←')
+        .replace(/\\left/g, '')
+        .replace(/\\right/g, '');
 
-    // 2. Parser for \frac{num}{den}, ^{sup}, _{sub}
+    // 2. Parser
     const output: React.ReactNode[] = [];
     let i = 0;
     
-    // Helper to extract content inside {} starting at index start
+    // Helper to extract content inside {}
     const extractBraceContent = (str: string, start: number) => {
         let depth = 1;
         let content = "";
@@ -70,14 +77,51 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
 
             output.push(
-                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle">
+                <span key={`frac-${i}`} className="inline-flex flex-col text-center align-middle mx-1 align-middle relative group">
                     <span className="border-b-2 border-current px-1 pb-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(num)}</span>
+                    {/* Hidden slash for copy-paste support */}
+                    <span className="w-[1px] h-[1px] overflow-hidden opacity-0 absolute left-0 top-1/2 -z-10 select-all">/</span>
                     <span className="px-1 pt-[1px] text-[0.8em] font-semibold leading-none block">{renderMath(den)}</span>
                 </span>
             );
 
+        } else if (text.substr(i, 9) === '\\overline') {
+            i += 9;
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else {
+                content = text[i];
+                i++;
+            }
+            output.push(
+                <span key={`over-${i}`} className="border-t border-current inline-block">{renderMath(content)}</span>
+            );
+
+        } else if (text.substr(i, 7) === '\\cancel') {
+            i += 7;
+            let content = "";
+            if (i < text.length && text[i] === '{') {
+                const res = extractBraceContent(text, i);
+                content = res.content;
+                i = res.nextIndex;
+            } else {
+                content = text[i];
+                i++;
+            }
+            output.push(
+                <span key={`cancel-${i}`} className="relative inline-block mx-0.5">
+                    {renderMath(content)}
+                    <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <span className="w-full border-t-2 border-red-500 transform -rotate-12 opacity-80"></span>
+                    </span>
+                </span>
+            );
+
         } else if (text[i] === '^') {
-            i++; // skip ^
+            i++; 
             let content = "";
             if (i < text.length && text[i] === '{') {
                 const res = extractBraceContent(text, i);
@@ -89,7 +133,7 @@ const renderMath = (latex: string): React.ReactNode[] => {
             }
             output.push(<sup key={`sup-${i}`} className="text-[0.6em] align-super ml-0.5 font-bold">{renderMath(content)}</sup>);
         } else if (text[i] === '_') {
-            i++; // skip _
+            i++; 
              let content = "";
             if (i < text.length && text[i] === '{') {
                 const res = extractBraceContent(text, i);
@@ -103,7 +147,14 @@ const renderMath = (latex: string): React.ReactNode[] => {
         } else {
             // Collect text until next special char
             let buffer = "";
-            while (i < text.length && text.substr(i, 5) !== '\\frac' && text[i] !== '^' && text[i] !== '_') {
+            while (
+                i < text.length && 
+                text.substr(i, 5) !== '\\frac' && 
+                text.substr(i, 9) !== '\\overline' && 
+                text.substr(i, 7) !== '\\cancel' &&
+                text[i] !== '^' && 
+                text[i] !== '_'
+            ) {
                 buffer += text[i];
                 i++;
             }
